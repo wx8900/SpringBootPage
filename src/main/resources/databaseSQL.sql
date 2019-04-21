@@ -1,6 +1,5 @@
 CREATE DATABASE `test` CHARACTER SET utf8 COLLATE utf8_bin;
 
-
 CREATE TABLE `tbl_student` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(100) NOT NULL,
@@ -10,7 +9,6 @@ CREATE TABLE `tbl_student` (
   `EMAIL` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
 
 INSERT INTO `tbl_student` (`ID`, `NAME`, `BRANCH`, `PERCENTAGE`, `PHONE`, `EMAIL`)
 VALUES
