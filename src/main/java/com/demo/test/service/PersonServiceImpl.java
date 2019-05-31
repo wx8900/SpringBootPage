@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 /**
- * Created on 2018/6/15.
+ * Service class
+ *
+ * @author Jack
+ * @date 2019/05/30 14:36 PM
  */
 @Service("studentService")
-@Transactional
+@Transactional(rollbackOn = Exception.class)
 public class PersonServiceImpl implements PersonService {
 
+    @Autowired
     private final StudentRepository studentRepository;
 
     @Autowired
@@ -31,6 +35,11 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Page<Student> findByName(String name, Pageable pageable) {
         return studentRepository.findByName(name, pageable);
+    }
+
+    @Override
+    public Student findByNameAndPassword(String name, String password) {
+        return studentRepository.findByNameAndPassword(name, password);
     }
 
 }
