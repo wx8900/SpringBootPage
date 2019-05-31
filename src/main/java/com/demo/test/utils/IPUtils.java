@@ -1,17 +1,17 @@
 package com.demo.test.utils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 获取发出request请求的客户端ip, 如果是自己发出的请求,那么获取的是自己的ip
  * Note:
- *    如果使用此工具,获取到的不是客户端的ip地址;而是虚拟机的ip地址(d当客户端安装有VMware时,可能出现此情况);
- *    那么需要在客户端的[控制面板\网络和 Internet\网络连接]中禁用虚拟机网络适配器
+ * 如果使用此工具,获取到的不是客户端的ip地址;而是虚拟机的ip地址(d当客户端安装有VMware时,可能出现此情况);
+ * 那么需要在客户端的[控制面板\网络和 Internet\网络连接]中禁用虚拟机网络适配器
  *
- * @author  Jack
- * @date    2019/05/30 15:32 PM
+ * @author Jack
+ * @date 2019/05/30 15:32 PM
  */
 public class IPUtils {
 
@@ -46,7 +46,7 @@ public class IPUtils {
                 }
             }
         } catch (Exception e) {
-            ipAddress="";
+            ipAddress = "";
         }
 
         return ipAddress;
