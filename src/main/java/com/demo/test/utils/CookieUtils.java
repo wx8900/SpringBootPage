@@ -18,12 +18,12 @@ import java.net.URLEncoder;
  * @date   2019/05/30 14:36 PM
  */
 public class CookieUtils {
+
     private static final Logger logger = LoggerFactory.getLogger(CookieUtils.class);
 
     private static int iDefaultValidSecond = -1;
 
-    private CookieUtils() {
-    }
+    private CookieUtils() {}
 
     /**
      * 将值存入cookie，浏览器关闭后失效

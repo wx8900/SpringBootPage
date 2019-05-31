@@ -1,6 +1,8 @@
 package com.demo.test.utils;
 
 import com.demo.test.domain.TokenModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -15,6 +17,8 @@ import java.util.UUID;
  */
 @Component
 public class TokenUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(TokenUtils.class);
 
     private static Map<Long, String> tokenMap = new HashMap<>();
 
@@ -33,7 +37,7 @@ public class TokenUtils {
         //TokenModel model = new TokenModel(userId, token);
         //存储到redis并设置过期时间
         //redis.boundValueOps(userId).set(token, Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
-        System.out.println("UserId : " + userId + " Token : " + token);
+        LoggerUtils.logInfo(logger, "UserId : " + userId + " Token : " + token);
         tokenMap.put(userId, token);
     }
 
@@ -57,6 +61,7 @@ public class TokenUtils {
         }
         //String token = redis.boundValueOps(model.getUserId()).get();
         String token = tokenMap.get(model.getUserId());
+        LoggerUtils.logInfo(logger, "checkToken : " + token);
         return token != null && token.equals(model.getToken());//如果验证成功，说明此用户进行了一次有效操作，延长token的过期时间
         //redis.boundValueOps(model.getUserId()).expire(Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
     }
@@ -64,5 +69,6 @@ public class TokenUtils {
     public static void deleteToken(long userId) {
         //redis.delete(userId);
         tokenMap.remove(userId);
+        LoggerUtils.logInfo(logger, "deleteToken =====> userId : " + userId);
     }
 }

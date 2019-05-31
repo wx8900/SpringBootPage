@@ -2,7 +2,6 @@ package com.demo.test.filter;
 
 import com.demo.test.domain.Student;
 import com.demo.test.utils.MDUtils;
-import org.springframework.util.DigestUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,24 +13,58 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.demo.test.domain.TokenModel.checkTime;
-
 /**
  * Token Utils 类
  *
  * @author Jack
  * @date 2019/05/30 14:36 PM
  */
-// 表示全部拦截
+// /* 表示全部拦截
 @WebFilter(filterName = "tokenFilter", urlPatterns = "/*")
 public class TokenFilter implements Filter {
 
-    private static final String salt="1234567890...abcdefghigklmpopqrstuvwxyz";
+    private static final String salt = "1234567890...abcdefghigklmpopqrstuvwxyz";
 
-    //这里面 填写不需要 被拦截的地址
+    //在这里面填不需要被拦截的地址
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(
             new HashSet<>(Arrays.asList("/v1/api/students/login", "/v1/api/students/isLogin", "/findCategory"))
     );
+
+    /**
+     * 校验签名
+     *
+     * @param timestamp
+     * @param signature
+     * @param params
+     * @return
+     */
+    public static boolean checkSignature(long timestamp, String signature, String[] params) {
+        if (timestamp == 0 || signature == null || params == null) {
+            return false;
+        }
+        long nowTime = System.currentTimeMillis();
+        // 接口请求的时间在600秒钟之前的直接抛弃
+        if ((nowTime - timestamp) > 600000) {
+            return false;
+        }
+        // 将方法的参数按字典排序,然后按字典排序将它们加起来的字符串+盐按SHA512加密，和签名作对比
+        Arrays.sort(params);
+        int length = params.length;
+        String signStr = "";
+        if (params != null && length > 0) {
+            StringBuilder sb = new StringBuilder(length);
+            for (int i = 0; i < length; i++) {
+                if (params[i] != null && params[i].length() > 0) {
+                    sb.append(params[i]);
+                }
+            }
+            signStr = MDUtils.encrypt(sb.toString());
+            /*if (signature.equals(EncryptionUtil.SHA512((signStr+salt)))) {
+                return true;
+            }*/
+        }
+        return false;
+    }
 
     //初始化调用的方法
     //当服务器 被启动的时候，调用
@@ -59,7 +92,7 @@ public class TokenFilter implements Filter {
 
         //需要拦截的方法
         if (!allowePath) {
-            Student student = (Student)request.getSession().getAttribute("currentUser");
+            Student student = (Student) request.getSession().getAttribute("currentUser");
             if (student != null) {
                 /*// timeStamp是客户端从Header传过来的值
                 Long timeStamp = RequestHeaderContext.getInstance().getTimeStamp();
@@ -102,41 +135,6 @@ public class TokenFilter implements Filter {
             filterChain.doFilter(request, response);
         }
 
-    }
-
-    /**
-     * 校验签名
-     * @param timestamp
-     * @param signature
-     * @param params
-     * @return
-     */
-    public static boolean checkSignature(long timestamp,String signature,String params[]){
-        if (timestamp == 0 || signature == null||params==null) {
-            return false;
-        }
-        long nowTime = System.currentTimeMillis();
-        // 接口请求的时间在600秒钟之前的直接抛弃
-        if ((nowTime - timestamp) > 600000) {
-            return false;
-        }
-        // 将方法的参数按字典排序,然后按字典排序将它们加起来的字符串+盐按SHA512加密，和签名作对比
-        Arrays.sort(params);
-        int length=params.length;
-        String signStr="";
-        if (params != null &&length>0) {
-            StringBuilder sb=new StringBuilder(length);
-            for (int i = 0; i < length; i++) {
-                if(params[i] != null && params[i].length() > 0){
-                    sb.append(params[i]);
-                }
-            }
-            signStr = MDUtils.encrypt(sb.toString());
-            /*if (signature.equals(EncryptionUtil.SHA512((signStr+salt)))) {
-                return true;
-            }*/
-        }
-        return false;
     }
 
     //销毁时候调用的方法

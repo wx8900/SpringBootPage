@@ -1,5 +1,9 @@
 package com.demo.test.utils;
 
+import com.demo.test.controllers.LoginController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -14,6 +18,8 @@ import java.net.UnknownHostException;
  * @date 2019/05/30 15:32 PM
  */
 public class IPUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(IPUtils.class);
 
     public static String getIpAddr(HttpServletRequest request) {
         String ipAddress = null;
@@ -32,8 +38,9 @@ public class IPUtils {
                     InetAddress inet = null;
                     try {
                         inet = InetAddress.getLocalHost();
+                        LoggerUtils.logInfo(logger,"IP Address is :" + inet);
                     } catch (UnknownHostException e) {
-                        e.printStackTrace();
+                        LoggerUtils.logError(logger,"UnknownHostException happen in getIpAddr()", e.getStackTrace());
                     }
                     ipAddress = inet.getHostAddress();
                 }
@@ -47,6 +54,7 @@ public class IPUtils {
             }
         } catch (Exception e) {
             ipAddress = "";
+            LoggerUtils.logError(logger,"Exception happen in getIpAddr()", e.getStackTrace());
         }
 
         return ipAddress;

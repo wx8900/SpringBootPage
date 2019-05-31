@@ -2,13 +2,14 @@ package com.demo.test.controllers;
 
 import com.demo.test.domain.Student;
 import com.demo.test.service.PersonServiceImpl;
+import com.demo.test.utils.LoggerUtils;
 import com.demo.test.utils.TokenUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,10 +18,15 @@ import javax.servlet.http.HttpSession;
  * @date 2019/05/30 14:36 PM
  * <p>
  * http://localhost:8080/v1/api/students/login?name=mark&password=345
+ * <p>
+ * http://localhost:8080/v1/api/students/logOff
+ *
  */
 @RestController
 @RequestMapping("/v1/api/students")
 public class LoginController {
+
+    private final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     private final PersonServiceImpl studentService;
 
@@ -38,6 +44,7 @@ public class LoginController {
                 if (student != null) {
                     session.setAttribute("currentUser", student);
                     TokenUtils.createToken(student.getId());
+                    LoggerUtils.logInfo(logger,name + " has login the website.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -46,12 +53,13 @@ public class LoginController {
         return "";
     }
 
-    @RequestMapping(value = "/loginOff", method = RequestMethod.GET)
-    public String loginOff(HttpSession session) {
+    @RequestMapping(value = "/logOff", method = RequestMethod.GET)
+    public String logOff(HttpSession session) {
         try {
             //String id = RequestContextHolder.currentRequestAttributes().getSessionId();
             Student student = (Student)session.getAttribute("currentUser");
             TokenUtils.deleteToken(student.getId());
+            LoggerUtils.logInfo(logger,student.getName() + " has log off the website.");
             session.removeAttribute("currentUser");
         } catch (Exception e) {
             e.printStackTrace();

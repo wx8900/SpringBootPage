@@ -3,7 +3,10 @@ package com.demo.test.controllers;
 import com.demo.test.domain.Student;
 import com.demo.test.domain.TokenModel;
 import com.demo.test.service.PersonServiceImpl;
+import com.demo.test.utils.LoggerUtils;
 import com.demo.test.utils.TokenUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Jack
- * @version 1.0  create APIs
+ * @version 2.0  Add Token for each API
  * @date 2019/04/15 06:14 AM
  * <p>
  * Step 1: start mysql on local
@@ -26,7 +29,6 @@ import javax.servlet.http.HttpSession;
  * http://localhost:8080/v1/api/students/queryByPage?page=0&size=10&sort=percentage
  * return "status": 400
  * <p> Version 2 <p>
- * @version 2.0  Add Token for each API
  * @date 2019/05/30 14:36 PM
  * <p>
  * http://localhost:8080/v1/api/students/queryByPage?page=0&size=10&sort=percentage&token=94d7aa6b7cd94509a93fd400063d3a24
@@ -40,6 +42,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/v1/api/students")
 public class StudentPageRestController {
 
+    private final Logger logger = LoggerFactory.getLogger(StudentPageRestController.class);
+
     private final PersonServiceImpl studentService;
 
     @Autowired
@@ -51,12 +55,13 @@ public class StudentPageRestController {
     public Page<Student> queryByPage(Pageable pageable, @RequestParam String token, HttpSession session) {
         // Pageable pageable = PageRequest.of(0, 10);
         Page<Student> pageInfo = null;
-        Student student = (Student)session.getAttribute("currentUser");
+        Student student = (Student) session.getAttribute("currentUser");
         TokenModel model = new TokenModel(student.getId(), token);
         if (token != null || token.length() > 0 || TokenUtils.checkToken(model)) {
             pageInfo = studentService.listByPage(pageable);
+            LoggerUtils.logInfo(logger, " Calling the API ======> queryByPage");
         } else {
-            System.out.println("This token is invalid!!!");
+            LoggerUtils.logInfo(logger, "This token is invalid!!!");
         }
         return pageInfo;
     }
@@ -64,12 +69,13 @@ public class StudentPageRestController {
     @RequestMapping(value = "/queryByName", method = RequestMethod.GET)
     public Page<Student> queryByName(String name, Pageable pageable, @RequestParam String token, HttpSession session) {
         Page<Student> pageInfo = null;
-        Student student = (Student)session.getAttribute("currentUser");
+        Student student = (Student) session.getAttribute("currentUser");
         TokenModel model = new TokenModel(student.getId(), token);
         if (token != null || token.length() > 0 || TokenUtils.checkToken(model)) {
             pageInfo = studentService.findByName(name, pageable);
+            LoggerUtils.logInfo(logger, " Calling the API ======> queryByName : name is" + name);
         } else {
-            System.out.println("This token is invalid!!!");
+            LoggerUtils.logInfo(logger, "This token is invalid!!!");
         }
         return pageInfo;
     }

@@ -1,6 +1,8 @@
 package com.demo.test.utils;
 
 import org.apache.commons.codec.binary.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -13,6 +15,8 @@ import java.security.NoSuchAlgorithmException;
  * @date 2019/05/30  14:50:12
  */
 public class MDUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(MDUtils.class);
 
     /**
      * 加密

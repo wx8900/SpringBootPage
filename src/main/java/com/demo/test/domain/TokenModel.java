@@ -8,7 +8,7 @@ import lombok.ToString;
  * “请求的API参数”+“时间戳”+“盐”进行MD5算法加密
  *
  * @author Jack
- * @date   2019/05/30 23:40 PM
+ * @date 2019/05/30 23:40 PM
  */
 @Data
 @ToString(exclude = {"userId", "token", "timeStamp", "signature"})
@@ -40,14 +40,11 @@ public class TokenModel {
     }
 
     // checkTime方法
-    public static boolean checkTime(Long time, Integer variable){
+    public static boolean checkTime(Long time, Integer variable) {
         Long currentTimeMillis = System.currentTimeMillis();
         Long addTime = currentTimeMillis + variable;
         Long subTime = currentTimeMillis - variable;
-        if (addTime > time && time > subTime){
-            return true;
-        }
-        return false;
+        return addTime > time && time > subTime;
     }
 
 }

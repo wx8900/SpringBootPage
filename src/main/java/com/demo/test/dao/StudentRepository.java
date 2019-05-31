@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * JPA class
  *
  * @author Jack
- * @date   2019/5/30
+ * @date 2019/5/30
  */
 @Repository
 public interface StudentRepository extends PagingAndSortingRepository<Student, Long> {

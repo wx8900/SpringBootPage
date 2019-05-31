@@ -2,6 +2,7 @@ package com.demo.test.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Log 类
@@ -10,6 +11,9 @@ import org.slf4j.Logger;
  * @date 2019/05/30 14:36 PM
  */
 public class LoggerUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoggerUtils.class);
+
     private LoggerUtils() {
         super();
     }
