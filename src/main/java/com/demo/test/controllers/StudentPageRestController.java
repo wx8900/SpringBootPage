@@ -73,7 +73,7 @@ public class StudentPageRestController {
         TokenModel model = new TokenModel(student.getId(), token);
         if (token != null || token.length() > 0 || TokenUtils.checkToken(model)) {
             pageInfo = studentService.findByName(name, pageable);
-            LoggerUtils.logInfo(logger, " Calling the API ======> queryByName : name is" + name);
+            LoggerUtils.logInfo(logger, " Calling the API ======> queryByName : name is " + name);
         } else {
             LoggerUtils.logInfo(logger, "This token is invalid!!!");
         }
