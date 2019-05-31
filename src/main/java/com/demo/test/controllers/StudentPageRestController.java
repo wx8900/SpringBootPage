@@ -61,7 +61,7 @@ public class StudentPageRestController {
             pageInfo = studentService.listByPage(pageable);
             LoggerUtils.logInfo(logger, " Calling the API ======> queryByPage");
         } else {
-            LoggerUtils.logInfo(logger, "This token is invalid!!!");
+            LoggerUtils.logError(logger, "The API token of calling queryByPage is invalid!!!");
         }
         return pageInfo;
     }
@@ -75,7 +75,7 @@ public class StudentPageRestController {
             pageInfo = studentService.findByName(name, pageable);
             LoggerUtils.logInfo(logger, " Calling the API ======> queryByName : name is " + name);
         } else {
-            LoggerUtils.logInfo(logger, "This token is invalid!!!");
+            LoggerUtils.logError(logger, "The API token of calling queryByName is invalid!!!");
         }
         return pageInfo;
     }

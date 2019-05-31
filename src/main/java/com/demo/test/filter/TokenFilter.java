@@ -1,7 +1,11 @@
 package com.demo.test.filter;
 
+import com.demo.test.controllers.LoginController;
 import com.demo.test.domain.Student;
+import com.demo.test.utils.LoggerUtils;
 import com.demo.test.utils.MDUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -22,6 +26,8 @@ import java.util.Set;
 // /* 表示全部拦截
 @WebFilter(filterName = "tokenFilter", urlPatterns = "/*")
 public class TokenFilter implements Filter {
+
+    private final Logger logger = LoggerFactory.getLogger(TokenFilter.class);
 
     private static final String salt = "1234567890...abcdefghigklmpopqrstuvwxyz";
 
@@ -87,7 +93,7 @@ public class TokenFilter implements Filter {
 
         String path = request.getRequestURI().substring(request.getContextPath().length())
                 .replaceAll("[/]+$", "");
-        System.out.println("=========> Going into the tokenFilter ----- path : " + path);
+        LoggerUtils.logInfo(logger, "=========> Going into the tokenFilter ----- path : " + path);
         boolean allowePath = ALLOWED_PATHS.contains(path);
 
         //需要拦截的方法

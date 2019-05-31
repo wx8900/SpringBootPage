@@ -47,7 +47,7 @@ public class LoginController {
                     LoggerUtils.logInfo(logger,name + " has login the website.");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                LoggerUtils.logError(logger, "Exception happen in login!!!", e.getStackTrace());
             }
         }
         return "";
@@ -62,7 +62,7 @@ public class LoginController {
             LoggerUtils.logInfo(logger,student.getName() + " has log off the website.");
             session.removeAttribute("currentUser");
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggerUtils.logError(logger, "Exception happen in logOff!!!", e.getStackTrace());
         }
         return "";
     }
