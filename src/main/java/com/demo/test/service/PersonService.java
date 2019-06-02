@@ -14,4 +14,6 @@ public interface PersonService {
     Page<Student> findByName(String name, Pageable pageable);
 
     Student findByNameAndPassword(String name, String password);
+
+    void addStudent(Student student);
 }

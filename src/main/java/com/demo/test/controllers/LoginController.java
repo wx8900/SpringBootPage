@@ -2,7 +2,7 @@ package com.demo.test.controllers;
 
 import com.demo.test.domain.Student;
 import com.demo.test.service.PersonServiceImpl;
-import com.demo.test.utils.LoggerUtils;
+import com.demo.test.utils.LogUtils;
 import com.demo.test.utils.TokenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Jack
@@ -20,13 +21,12 @@ import javax.servlet.http.HttpSession;
  * http://localhost:8080/v1/api/students/login?name=mark&password=345
  * <p>
  * http://localhost:8080/v1/api/students/logOff
- *
  */
 @RestController
 @RequestMapping("/v1/api/students")
 public class LoginController {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    //private final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     private final PersonServiceImpl studentService;
 
@@ -36,19 +36,17 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(String name, String password, HttpSession session) {
-        if (name != null && name.length() > 0 && password != null && password.length() > 0) {
-            System.out.println("Name is : " + name + " password is : " + password);
-            try {
-                Student student = studentService.findByNameAndPassword(name, password);
-                if (student != null) {
-                    session.setAttribute("currentUser", student);
-                    TokenUtils.createToken(student.getId());
-                    LoggerUtils.logInfo(logger,name + " has login the website.");
-                }
-            } catch (Exception e) {
-                LoggerUtils.logError(logger, "Exception happen in login!!!", e.getStackTrace());
+    public String login(@NotNull String name, @NotNull String password, HttpSession session) {
+        try {
+            Student student = studentService.findByNameAndPassword(name, password);
+            if (student != null) {
+                session.setAttribute("currentUser", student);
+                String token = TokenUtils.createToken(student.getId());
+                LogUtils.info(name + " has login the website. The userId is " + student.getId()
+                        + " and token is " + token);
             }
+        } catch (Exception e) {
+            LogUtils.info("Exception happen in login!!!", e.getStackTrace());
         }
         return "";
     }
@@ -57,12 +55,12 @@ public class LoginController {
     public String logOff(HttpSession session) {
         try {
             //String id = RequestContextHolder.currentRequestAttributes().getSessionId();
-            Student student = (Student)session.getAttribute("currentUser");
+            Student student = (Student) session.getAttribute("currentUser");
             TokenUtils.deleteToken(student.getId());
-            LoggerUtils.logInfo(logger,student.getName() + " has log off the website.");
+            LogUtils.info(student.getName() + " has log off the website.");
             session.removeAttribute("currentUser");
         } catch (Exception e) {
-            LoggerUtils.logError(logger, "Exception happen in logOff!!!", e.getStackTrace());
+            LogUtils.info("Exception happen in logOff!!!", e.getStackTrace());
         }
         return "";
     }

@@ -42,4 +42,9 @@ public class PersonServiceImpl implements PersonService {
         return studentRepository.findByNameAndPassword(name, password);
     }
 
+    @Override
+    public void addStudent(Student student) {
+        studentRepository.save(student);
+    }
+
 }

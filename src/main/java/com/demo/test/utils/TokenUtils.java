@@ -31,14 +31,14 @@ public class TokenUtils {
         redis.setKeySerializer(new JdkSerializationRedisSerializer());
     }*/
 
-    public static void createToken(long userId) {
+    public static String createToken(long userId) {
         //使用uuid作为源token
         String token = UUID.randomUUID().toString().replace("-", "");
         //TokenModel model = new TokenModel(userId, token);
         //存储到redis并设置过期时间
         //redis.boundValueOps(userId).set(token, Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
-        LoggerUtils.logInfo(logger, "UserId : " + userId + " Token : " + token);
         tokenMap.put(userId, token);
+        return token;
     }
 
     public static TokenModel getToken(String authentication) {

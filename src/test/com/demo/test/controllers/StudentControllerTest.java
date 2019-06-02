@@ -5,9 +5,9 @@ import org.junit.Before;
 import org.junit.After; 
 
 /** 
-* StudentPageRestController Tester. 
+* StudentController Tester.
 * 
-* @author Jeff
+* @author Jack
 * @since <pre>四月 13, 2019 $time</pre> 
 * @version 1.0 
 */
@@ -16,7 +16,7 @@ import org.junit.After;
 @WebAppConfiguration
 @SpringBootTest
 @AutoConfigureMockMvc
-public class StudentPageRestControllerTest { 
+public class StudentControllerTest {
 
     @Before
     public void before() throws Exception { 
