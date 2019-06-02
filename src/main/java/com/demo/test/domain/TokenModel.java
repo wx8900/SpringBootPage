@@ -17,7 +17,7 @@ public class TokenModel {
     /**
      * 用户id
      */
-    private long userId;
+    private long id;
 
     /**
      * 随机生成的uuid, 登录后由服务端生成并返回
@@ -34,8 +34,8 @@ public class TokenModel {
      */
     private String signature;
 
-    public TokenModel(long userId, String token) {
-        this.userId = userId;
+    public TokenModel(long id, String token) {
+        this.id = id;
         this.token = token;
     }
 

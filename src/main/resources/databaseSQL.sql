@@ -31,6 +31,8 @@ VALUES
 DROP TABLE IF EXISTS `LOG_ERROR`;
 CREATE TABLE `LOG_ERROR` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `StudentId` varchar(255) DEFAULT NULL,
+  `Name` varchar(255) DEFAULT NULL,
   `Class` varchar(255) DEFAULT NULL,
   `Method` varchar(255) DEFAULT NULL,
   `CreateTime` varchar(255) DEFAULT NULL,

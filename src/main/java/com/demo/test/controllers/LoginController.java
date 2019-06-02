@@ -46,7 +46,8 @@ public class LoginController {
                         + " and token is " + token);
             }
         } catch (Exception e) {
-            LogUtils.info("Exception happen in login!!!", e.getStackTrace());
+            LogUtils.info(name + " Login Exception : " + e);
+            LogUtils.error("Exception happen in login!!!", e.getMessage().replaceAll("'", ""));
         }
         return "";
     }
@@ -60,7 +61,7 @@ public class LoginController {
             LogUtils.info(student.getName() + " has log off the website.");
             session.removeAttribute("currentUser");
         } catch (Exception e) {
-            LogUtils.info("Exception happen in logOff!!!", e.getStackTrace());
+            LogUtils.error("Exception happen in logOff!!!", e.getMessage().replaceAll("'", ""));
         }
         return "";
     }

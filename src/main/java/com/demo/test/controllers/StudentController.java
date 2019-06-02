@@ -54,7 +54,8 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
-    public void addStudent(@RequestBody Student student, @NotNull @RequestParam String token, HttpSession session) {
+    public void addStudent(@RequestBody Student student,
+                           @NotNull @RequestParam String token, HttpSession session) {
         Student currentUser = (Student) session.getAttribute("currentUser");
         LogUtils.info(" ======> student properties " + student.toString());
         TokenModel model = new TokenModel(currentUser.getId(), token);
@@ -63,7 +64,8 @@ public class StudentController {
                 studentService.addStudent(student);
                 LogUtils.info(" Calling the API ======> addStudent");
             } catch (javax.validation.ConstraintViolationException ve) {
-                LogUtils.error("Validation Error : " + ve.getMessage().replaceAll("'", ""));
+                LogUtils.error("Validation Error : "
+                        + ve.getMessage().replaceAll("'", ""));
             }
         } else {
             LogUtils.error("The API token of calling addStudent is invalid!!!");
@@ -72,14 +74,21 @@ public class StudentController {
 
 
     @RequestMapping(value = "/queryByPage", method = RequestMethod.GET)
-    public Page<Student> queryByPage(@Valid Pageable pageable, @NotNull @RequestParam String token, HttpSession session) {
+    public Page<Student> queryByPage(@Valid Pageable pageable,
+                                     @NotNull @RequestParam String token,
+                                     HttpSession session){
         // Pageable pageable = PageRequest.of(0, 10);
         Page<Student> pageInfo = null;
         Student currentUser = (Student) session.getAttribute("currentUser");
         TokenModel model = new TokenModel(currentUser.getId(), token);
         if (TokenUtils.checkToken(model)) {
-            pageInfo = studentService.listByPage(pageable);
-            LogUtils.info(" Calling the API ======> queryByPage");
+            try {
+                pageInfo = studentService.listByPage(pageable);
+                LogUtils.info(" Calling the API ======> queryByPage");
+            } catch (Exception e) {
+                LogUtils.error("Exception happen in listByPage!!!",
+                        e.getMessage().replaceAll("'", ""));
+            }
         } else {
             LogUtils.error("The API token of calling queryByPage is invalid!!!");
         }
@@ -87,14 +96,20 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/queryByName", method = RequestMethod.GET)
-    public Page<Student> queryByName(@NotNull String name, @Valid Pageable pageable, @NotNull @RequestParam String token,
+    public Page<Student> queryByName(@NotNull String name, @Valid Pageable pageable,
+                                     @NotNull @RequestParam String token,
                                      HttpSession session) {
         Page<Student> pageInfo = null;
         Student currentUser = (Student) session.getAttribute("currentUser");
         TokenModel model = new TokenModel(currentUser.getId(), token);
         if (TokenUtils.checkToken(model)) {
-            pageInfo = studentService.findByName(name, pageable);
-            LogUtils.info(" Calling the API ======> queryByName : name is " + name);
+            try {
+                pageInfo = studentService.findByName(name, pageable);
+                LogUtils.info(" Calling the API ======> queryByName : name is " + name);
+            } catch (Exception e) {
+                LogUtils.error("Exception happen in findByName!!!",
+                        e.getMessage().replaceAll("'", ""));
+            }
         } else {
             LogUtils.error("The API token of calling queryByName is invalid!!!");
         }

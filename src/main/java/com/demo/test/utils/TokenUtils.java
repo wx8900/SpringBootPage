@@ -60,7 +60,7 @@ public class TokenUtils {
             return false;
         }
         //String token = redis.boundValueOps(model.getUserId()).get();
-        String token = tokenMap.get(model.getUserId());
+        String token = tokenMap.get(model.getId());
         LoggerUtils.logInfo(logger, "checkToken : " + token);
         return token != null && token.equals(model.getToken());//如果验证成功，说明此用户进行了一次有效操作，延长token的过期时间
         //redis.boundValueOps(model.getUserId()).expire(Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
