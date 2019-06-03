@@ -77,20 +77,21 @@ public class TokenAuthorFilter implements Filter {
                             resultInfo = new ResultInfo(Constant.SUCCESS, "用户授权认证通过!");
                             isFilter = true;
                         } else {
-                            resultInfo = new ResultInfo(Constant.ERROR_AUTHORIZED,
-                                    "没通过用户授权认证!客户端请求参数token验证失败！");
+                            String msg = "客户端请求参数Token无效，token验证失败！请重新申请 token!";
+                            resultInfo = new ResultInfo(Constant.TOKEN_INVALID, msg);
+                            logger.error(msg);
                         }
                     } else {
-                        resultInfo = new ResultInfo(Constant.NO_CURRENT_USER, "当前没有登录用户，请重新登录!");
+                        resultInfo = new ResultInfo(Constant.NO_LOGIN_USER, "当前没有登录用户，请重新登录!");
                     }
                 } else {
-                    resultInfo = new ResultInfo(Constant.UN_AUTHORIZED, "没通过用户授权认证!客户端请求参数无token信息");
+                    resultInfo = new ResultInfo(Constant.NO_TOKEN, "客户端请求参数无token信息, 没有访问权限！");
                 }
                 // 验证失败
                 String code = resultInfo.getCode();
-                if (Constant.ERROR_AUTHORIZED.equals(code)
-                        || Constant.UN_AUTHORIZED.equals(code)
-                        || Constant.NO_CURRENT_USER.equals(code)) {
+                if (Constant.NO_TOKEN.equals(code)
+                        || Constant.TOKEN_INVALID.equals(code)
+                        || Constant.NO_LOGIN_USER.equals(code)) {
                     PrintWriter writer = null;
                     OutputStreamWriter osw = null;
                     try {
