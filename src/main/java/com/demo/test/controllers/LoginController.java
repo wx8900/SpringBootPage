@@ -34,7 +34,7 @@ public class LoginController {
         this.studentService = studentService;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping(value = "/login")
     public String login(@Size(min = 3, max = 20) String name, @Size(min = 8, max = 20) String password,
                         HttpSession session) {
         try {
@@ -53,7 +53,7 @@ public class LoginController {
         return "Login successful!";
     }
 
-    @RequestMapping(value = "/logOff", method = RequestMethod.GET)
+    @GetMapping(value = "/logOff")
     public void logOff(HttpSession session) {
         try {
             //String id = RequestContextHolder.currentRequestAttributes().getSessionId();
