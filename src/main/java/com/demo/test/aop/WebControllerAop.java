@@ -12,11 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
+ * AOP统一处理Web请求日志
  *
- * @Description: AOP统一处理Web请求日志
- * @Auther: Jack
- * @Date:   2019/06/02 12:20 PM
- *
+ * @Auther    Jack
+ * @Date      2019/06/02 12:20 PM
  */
 @Aspect
 @Component
@@ -25,14 +24,14 @@ public class WebControllerAop {
      * 指定切点
      * 匹配 com.example.demo.controller包及其子包下的所有类的所有方法
      */
-    /*@Pointcut("execution(public * com.demo.test.controllers.*.*(..))")
+    @Pointcut("execution(public * com.demo.test.controllers.*.*(..))")
     public void webLog(){
     }
 
-    *//**
+    /**
      * 前置通知，方法调用前被调用
      * @param joinPoint
-     *//*
+     */
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint){
         System.out.println("我是前置通知!!!");
@@ -59,40 +58,40 @@ public class WebControllerAop {
         System.out.println("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
     }
 
-    *//**
+    /**
      * 处理完请求返回内容
      * @param ret
      * @throws Throwable
-     *//*
+     */
     @AfterReturning(returning = "ret", pointcut = "webLog()")
     public void doAfterReturning(Object ret) throws Throwable {
         // 处理完请求，返回内容
         System.out.println("方法的返回值 : " + ret);
     }
 
-    *//**
+    /**
      * 后置异常通知
      * @param jp
-     *//*
+     */
     @AfterThrowing("webLog()")
     public void throwss(JoinPoint jp){
         System.out.println("方法异常时执行.....");
     }
 
-    *//**
+    /**
      * 后置最终通知,final增强，不管是抛出异常或者正常退出都会执行
      * @param jp
-     *//*
+     */
     @After("webLog()")
     public void after(JoinPoint jp){
 
     }
 
-    *//**
+    /**
      * 环绕通知,环绕增强，相当于MethodInterceptor
      * @param pjp
      * @return
-     *//*
+     */
     @Around("webLog()")
     public Object arround(ProceedingJoinPoint pjp) {
         try {
@@ -102,6 +101,6 @@ public class WebControllerAop {
             e.printStackTrace();
             return null;
         }
-    }*/
+    }
 
 }
