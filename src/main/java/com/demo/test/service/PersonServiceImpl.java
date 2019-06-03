@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Service class
@@ -38,13 +40,18 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Student findByNameAndPassword(String name, String password) {
+    public List<Student> findByNameAndPassword(String name, String password) {
         return studentRepository.findByNameAndPassword(name, password);
     }
 
     @Override
     public void addStudent(Student student) {
         studentRepository.save(student);
+    }
+
+    @Override
+    public Optional<Student> findById(Long id) {
+        return studentRepository.findById(id);
     }
 
 }

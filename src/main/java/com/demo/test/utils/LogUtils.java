@@ -107,4 +107,19 @@ public class LogUtils {
 
     }
 
+    /**
+     * 输出异常信息
+     * @param e
+     * @return
+     */
+    public static String printErrorStackTrace(Exception e) {
+        StringBuffer sb = new StringBuffer(500);
+        if (e != null) {
+            for (StackTraceElement element : e.getStackTrace()) {
+                sb.append("\r\n\t").append(element);
+            }
+        }
+        return sb.length() == 0 ? null : sb.toString().substring(0, 500);
+    }
+
 }
