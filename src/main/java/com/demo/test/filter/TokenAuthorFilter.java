@@ -25,9 +25,9 @@ import java.util.Set;
 /**
  * token验证拦截
  *
- * @author   Jack
- * @time     2019/06/02
- * @version  latest version, use now
+ * @author Jack
+ * @version latest version, use now
+ * @time 2019/06/02
  */
 @WebFilter(filterName = "tokenAuthorFilter", urlPatterns = "/*")
 public class TokenAuthorFilter implements Filter {
