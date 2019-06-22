@@ -1,0 +1,5 @@
+2019-06-22 03:46:45  [ http-nio-8080-exec-7:168816 ] - [ WARN ]  redis中获取数据：[{}]Student(id=0, name=20190622Redis, password=2019062201, branch=Redis, percentage=53, phone=6501238888, email=20190622@gmail.com)
+2019-06-22 03:46:50  [ http-nio-8080-exec-8:173298 ] - [ WARN ]  redis中获取数据：[{}]null
+2019-06-22 05:23:45  [ http-nio-8080-exec-5:360749 ] - [ WARN ]  redis中获取数据：[{}]Student(id=0, name=testRedis0518, password=Redis0518, branch=MSIT, percentage=24, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 06:45:37  [ http-nio-8080-exec-7:415465 ] - [ WARN ]  redis中获取数据：[{}]Student(id=0, name=uUserTest0644, password=uUserTest0644, branch=IT, percentage=44, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 06:50:53  [ http-nio-8080-exec-4:78077 ] - [ WARN ]  redis中获取数据：[{}]Student(id=0, name=uUserTest0650, password=uUserTest0650, branch=IT, percentage=50, phone=65012388886, email=Redis0518@gmail.com)
