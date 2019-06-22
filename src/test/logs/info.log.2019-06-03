@@ -1,0 +1,40 @@
+2019-06-03 01:06:06  [ http-nio-8080-exec-1:1 ] - [ INFO ]  jack has login the website. The userId is 1 and token is fcfa1be288bd4a1aabb211378bb05176
+2019-06-03 01:06:30  [ http-nio-8080-exec-3:24677 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:06:57  [ http-nio-8080-exec-4:51011 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:10:52  [ http-nio-8080-exec-5:286619 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:11:01  [ http-nio-8080-exec-6:295494 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:19:49  [ http-nio-8080-exec-1:1 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 8a4b455bc27b7d5cc204e44c2eea2ff2
+2019-06-03 01:26:35  [ http-nio-8080-exec-1:1 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 5faa9abca0f48f121695451dceb51b27
+2019-06-03 01:27:22  [ http-nio-8080-exec-3:47393 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:27:22  [ http-nio-8080-exec-3:47549 ] - [ INFO ]  ==========> student properties Student(id=20, name=你好吗, password=777733333, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-03 01:27:22  [ http-nio-8080-exec-3:47614 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-03 01:28:29  [ http-nio-8080-exec-5:114623 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:29:47  [ http-nio-8080-exec-6:192701 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:29:47  [ http-nio-8080-exec-6:192705 ] - [ INFO ]  ==========> student properties Student(id=20, name=Test111, password=12345678, branch=IT, percentage=35, phone=1505552388, email=goodjob@gmail.com)
+2019-06-03 01:29:47  [ http-nio-8080-exec-6:192711 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-03 01:30:08  [ http-nio-8080-exec-7:212773 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:31:08  [ http-nio-8080-exec-8:273569 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:33:30  [ http-nio-8080-exec-1:415346 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:33:30  [ http-nio-8080-exec-1:415348 ] - [ INFO ]  ==========> student properties Student(id=21, name=ffdsfds, password=53451122, branch=IT, percentage=35, phone=1505552388, email=goodjob@gmail.com)
+2019-06-03 01:33:30  [ http-nio-8080-exec-1:415354 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-03 01:38:36  [ http-nio-8080-exec-3:720760 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:38:36  [ http-nio-8080-exec-3:720764 ] - [ INFO ]  ==========> student properties Student(id=22, name=AAAA, password=53451122, branch=IT, percentage=35, phone=1505552388, email=goodjob@gmail.com)
+2019-06-03 01:38:36  [ http-nio-8080-exec-3:720770 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-03 01:44:11  [ http-nio-8080-exec-5:1056540 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:44:11  [ http-nio-8080-exec-5:1056544 ] - [ INFO ]  ==========> student properties Student(id=0, name=AAAA, password=53451122, branch=IT, percentage=35, phone=1505552388, email=goodjob@gmail.com)
+2019-06-03 01:44:11  [ http-nio-8080-exec-5:1056554 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-03 01:45:04  [ http-nio-8080-exec-6:1108787 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:45:04  [ http-nio-8080-exec-6:1108790 ] - [ INFO ]  ==========> student properties Student(id=0, name=AAAA24, password=53451124, branch=IT, percentage=24, phone=1505552388, email=goodjob@gmail.com)
+2019-06-03 01:45:04  [ http-nio-8080-exec-6:1108794 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-03 01:51:10  [ http-nio-8080-exec-10:1475037 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:51:37  [ http-nio-8080-exec-1:1502526 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:51:37  [ http-nio-8080-exec-1:1502528 ] - [ INFO ]  ==========> student properties Student(id=0, name=AAAA26, password=53451126, branch=IT, percentage=26, phone=1234567890, email=goodjob@gmail.com)
+2019-06-03 01:51:37  [ http-nio-8080-exec-1:1502533 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-03 01:53:38  [ http-nio-8080-exec-5:1623065 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:53:38  [ http-nio-8080-exec-5:1623108 ] - [ INFO ]   Calling the API ======> queryByPage
+2019-06-03 01:55:33  [ http-nio-8080-exec-8:1738536 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:55:33  [ http-nio-8080-exec-8:1738548 ] - [ INFO ]   Calling the API ======> queryByPage
+2019-06-03 01:55:42  [ http-nio-8080-exec-9:1746800 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:55:42  [ http-nio-8080-exec-9:1746813 ] - [ INFO ]   Calling the API ======> queryByPage
+2019-06-03 01:56:03  [ http-nio-8080-exec-1:1768494 ] - [ INFO ]  =======已在线=======
+2019-06-03 01:56:10  [ http-nio-8080-exec-2:1774981 ] - [ INFO ]  =======已在线=======

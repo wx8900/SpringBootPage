@@ -1,0 +1,6 @@
+2019-06-22 01:09:52  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 93c8b4c7e36cbeb4eb22b65541a62768
+2019-06-22 01:11:41  [ http-nio-8080-exec-4:108778 ] - [ INFO ]  =======已在线=======
+2019-06-22 01:11:41  [ http-nio-8080-exec-4:108837 ] - [ INFO ]   Calling the API ======> queryByPage
+2019-06-22 01:12:48  [ http-nio-8080-exec-6:175769 ] - [ INFO ]  =======已在线=======
+2019-06-22 01:12:48  [ http-nio-8080-exec-6:175865 ] - [ INFO ]  ==========> student properties Student(id=0, name=20190622, password=2019062201, branch=MSIT, percentage=33, phone=6501234567, email=20190622@gmail.com)
+2019-06-22 01:12:48  [ http-nio-8080-exec-6:175891 ] - [ INFO ]   Calling the API ======> addStudent

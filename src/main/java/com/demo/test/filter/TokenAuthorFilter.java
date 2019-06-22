@@ -25,9 +25,9 @@ import java.util.Set;
 /**
  * token验证拦截
  *
- * @author Jack
- * @version latest version, use now
- * @time 2019/06/02
+ * @author  Jack
+ * @version 2.0, use now
+ * @time    2019/06/02
  */
 @WebFilter(filterName = "tokenAuthorFilter", urlPatterns = "/*")
 public class TokenAuthorFilter implements Filter {
@@ -77,7 +77,7 @@ public class TokenAuthorFilter implements Filter {
                             resultInfo = new ResultInfo(Constant.SUCCESS, "用户授权认证通过!");
                             isFilter = true;
                         } else {
-                            String msg = "客户端请求参数Token无效，token验证失败！请重新申请 token!";
+                            String msg = "客户端请求参数Token验证失败！请重新申请 token!";
                             resultInfo = new ResultInfo(Constant.TOKEN_INVALID, msg);
                             logger.error(msg);
                         }
@@ -103,7 +103,7 @@ public class TokenAuthorFilter implements Filter {
                         writer.close();
                         osw.close();
                     } catch (UnsupportedEncodingException e) {
-                        logger.error("过滤器返回信息失败，编码错误:" + e.getMessage(), e);
+                        logger.error("过滤器返回信息失败，不支持的编码错误:" + e.getMessage(), e);
                     } catch (IOException e) {
                         logger.error("过滤器返回信息失败，IO错误:" + e.getMessage(), e);
                     } finally {
