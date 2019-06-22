@@ -12,7 +12,7 @@ CREATE TABLE `tbl_student` (
   `PHONE` varchar(10) NOT NULL,
   `EMAIL` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `tbl_student` (`ID`, `NAME`,  `PASSWORD`, `BRANCH`, `PERCENTAGE`, `PHONE`, `EMAIL`)
 VALUES
@@ -28,16 +28,19 @@ VALUES
     (10, 'Mike', '001test', 'it', '5', '6', 'mike@test.com'),
     (11, 'Cow', '777', 'it', '3', '23', 'cow@test.com');
 
+
 DROP TABLE IF EXISTS `LOG_ERROR`;
 CREATE TABLE `LOG_ERROR` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `StudentId` varchar(255) DEFAULT NULL,
-  `Name` varchar(255) DEFAULT NULL,
   `Class` varchar(255) DEFAULT NULL,
   `Method` varchar(255) DEFAULT NULL,
+  `Thread` varchar(255) DEFAULT NULL,
   `CreateTime` varchar(255) DEFAULT NULL,
   `LogLevel` varchar(20) DEFAULT NULL,
   `LogLine` varchar(255) DEFAULT NULL,
   `MSG` varchar(555) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
