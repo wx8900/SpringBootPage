@@ -8,15 +8,15 @@ redis:
   #redis密码
   password:
   #redis超时时间（毫秒），如果不设置，取默认值2000
-  timeout: 10000
+  timeout: 5000
   #最大空闲数
-  maxIdle: 300
+  maxIdle: 10
   #连接池的最大数据库连接数。设为0表示无限制,如果是jedis 2.4以后用redis.maxTotal
-  #maxActive=600
+  maxActive: 100
   #控制一个pool可分配多少个jedis实例,用来替换上面的redis.maxActive,如果是jedis 2.4以后用该属性
   maxTotal: 1000
   #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
-  maxWaitMillis: 1000
+  maxWaitMillis: 100000
   #连接的最小空闲时间 默认1800000毫秒(30分钟)
   minEvictableIdleTimeMillis: 300000
   #每次释放连接的最大数目,默认3

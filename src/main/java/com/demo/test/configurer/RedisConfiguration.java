@@ -1,13 +1,16 @@
 package com.demo.test.configurer;
 
 
+import com.demo.test.utils.RedisUtils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -15,9 +18,11 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,17 +36,14 @@ import java.util.Set;
  * @Date 2019/06/22 03:12 AM
  */
 @Configuration
-//@EnableCaching
+@EnableCaching
 @AutoConfigureAfter(RedisAutoConfiguration.class)
-public class RedisConfig {
+public class RedisConfiguration extends CachingConfigurerSupport {
 
     /**
      * 配置自定义redisTemplate
      * 因为使用的连接客户端为：Lettuce,所以RedisConnectionFactory实际传入数据为 LettuceConnectionFactory
      * 使用StringRedisSerializer来序列化和反序列化redis的key值
-     *
-     * @param
-     * @return
      */
     /*@Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
@@ -55,28 +57,6 @@ public class RedisConfig {
         return template;
     }*/
 
-    /*@Bean
-    @SuppressWarnings("all")
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
-        template.setConnectionFactory(factory);
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        // key采用String的序列化方式
-        template.setKeySerializer(stringRedisSerializer);
-        // hash的key也采用String的序列化方式
-        template.setHashKeySerializer(stringRedisSerializer);
-        // value序列化方式采用jackson
-        template.setValueSerializer(jackson2JsonRedisSerializer);
-        // hash的value序列化方式采用jackson
-        template.setHashValueSerializer(jackson2JsonRedisSerializer);
-        template.afterPropertiesSet();
-        return template;
-    }*/
     @Bean
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Serializable> template = new RedisTemplate<>();
@@ -103,6 +83,54 @@ public class RedisConfig {
     }
 
     /**
+     * 自定义生成key的规则
+     */
+    @Override
+    public KeyGenerator keyGenerator() {
+        return new KeyGenerator() {
+            @Override
+            public Object generate(Object o, Method method, Object... objects) {
+                //格式化缓存key字符串
+                StringBuilder sb = new StringBuilder();
+                //追加类名
+                sb.append(o.getClass().getName());
+                //追加方法名
+                sb.append(method.getName());
+                //遍历参数并且追加
+                for (Object obj : objects) {
+                    sb.append(obj.toString());
+                }
+                System.out.println("调用Redis缓存Key : " + sb.toString());
+                return sb.toString();
+            }
+        };
+    }
+
+    /**
+     * 采用RedisCacheManager作为缓存管理器
+     * @param connectionFactory
+     */
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+        RedisCacheManager redisCacheManager = RedisCacheManager.create(connectionFactory);
+        return  redisCacheManager;
+    }
+
+    @Bean
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+        ////解决键、值序列化问题
+        StringRedisTemplate template = new StringRedisTemplate(factory);
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+        template.setValueSerializer(jackson2JsonRedisSerializer);
+        template.afterPropertiesSet();
+        return template;
+    }
+
+    /**
      * 配置缓存管理器
      * 需要注意的是 你在RedisTemplate<String, Object>中的配置的key，value序列化方法并不会生效
      * 需要在RedisCacheConfiguration中单独配置。
@@ -110,7 +138,7 @@ public class RedisConfig {
      * @param redisConnectionFactory
      * @return
      */
-    @Bean
+    /*@Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         // 生成一个默认配置，通过config对象即可对缓存进行自定义配置
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
@@ -143,5 +171,22 @@ public class RedisConfig {
                 .withInitialCacheConfigurations(configMap)
                 .build();
         return cacheManager;
+    }*/
+
+    /**
+     * 设置数据存入Redis的序列化方式,并开启事务
+     * @param redisTemplate
+     * @param factory
+     */
+    private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
+        //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        // 开启事务
+        redisTemplate.setEnableTransactionSupport(true);
+        redisTemplate.setConnectionFactory(factory);
     }
+
 }
