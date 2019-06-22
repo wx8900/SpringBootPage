@@ -10,12 +10,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-//@Component
-public final class RedisUtils {
+public class RedisUtils {
 
-    //@Autowired
     private RedisTemplate<String, Object> redisTemplate;
-    // =============================common============================
+
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
      * 指定缓存失效时间
@@ -154,6 +155,7 @@ public final class RedisUtils {
         }
         return redisTemplate.opsForValue().increment(key, -delta);
     }
+
     // ================================Map=================================
 
     /**
