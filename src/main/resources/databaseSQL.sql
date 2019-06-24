@@ -7,9 +7,9 @@ CREATE TABLE `tbl_student` (
   `ID` BIGINT(10) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(100) NOT NULL,
   `PASSWORD` varchar(50) NOT NULL,
-  `BRANCH` varchar(255) NOT NULL,
-  `PERCENTAGE` varchar(3) NOT NULL,
-  `PHONE` varchar(10) NOT NULL,
+  `BRANCH` varchar(255) DEFAULT NULL,
+  `PERCENTAGE` varchar(3) DEFAULT NULL,
+  `PHONE` varchar(10) DEFAULT NULL,
   `EMAIL` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -40,6 +40,16 @@ CREATE TABLE `LOG_ERROR` (
   `LogLine` varchar(255) DEFAULT NULL,
   `MSG` varchar(555) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tbl_book`;
+CREATE TABLE `tbl_book` (
+      `ID` BIGINT(10) NOT NULL AUTO_INCREMENT,
+      `ISBN` varchar(20) DEFAULT NULL,
+      `BookName` varchar(50) DEFAULT NULL,
+      `BookPrice` varchar(20) DEFAULT NULL,
+      `BookDesc` varchar(100) DEFAULT NULL,
+      PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
