@@ -7,7 +7,10 @@ import com.demo.test.utils.TokenUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Size;
@@ -15,7 +18,7 @@ import java.util.Optional;
 
 /**
  * @author Jack
- * @date   2019/05/30 14:36 PM
+ * @date 2019/05/30 14:36 PM
  * <p>
  * http://localhost:8080/v1/api/students/login?name=mark&password=345
  * <p>
@@ -26,13 +29,10 @@ import java.util.Optional;
 @RequestMapping("/v1/api/students")
 public class LoginController {
 
-    private final PersonServiceImpl studentService;
     Logger logger = Logger.getLogger(LoginController.class);
 
     @Autowired
-    public LoginController(PersonServiceImpl studentService) {
-        this.studentService = studentService;
-    }
+    private PersonServiceImpl studentService;
 
     @GetMapping(value = "/login")
     public String login(@Size(min = 3, max = 20) String name, @Size(min = 8, max = 20) String password,

@@ -2,8 +2,6 @@ package com.demo.test.controllers;
 
 import com.demo.test.domain.Book;
 import com.demo.test.service.BookService;
-import com.demo.test.service.BookServiceImpl;
-import com.demo.test.service.PersonServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,13 +37,6 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
-
-    /*private final BookServiceImpl bookService;
-
-    @Autowired
-    public BookController(BookServiceImpl bookService) {
-        this.bookService = bookService;
-    }*/
 
     /**
      * has Cache
@@ -129,6 +120,7 @@ public class BookController {
     private Book getBook(Long id) throws Exception {
         Book book = bookService.findBookById(id);
         if (null == book) {
+            logger.error("操作失败， 单条查询为空! [BookController.getBook(Long id)] ");
             throw new Exception("操作失败， 单条查询为空!");
         }
         return book;
@@ -141,6 +133,7 @@ public class BookController {
             for (Long id : ids) {
                 Book book = bookService.findBookById(id);
                 if (null == book) {
+                    logger.error("操作失败， 单条查询为空! [BookController.getBook(List<Long> ids)] ");
                     throw new Exception("操作失败， 单条查询为空!");
                 }
                 books.add(book);

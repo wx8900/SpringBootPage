@@ -1,6 +1,8 @@
 package com.demo.test.controllers;
 
-import com.demo.test.domain.*;
+import com.demo.test.domain.Constant;
+import com.demo.test.domain.ResultInfo;
+import com.demo.test.domain.Student;
 import com.demo.test.service.PersonServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
@@ -44,12 +47,12 @@ import javax.validation.constraints.Size;
  * -----Body：
  * //  JSON中不用发“id"的数据，DB会自动产生
  * {
- *     "name": "AAAA24",
- *     "password": "53451124",
- *     "branch": "IT",
- *     "percentage": "24",
- *     "phone": "1505552388",
- *     "email": "goodjob@gmail.com"
+ * "name": "AAAA24",
+ * "password": "53451124",
+ * "branch": "IT",
+ * "percentage": "24",
+ * "phone": "1505552388",
+ * "email": "goodjob@gmail.com"
  * }
  */
 @RestController

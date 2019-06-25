@@ -3,7 +3,6 @@ package com.demo.test.controllers;
 import com.demo.test.domain.Constant;
 import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
-import com.demo.test.service.RedisService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,6 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ *
+ * cd /Users/Jack_Cai/redis-4.0.11
+ * src/redis-server
+ * redis-cli
+ * redis-cli shutdown
+ *
+ */
 @RestController
 @Validated
 @RequestMapping("/v1/api/students")
@@ -19,12 +26,17 @@ public class RedisController {
 
     Logger logger = Logger.getLogger(RedisController.class);
 
+    /**
+     * 操作key-value都是字符串
+     */
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 操作key-value都是对象
+     */
     /*@Autowired
     private RedisService redisService;*/
-
     @PostMapping(value = "/redisAdd")
     public void saveRedis() {
         stringRedisTemplate.opsForValue().set("admin2019062211", "test062211");

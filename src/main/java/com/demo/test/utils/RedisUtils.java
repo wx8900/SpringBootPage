@@ -15,9 +15,6 @@ public class RedisUtils {
 
     private static Logger logger = Logger.getLogger("RedisUtils");
 
-    //@Autowired
-    //private StringRedisTemplate stringRedisTemplate;//操作key-value都是字符串
-
     /**
      * 操作key-value都是对象
      */

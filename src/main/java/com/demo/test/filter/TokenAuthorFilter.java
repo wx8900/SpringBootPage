@@ -27,7 +27,7 @@ import java.util.Set;
  *
  * @author  Jack
  * @version 2.0, use now
- * @time    2019/06/02
+ * @date    2019/06/02
  */
 @WebFilter(filterName = "tokenAuthorFilter", urlPatterns = "/*")
 public class TokenAuthorFilter implements Filter {
@@ -82,10 +82,10 @@ public class TokenAuthorFilter implements Filter {
                             logger.error(msg);
                         }
                     } else {
-                        resultInfo = new ResultInfo(Constant.NO_LOGIN_USER, "当前没有登录用户，请重新登录!");
+                        resultInfo = new ResultInfo(Constant.NO_LOGIN_USER, "当前没有用户登录，请重新登录!");
                     }
                 } else {
-                    resultInfo = new ResultInfo(Constant.NO_TOKEN, "客户端请求参数无token信息, 没有访问权限！");
+                    resultInfo = new ResultInfo(Constant.NO_TOKEN, "客户端请求无参数token信息, 没有访问权限！");
                 }
                 // 验证失败
                 String code = resultInfo.getCode();
