@@ -1,0 +1,58 @@
+2019-06-22 03:43:57  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 5d535a7071e38c4926854a694162c736
+2019-06-22 03:44:37  [ http-nio-8080-exec-3:40459 ] - [ INFO ]  =======已在线=======
+2019-06-22 03:44:37  [ http-nio-8080-exec-3:40606 ] - [ INFO ]  ==========> student properties Student(id=0, name=20190622-2, password=2019062201, branch=MSIT, percentage=53, phone=6501234567, email=20190622@gmail.com)
+2019-06-22 03:44:37  [ http-nio-8080-exec-3:40639 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-22 03:45:47  [ http-nio-8080-exec-5:110751 ] - [ INFO ]  =======已在线=======
+2019-06-22 03:46:06  [ http-nio-8080-exec-6:129677 ] - [ INFO ]  =======已在线=======
+2019-06-22 03:46:12  [ http-nio-8080-exec-6:135102 ] - [ INFO ]  redis保存数据为：[{}]Student(id=0, name=20190622Redis, password=2019062201, branch=Redis, percentage=53, phone=6501238888, email=20190622@gmail.com)
+2019-06-22 03:46:45  [ http-nio-8080-exec-7:168787 ] - [ INFO ]  =======已在线=======
+2019-06-22 03:46:45  [ http-nio-8080-exec-7:168802 ] - [ INFO ]  redis中获取数据：[{}]Student(id=0, name=20190622Redis, password=2019062201, branch=Redis, percentage=53, phone=6501238888, email=20190622@gmail.com)
+2019-06-22 03:46:50  [ http-nio-8080-exec-8:173292 ] - [ INFO ]  =======已在线=======
+2019-06-22 03:46:50  [ http-nio-8080-exec-8:173295 ] - [ INFO ]  redis中获取数据：[{}]null
+2019-06-22 04:52:17  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 170155e9c445dac3d0f145846326c02b
+2019-06-22 04:52:45  [ http-nio-8080-exec-2:28132 ] - [ INFO ]  =======已在线=======
+2019-06-22 04:52:45  [ http-nio-8080-exec-2:28282 ] - [ INFO ]  ==========> student properties Student(id=0, name=test20192019, password=12262626, branch=MBA, percentage=24, phone=6501234567, email=goodjob@gmail.com)
+2019-06-22 04:52:45  [ http-nio-8080-exec-2:28331 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-22 04:55:00  [ http-nio-8080-exec-5:162666 ] - [ INFO ]  =======已在线=======
+2019-06-22 04:55:52  [ http-nio-8080-exec-6:214578 ] - [ INFO ]  =======已在线=======
+2019-06-22 04:56:40  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is c36f1db1223cadff731921f15b668eef
+2019-06-22 04:56:52  [ http-nio-8080-exec-2:11781 ] - [ INFO ]  =======已在线=======
+2019-06-22 04:57:34  [ http-nio-8080-exec-3:53858 ] - [ INFO ]  =======已在线=======
+2019-06-22 04:57:41  [ http-nio-8080-exec-4:60540 ] - [ INFO ]  =======已在线=======
+2019-06-22 05:01:04  [ http-nio-8080-exec-6:263459 ] - [ INFO ]  =======已在线=======
+2019-06-22 05:06:36  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 98c811166ce1820582f8c8f6bd4faf9c
+2019-06-22 05:07:31  [ http-nio-8080-exec-2:55242 ] - [ INFO ]  =======已在线=======
+2019-06-22 05:10:49  [ http-nio-8080-exec-4:253050 ] - [ INFO ]  =======已在线=======
+2019-06-22 05:11:35  [ http-nio-8080-exec-5:298688 ] - [ INFO ]  =======已在线=======
+2019-06-22 05:17:44  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is e69dd5d3354efb2cdf9f864eebac3e9f
+2019-06-22 05:19:03  [ http-nio-8080-exec-3:78778 ] - [ INFO ]  =======已在线=======
+2019-06-22 05:19:09  [ http-nio-8080-exec-3:84272 ] - [ INFO ]  redis保存数据为：[{}]Student(id=0, name=testRedis0518, password=Redis0518, branch=MSIT, percentage=24, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 05:23:45  [ http-nio-8080-exec-5:360726 ] - [ INFO ]  =======已在线=======
+2019-06-22 05:23:45  [ http-nio-8080-exec-5:360730 ] - [ INFO ]  redis中获取数据：[{}]Student(id=0, name=testRedis0518, password=Redis0518, branch=MSIT, percentage=24, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 06:26:47  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 2baf4cf680bd60d766ee3c72a2ef4ae9
+2019-06-22 06:27:28  [ http-nio-8080-exec-2:41189 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:27:33  [ http-nio-8080-exec-2:46638 ] - [ INFO ]  redis保存数据为：[{}]Student(id=0, name=testRedis06220627, password=Redis06220627, branch=MBA, percentage=24, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 06:28:12  [ http-nio-8080-exec-3:85098 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:29:10  [ http-nio-8080-exec-4:143527 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:30:13  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 598035ea5a1e7c42c810236e95dc1c4b
+2019-06-22 06:30:57  [ http-nio-8080-exec-2:43735 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:31:02  [ http-nio-8080-exec-2:49215 ] - [ INFO ]  redis保存数据为：[{}]Student(id=0, name=testRedis06220629, password=Redis06220629, branch=IT, percentage=59, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 06:33:27  [ http-nio-8080-exec-4:193304 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:33:27  [ http-nio-8080-exec-4:193309 ] - [ INFO ]  redis保存数据为：[{}]Student(id=0, name=Redis0633, password=Redis0633, branch=IT, percentage=33, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 06:34:22  [ http-nio-8080-exec-5:249176 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:34:31  [ http-nio-8080-exec-6:258203 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:34:39  [ http-nio-8080-exec-7:265692 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:38:41  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 21e07ed8d4551da302f24a425d38b60f
+2019-06-22 06:39:57  [ http-nio-8080-exec-3:75384 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:40:02  [ http-nio-8080-exec-3:80808 ] - [ INFO ]  redis保存数据为：[{}]Student(id=0, name=uUserTest0637, password=uUserTest0637, branch=IT, percentage=37, phone=65012388889, email=Redis0518@gmail.com)
+2019-06-22 06:43:50  [ http-nio-8080-exec-5:308412 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 62308f7294a3b9f137b904361fccce88
+2019-06-22 06:44:42  [ http-nio-8080-exec-6:360733 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:44:42  [ http-nio-8080-exec-6:360739 ] - [ INFO ]  redis保存数据为：[{}]Student(id=0, name=uUserTest0644, password=uUserTest0644, branch=IT, percentage=44, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 06:45:37  [ http-nio-8080-exec-7:415444 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:45:37  [ http-nio-8080-exec-7:415447 ] - [ INFO ]  redis中获取数据：[{}]Student(id=0, name=uUserTest0644, password=uUserTest0644, branch=IT, percentage=44, phone=6501238888, email=Redis0518@gmail.com)
+2019-06-22 06:49:35  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is c966429438363769c61f76f32cb1a274
+2019-06-22 06:50:03  [ http-nio-8080-exec-2:28541 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:50:20  [ http-nio-8080-exec-3:45961 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:50:26  [ http-nio-8080-exec-3:51273 ] - [ INFO ]  redis保存数据为：[{}]Student(id=0, name=uUserTest0650, password=uUserTest0650, branch=IT, percentage=50, phone=65012388886, email=Redis0518@gmail.com)
+2019-06-22 06:50:53  [ http-nio-8080-exec-4:78062 ] - [ INFO ]  =======已在线=======
+2019-06-22 06:50:53  [ http-nio-8080-exec-4:78066 ] - [ INFO ]  redis中获取数据：[{}]Student(id=0, name=uUserTest0650, password=uUserTest0650, branch=IT, percentage=50, phone=65012388886, email=Redis0518@gmail.com)
