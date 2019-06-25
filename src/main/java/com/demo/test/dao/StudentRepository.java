@@ -17,6 +17,7 @@ import java.util.List;
  */
 @Repository
 public interface StudentRepository extends PagingAndSortingRepository<Student, Long> {
+
     Page<Student> findByName(String name, Pageable pageable);
 
     // @Query("SELECT u.id FROM tbl_student u WHERE u.name = ?1 and u.password = ?2")

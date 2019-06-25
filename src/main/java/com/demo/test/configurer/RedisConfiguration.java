@@ -24,10 +24,10 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 
 /**
- * Redis Configuration
+ * Redis Configuration class
  *
- * @Auther Jack
- * @Date 2019/06/22 03:12 AM
+ * @author Jack
+ * @date 2019/06/22 03:12 AM
  */
 @Configuration
 @EnableCaching
@@ -79,39 +79,19 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         return cacheManager;
     }
 
-    /*@Bean
-    @Override
-    public KeyGenerator keyGenerator(){
-        return new KeyGenerator(){
-            @Override
-            public Object generate(Object target, Method method, Object... params) {
-                StringBuffer sb = new StringBuffer();
-                sb.append(target.getClass().getName());
-                sb.append("#");
-                sb.append(method.getName());
-                sb.append("{");
-                for (Object param : params) {
-                    sb.append(param.toString());
-                }
-                sb.append("}");
-                System.out.println("调用redis生成key："+sb.toString());
-                return sb.toString();
-            }
-        };
-    }*/
-
     /**
-     * 自定义缓存key生成策略
+     * 自定义缓存key生成策略: 缓存的key是 包名+方法名+参数列表
      */
+    @Bean
     @Override
     public KeyGenerator keyGenerator() {
         return new KeyGenerator() {
             @Override
-            public Object generate(Object o, Method method, Object... params) {
+            public Object generate(Object target, Method method, Object... params) {
                 //格式化缓存key字符串
                 StringBuffer sb = new StringBuffer();
                 //追加类名
-                sb.append(o.getClass().getName());
+                sb.append(target.getClass().getName());
                 //追加方法名
                 sb.append(method.getName());
                 //遍历参数并且追加

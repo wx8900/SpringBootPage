@@ -12,13 +12,14 @@ import java.util.Optional;
  * @date 2019/05/30 14:36 PM
  */
 public interface PersonService {
-    Page<Student> listByPage(Pageable pageable);
 
     Page<Student> findByName(String name, Pageable pageable);
 
     List<Student> findByNameAndPassword(String name, String password);
 
-    void addStudent(Student student);
+    Page<Student> listByPage(Pageable pageable);
 
     Optional<Student> findById(Long id);
+
+    void addStudent(Student student);
 }
