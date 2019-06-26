@@ -10,11 +10,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Jack
- *
- * @version 1.0
- * @date 2019/06/22 01:24 AM
- *
  * @version 2.0
+ * @date 2019/06/22 01:24 AM
  * @date 2019/06/26 13:42 PM
  */
 public class TinyURLUtils implements Runnable {
@@ -30,6 +27,7 @@ public class TinyURLUtils implements Runnable {
     private final int SIZE62 = BASE62.length();
     String shortUrl = "";
     Lock lock = new ReentrantLock();
+    //Lock lock = new MyLock();
 
     public static void main(String[] args) {
         TinyURLUtils tinyURLUtils = new TinyURLUtils();
@@ -46,8 +44,8 @@ public class TinyURLUtils implements Runnable {
         System.out.println("decode3 is : " + tinyURLUtils.decode(encodeString3));
 
         TinyURLUtils r = new TinyURLUtils();
-        // 10个线程同时跑
-        for (int i = 0; i < 10; i++) {
+        // 3个线程同时跑
+        for (int i = 0; i < 3; i++) {
             new Thread(r, "Thread-" + i).start();
         }
         try {
@@ -55,7 +53,6 @@ public class TinyURLUtils implements Runnable {
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
         }
-
     }
 
     /**
@@ -72,7 +69,9 @@ public class TinyURLUtils implements Runnable {
         /** encodedToUrl.put(uniqueURL, longUrl); */
         lock.lock();
         try {
-            String shortUrl = generateRandomShortUrl();
+            if ("".equals(shortUrl)) {
+                shortUrl = generateRandomShortUrl();
+            }
             while (encodedToUrl.containsKey(shortUrl)) {
                 shortUrl = generateRandomShortUrl();
             }
@@ -120,13 +119,13 @@ public class TinyURLUtils implements Runnable {
     @Override
     public void run() {
         try {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 100; i++) {
                 shortUrl = generateRandomShortUrl();
+                System.out.println(Thread.currentThread().getName() + " : shortUrl : " + shortUrl);
             }
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        System.out.println(Thread.currentThread().getName() + " : shortUrl : " + shortUrl);
     }
 
 }
