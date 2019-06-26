@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * Started SpringBootJpaApplication in 10.669 seconds (JVM running for 11.287)
+ * Started SpringBootJpaApplication in 8.796 seconds (JVM running for 9.378)
  * @EnableCaching  start cache base on annotations
  *
  * @author Jack

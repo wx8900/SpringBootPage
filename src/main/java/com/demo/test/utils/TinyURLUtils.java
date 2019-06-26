@@ -1,19 +1,35 @@
 package com.demo.test.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Jack
+ *
+ * @version 1.0
  * @date 2019/06/22 01:24 AM
+ *
+ * @version 2.0
+ * @date 2019/06/26 13:42 PM
  */
 public class TinyURLUtils implements Runnable {
 
-    static final int K = 6;
+    private static final int K = 6;
     private static final String BASE_HOST = "http://tinyurl.com/";
-    private static final AtomicLong atomicLong = new AtomicLong();
+    /**
+     * private static final AtomicLong atomicLong = new AtomicLong();
+     */
     private static final ConcurrentHashMap<String, String> encodedToUrl = new ConcurrentHashMap<>();
+    static Logger logger = LogManager.getLogger("TinyURLUtils");
+    private final String BASE62 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private final int SIZE62 = BASE62.length();
+    String shortUrl = "";
+    Lock lock = new ReentrantLock();
 
     public static void main(String[] args) {
         TinyURLUtils tinyURLUtils = new TinyURLUtils();
@@ -30,12 +46,16 @@ public class TinyURLUtils implements Runnable {
         System.out.println("decode3 is : " + tinyURLUtils.decode(encodeString3));
 
         TinyURLUtils r = new TinyURLUtils();
-        Thread ta = new Thread(r, "Thread-A");
-        Thread tb = new Thread(r, "Thread-B");
-        Thread tc = new Thread(r, "Thread-C");
-        ta.start();
-        tb.start();
-        tc.start();
+        // 10个线程同时跑
+        for (int i = 0; i < 10; i++) {
+            new Thread(r, "Thread-" + i).start();
+        }
+        try {
+            Thread.sleep(1000L);
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+        }
+
     }
 
     /**
@@ -44,17 +64,25 @@ public class TinyURLUtils implements Runnable {
      * @param longUrl
      * @return
      */
-    public synchronized String encode(String longUrl) {
-        if (longUrl == null || longUrl.length() <= 0) {
+    public String encode(String longUrl) {
+        if (longUrl == null || longUrl.trim().length() <= 0) {
             return longUrl;
         }
-        //String uniqueURL = String.valueOf(atomicLong.getAndIncrement());
-        //encodedToUrl.put(uniqueURL, longUrl);
-        String shortUrl = generateRandomShortUrl();
-        while (encodedToUrl.containsKey(shortUrl)) {
-            shortUrl = generateRandomShortUrl();
+        /** String uniqueURL = String.valueOf(atomicLong.getAndIncrement()); */
+        /** encodedToUrl.put(uniqueURL, longUrl); */
+        lock.lock();
+        try {
+            String shortUrl = generateRandomShortUrl();
+            while (encodedToUrl.containsKey(shortUrl)) {
+                shortUrl = generateRandomShortUrl();
+            }
+            encodedToUrl.put(shortUrl, longUrl);
+        } catch (Exception e) {
+            logger.error("encode Error : " + e.getMessage());
+        } finally {
+            lock.unlock();
         }
-        encodedToUrl.put(shortUrl, longUrl);
+
         return BASE_HOST + shortUrl;
     }
 
@@ -71,28 +99,34 @@ public class TinyURLUtils implements Runnable {
         return encodedToUrl.get(shortUrl.substring(BASE_HOST.length()));
     }
 
-    private synchronized String generateRandomShortUrl() {
-        final String BASE62 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        final int size = BASE62.length();
+    private String generateRandomShortUrl() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < K; i++) {
-            int randomIndex = ThreadLocalRandom.current().nextInt(0, size);
-            sb.append(BASE62.charAt(randomIndex));
+        lock.lock();
+        try {
+            for (int i = 0; i < K; i++) {
+                int randomIndex = ThreadLocalRandom.current().nextInt(0, SIZE62);
+                sb.append(BASE62.charAt(randomIndex));
+            }
+        } catch (Exception e) {
+            logger.error("generateRandomShortUrl Error : " + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
+        } finally {
+            lock.unlock();
         }
+
         return sb.toString();
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < 3; i++) {
-            String shortUrl = "";
-            try {
+        try {
+            for (int i = 0; i < 10; i++) {
                 shortUrl = generateRandomShortUrl();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            System.out.println(Thread.currentThread().getName() + " : shortUrl : " + shortUrl);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
+        System.out.println(Thread.currentThread().getName() + " : shortUrl : " + shortUrl);
     }
 
 }
