@@ -36,6 +36,7 @@ public class RedisController {
      */
     /*@Autowired
     private RedisService redisService;*/
+
     @PostMapping(value = "/redisAdd")
     public void saveRedis() {
         stringRedisTemplate.opsForValue().set("admin2019062211", "test062211");

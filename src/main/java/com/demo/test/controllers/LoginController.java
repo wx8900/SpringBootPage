@@ -2,7 +2,7 @@ package com.demo.test.controllers;
 
 import com.demo.test.domain.Student;
 import com.demo.test.domain.Token;
-import com.demo.test.service.PersonServiceImpl;
+import com.demo.test.service.PersonService;
 import com.demo.test.utils.TokenUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +33,7 @@ public class LoginController {
     static Logger logger = LogManager.getLogger(LoginController.class);
 
     @Autowired
-    private PersonServiceImpl studentService;
+    private PersonService studentService;
 
     @GetMapping(value = "/login")
     public String login(@Size(min = 3, max = 20) String name, @Size(min = 8, max = 20) String password,

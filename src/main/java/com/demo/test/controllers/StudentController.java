@@ -3,6 +3,7 @@ package com.demo.test.controllers;
 import com.demo.test.domain.Constant;
 import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
+import com.demo.test.service.PersonService;
 import com.demo.test.service.PersonServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,7 +63,7 @@ import javax.validation.constraints.Size;
 public class StudentController {
 
     static Logger logger = LogManager.getLogger(StudentController.class);
-    private final PersonServiceImpl studentService;
+    private PersonService studentService;
 
     @Autowired
     public StudentController(PersonServiceImpl studentService) {

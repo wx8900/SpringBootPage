@@ -44,7 +44,7 @@ public class BookController {
     private BookService bookService;
 
     /**
-     * has Cache, 自动根据方法生成缓存
+     * 自动根据方法生成缓存
      *
      * @return
      */
@@ -55,7 +55,7 @@ public class BookController {
     }
 
     /**
-     * has Cache, 带分页
+     * 带分页
      *
      * @return
      */

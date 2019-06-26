@@ -40,17 +40,62 @@ CREATE TABLE `LOG_ERROR` (
   `LogLine` varchar(255) DEFAULT NULL,
   `MSG` varchar(555) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `tbl_book`;
 CREATE TABLE `tbl_book` (
       `ID` BIGINT(10) NOT NULL AUTO_INCREMENT,
       `ISBN` varchar(20) DEFAULT NULL,
-      `BookName` varchar(50) DEFAULT NULL,
-      `BookPrice` varchar(20) DEFAULT NULL,
-      `BookDesc` varchar(100) DEFAULT NULL,
+      `Category` varchar(20) DEFAULT NULL,
+      `Author` varchar(100) DEFAULT NULL,
+      `Name` varchar(50) DEFAULT NULL,
+      `Price` varchar(20) DEFAULT NULL,
+      `Desc` varchar(100) DEFAULT NULL,
+      `Publisher` varchar(50) DEFAULT NULL,
+      `PublishDate` varchar(10) DEFAULT NULL,
+      `Available`  int(1) DEFAULT NULL,
       PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+      ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tbl_book` (`ID`, `ISBN`,  `Category`, `Author`, `Name`, `Price`, `Desc`, `Publisher`, `PublishDate`, `Available`)
+VALUES (1, '978-0-9845888-0-2',  'Computer Science', 'Alex', 'Java Program Introduce', '18.62', 'This is a old Java book', 'China East Book Group', '2019-06-10', 1);
+
+INSERT INTO `tbl_book` (`ID`, `ISBN`,  `Category`, `Author`, `Name`, `Price`, `Desc`, `Publisher`, `PublishDate`, `Available`)
+VALUES (2, '347-0-9845888-1-3',  'Machinery', 'Dan Tom', 'Vehicle System Design', '53.20', 'This is a machinery book', 'East Education Company', '2009-06-28', 1);
+
+INSERT INTO `tbl_book` (`ID`, `ISBN`,  `Category`, `Author`, `Name`, `Price`, `Desc`, `Publisher`, `PublishDate`, `Available`)
+VALUES (3, '685-0-9846658-9-1',  'Medicine', 'Jed Jiang', 'Medicine Cases Research', '43.98', 'This is a research book introduced medicine data', 'Book of USA', '2015-08-16', 1);
+
+INSERT INTO `tbl_book` (`ID`, `ISBN`,  `Category`, `Author`, `Name`, `Price`, `Desc`, `Publisher`, `PublishDate`, `Available`)
+VALUES (4, '138-0-9845888-2-5',  'Computer Science', 'Anne', 'Thinking in Java', '1866.28', 'This is a senior level book of Java', 'China North Group', '2010-09-02', 1);
+
+INSERT INTO `tbl_book` (`ID`, `ISBN`,  `Category`, `Author`, `Name`, `Price`, `Desc`, `Publisher`, `PublishDate`, `Available`)
+VALUES (5, '221-0-9845888-3-8',  'Computer Science', 'Tomas', 'Hand First', '1.68', 'This is a hand book of Java', 'World Book Group', '2012-01-01', 1);
+
+
+
+DROP TABLE IF EXISTS `tbl_student_book`;
+CREATE TABLE `tbl_student_book` (
+      `id` BIGINT(10) NOT NULL AUTO_INCREMENT,
+      `Uid` BIGINT(10) DEFAULT NULL,
+      `Bid` BIGINT(10) DEFAULT NULL,
+      `ExtendTimes` int(1) DEFAULT NULL,
+      `ReturnDate` varchar(20) DEFAULT NULL,
+      `IsReturned` int(1) DEFAULT NULL,
+      PRIMARY KEY (`ID`)
+      )  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tbl_student_book` (`id`, `Uid`,  `Bid`, `ExtendTimes`, `ReturnDate`, `IsReturned`)
+VALUES (1, 2,  5, 1, '2019-06-26', 0);
+
+INSERT INTO `tbl_student_book` (`id`, `Uid`,  `Bid`, `ExtendTimes`, `ReturnDate`, `IsReturned`)
+VALUES (2, 3,  4, 1, '2019-06-30', 0);
+
+INSERT INTO `tbl_student_book` (`id`, `Uid`,  `Bid`, `ExtendTimes`, `ReturnDate`, `IsReturned`)
+VALUES (3, 10,  3, 1, '2019-07-06', 0);
+
+
 
 
 
