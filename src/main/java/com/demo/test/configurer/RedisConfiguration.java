@@ -4,8 +4,6 @@ package com.demo.test.configurer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -31,10 +29,10 @@ import java.time.Duration;
  */
 @Configuration
 @EnableCaching
-@AutoConfigureAfter(RedisAutoConfiguration.class)
 public class RedisConfiguration extends CachingConfigurerSupport {
 
     /**
+     * for Redis Template
      * 自定义序列化, 配置自定义redisTemplate
      * 因为使用的连接客户端为：Lettuce,所以RedisConnectionFactory实际传入数据为 LettuceConnectionFactory
      * 使用StringRedisSerializer来序列化和反序列化redis的key值
@@ -50,6 +48,24 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         return redisTemplate;
     }
 
+    /**
+     * for String Redis Template
+     *
+     * @return
+     */
+    /*@Bean
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+        ////解决键、值序列化问题
+        StringRedisTemplate template = new StringRedisTemplate(factory);
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+        template.setValueSerializer(jackson2JsonRedisSerializer);
+        template.afterPropertiesSet();
+        return template;
+    }*/
     private RedisSerializer<String> keySerializer() {
         return new StringRedisSerializer();
     }
@@ -59,7 +75,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
     }
 
     /***
-     * 缓存管理器
+     * CacheManager 缓存管理器，管理各种缓存（cache）组件
      * @param factory
      * @return
      */
@@ -70,8 +86,10 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 
         // 配置序列化
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(20));
-        RedisCacheConfiguration redisCacheConfiguration = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer));
+        RedisCacheConfiguration redisCacheConfiguration = config.serializeKeysWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair
+                        .fromSerializer(jackson2JsonRedisSerializer));
 
         RedisCacheManager cacheManager = RedisCacheManager.builder(factory)
                 .cacheDefaults(redisCacheConfiguration)
@@ -80,7 +98,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
     }
 
     /**
-     * 自定义缓存key生成策略: 缓存的key是 包名+方法名+参数列表
+     * 缓存数据时key生成策略: 缓存的key是 包名+方法名+参数列表
      */
     @Bean
     @Override

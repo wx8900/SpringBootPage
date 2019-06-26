@@ -3,7 +3,8 @@ package com.demo.test.controllers;
 import com.demo.test.domain.Constant;
 import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.annotation.Validated;
@@ -12,19 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- *
  * cd /Users/Jack_Cai/redis-4.0.11
  * src/redis-server
  * redis-cli
  * redis-cli shutdown
- *
  */
 @RestController
 @Validated
 @RequestMapping("/v1/api/students")
 public class RedisController {
 
-    Logger logger = Logger.getLogger(RedisController.class);
+    static Logger logger = LogManager.getLogger(RedisController.class);
 
     /**
      * 操作key-value都是字符串

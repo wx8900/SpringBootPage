@@ -1,8 +1,8 @@
 package com.demo.test.utils;
 
 import com.demo.test.domain.TokenModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import java.util.UUID;
 @Component
 public class TokenUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(TokenUtils.class);
+    static Logger logger = LogManager.getLogger(TokenUtils.class);
 
     private static Map<Long, String> tokenMap = new HashMap<>();
 

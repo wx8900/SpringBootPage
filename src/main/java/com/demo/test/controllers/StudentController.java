@@ -4,7 +4,8 @@ import com.demo.test.domain.Constant;
 import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
 import com.demo.test.service.PersonServiceImpl;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -60,8 +61,8 @@ import javax.validation.constraints.Size;
 @RequestMapping("/v1/api/students")
 public class StudentController {
 
+    static Logger logger = LogManager.getLogger(StudentController.class);
     private final PersonServiceImpl studentService;
-    Logger logger = Logger.getLogger(StudentController.class);
 
     @Autowired
     public StudentController(PersonServiceImpl studentService) {

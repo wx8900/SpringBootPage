@@ -1,7 +1,6 @@
 package com.demo.test.service;
 
 import com.demo.test.domain.Book;
-import com.demo.test.domain.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,15 +19,15 @@ public interface BookService {
 
     void delete(Book books);
 
-    void deleteById(int id);
-
-    void deleteAll();
+    void deleteById(Long id);
 
     Book findBookById(Long id);
 
     List<Book> findAll();
 
     Page<Book> findAll(Specification<Book> spec, Pageable pageable);
+
+    List<Book> queryAllBookByUserId(int uid);
 
     void clearCacheBefore();
 }

@@ -1,7 +1,8 @@
 package com.demo.test.utils;
 
 import com.demo.test.domain.Token;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.security.MessageDigest;
 import java.util.Calendar;
@@ -19,7 +20,7 @@ public class TokenUtil {
     private static final String SALT = "sadmlf1$789787aadfjkds'[]jfeu;384785*^*&%^%$%";// 加盐
     private static final int HOUR = 3;// 检查token过期线程执行时间 时
     static ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private static Logger logger = Logger.getLogger("visit");
+    static Logger logger = LogManager.getLogger(TokenUtil.class);
     private static Map<Long, Token> tokenMap = new HashMap<>();
     private static TokenUtil tokenUtil = null;
 

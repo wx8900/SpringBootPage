@@ -1,9 +1,7 @@
 package com.demo.test.utils;
 
-import com.demo.test.controllers.LoginController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -19,7 +17,7 @@ import java.net.UnknownHostException;
  */
 public class IPUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(IPUtils.class);
+    static Logger logger = LogManager.getLogger(IPUtils.class);
 
     public static String getIpAddr(HttpServletRequest request) {
         String ipAddress = null;

@@ -1,8 +1,8 @@
 package com.demo.test.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Log 类
@@ -12,12 +12,11 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggerUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoggerUtils.class);
+    static Logger logger = LogManager.getLogger(LoggerUtils.class);
 
     private LoggerUtils() {
         super();
     }
-
 
     /**
      * logInfo

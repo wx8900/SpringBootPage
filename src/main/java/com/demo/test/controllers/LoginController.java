@@ -4,7 +4,8 @@ import com.demo.test.domain.Student;
 import com.demo.test.domain.Token;
 import com.demo.test.service.PersonServiceImpl;
 import com.demo.test.utils.TokenUtil;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ import java.util.Optional;
 @RequestMapping("/v1/api/students")
 public class LoginController {
 
-    Logger logger = Logger.getLogger(LoginController.class);
+    static Logger logger = LogManager.getLogger(LoginController.class);
 
     @Autowired
     private PersonServiceImpl studentService;

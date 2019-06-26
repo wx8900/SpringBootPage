@@ -1,6 +1,7 @@
 package com.demo.test.utils;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RedisUtils {
 
-    private static Logger logger = Logger.getLogger("RedisUtils");
+    static Logger logger = LogManager.getLogger("RedisUtils");
 
     /**
      * 操作key-value都是对象

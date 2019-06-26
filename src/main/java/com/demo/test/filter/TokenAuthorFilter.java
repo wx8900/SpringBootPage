@@ -5,8 +5,8 @@ import com.demo.test.domain.Constant;
 import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
 import com.demo.test.utils.TokenUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -25,18 +25,19 @@ import java.util.Set;
 /**
  * token验证拦截
  *
- * @author  Jack
+ * @author Jack
  * @version 2.0, use now
- * @date    2019/06/02
+ * @date 2019/06/02
  */
 @WebFilter(filterName = "tokenAuthorFilter", urlPatterns = "/*")
 public class TokenAuthorFilter implements Filter {
+
+    static Logger logger = LogManager.getLogger(TokenAuthorFilter.class);
 
     //在这里面填不需要被拦截的地址
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(
             new HashSet<>(Arrays.asList("/v1/api/students/login", "/v1/api/students/isLogin"))
     );
-    private static Logger logger = LoggerFactory.getLogger(TokenAuthorFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,

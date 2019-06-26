@@ -8,14 +8,15 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
  * AOP统一处理Web请求日志
  *
- * @Auther    Jack
- * @Date      2019/06/02 12:20 PM
+ * @Auther Jack
+ * @Date 2019/06/02 12:20 PM
  */
 @Aspect
 @Component
@@ -25,28 +26,29 @@ public class WebControllerAop {
      * 匹配 com.example.demo.controller包及其子包下的所有类的所有方法
      */
     @Pointcut("execution(public * com.demo.test.controllers.*.*(..))")
-    public void webLog(){
+    public void webLog() {
     }
 
     /**
      * 前置通知，方法调用前被调用
+     *
      * @param joinPoint
      */
     @Before("webLog()")
-    public void doBefore(JoinPoint joinPoint){
+    public void doBefore(JoinPoint joinPoint) {
         System.out.println("我是前置通知!!!");
         //获取目标方法的参数信息
         Object[] obj = joinPoint.getArgs();
         Signature signature = joinPoint.getSignature();
         //代理的是哪一个方法
-        System.out.println("方法："+signature.getName());
+        System.out.println("方法：" + signature.getName());
         //AOP代理类的名字
-        System.out.println("方法所在包:"+signature.getDeclaringTypeName());
+        System.out.println("方法所在包:" + signature.getDeclaringTypeName());
         //AOP代理类的类（class）信息
         signature.getDeclaringType();
         MethodSignature methodSignature = (MethodSignature) signature;
         String[] strings = methodSignature.getParameterNames();
-        System.out.println("参数名："+Arrays.toString(strings));
+        System.out.println("参数名：" + Arrays.toString(strings));
         System.out.println("参数值ARGS : " + Arrays.toString(joinPoint.getArgs()));
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -60,6 +62,7 @@ public class WebControllerAop {
 
     /**
      * 处理完请求返回内容
+     *
      * @param ret
      * @throws Throwable
      */
@@ -71,31 +74,34 @@ public class WebControllerAop {
 
     /**
      * 后置异常通知
+     *
      * @param jp
      */
     @AfterThrowing("webLog()")
-    public void throwss(JoinPoint jp){
+    public void throwss(JoinPoint jp) {
         System.out.println("方法异常时执行.....");
     }
 
     /**
      * 后置最终通知,final增强，不管是抛出异常或者正常退出都会执行
+     *
      * @param jp
      */
     @After("webLog()")
-    public void after(JoinPoint jp){
+    public void after(JoinPoint jp) {
 
     }
 
     /**
      * 环绕通知,环绕增强，相当于MethodInterceptor
+     *
      * @param pjp
      * @return
      */
     @Around("webLog()")
     public Object arround(ProceedingJoinPoint pjp) {
         try {
-            Object o =  pjp.proceed();
+            Object o = pjp.proceed();
             return o;
         } catch (Throwable e) {
             e.printStackTrace();

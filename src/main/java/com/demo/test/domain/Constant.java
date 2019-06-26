@@ -1,5 +1,8 @@
 package com.demo.test.domain;
 
+/**
+ * @author Jack
+ */
 public class Constant {
     public static final String NO_TOKEN = "This token is unauthorized";
     public static final String TOKEN_INVALID = "Authorization failure";

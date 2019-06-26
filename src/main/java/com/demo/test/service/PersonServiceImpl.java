@@ -2,6 +2,8 @@ package com.demo.test.service;
 
 import com.demo.test.dao.StudentRepository;
 import com.demo.test.domain.Student;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,8 @@ import java.util.Optional;
 @Service("studentService")
 @Transactional(rollbackOn = Exception.class)
 public class PersonServiceImpl implements PersonService {
+
+    static Logger logger = LogManager.getLogger(PersonServiceImpl.class);
 
     @Autowired
     private final StudentRepository studentRepository;

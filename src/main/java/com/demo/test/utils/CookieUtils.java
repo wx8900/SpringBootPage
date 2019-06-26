@@ -1,9 +1,8 @@
 package com.demo.test.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +18,7 @@ import java.net.URLEncoder;
  */
 public class CookieUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(CookieUtils.class);
+    static Logger logger = LogManager.getLogger(CookieUtils.class);
 
     private static int iDefaultValidSecond = -1;
 

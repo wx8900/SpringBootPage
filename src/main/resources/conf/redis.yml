@@ -2,6 +2,7 @@
 #jedis客户端
 spring:
   cache:
+    cache-names: bookCache
     type: redis
   redis:
     #redis机器ip
@@ -9,16 +10,17 @@ spring:
     port: 6379
     password:
     #redis超时时间（毫秒），如果不设置，取默认值2000
-    timeout: 5000
+    timeout: 2000
+    #默认是索引为0的数据库
     database: 0
     jedis:
       pool:
         #连接池的最大数据库连接数。设为0表示无限制,如果是jedis 2.4以后用redis.maxTotal
-        max-active: 100
+        max-active: 50
         #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
-        max-wait: -1ms
+        max-wait: 2000
         #最大空闲数
-        max-idle: 10
+        max-idle: 8
         #最小空闲数
         min-idle: 0
         maxWaitMillis: 100000
@@ -27,7 +29,7 @@ spring:
         #每次释放连接的最大数目,默认3
         numTestsPerEvictionRun: 1024
         #逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
-        timeBetweenEvictionRunsMillis: 30000
+        timeBetweenEvictionRunsMillis: 3000
         #是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
         testOnBorrow: true
         #在空闲时检查有效性, 默认false

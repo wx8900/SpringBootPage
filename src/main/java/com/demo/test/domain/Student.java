@@ -18,9 +18,8 @@ import javax.validation.constraints.Size;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamicUpdate
 @Table(name = "tbl_student")
-public class Student {
+public class Student implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private long id;
