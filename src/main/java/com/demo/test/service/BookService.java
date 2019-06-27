@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jack
@@ -23,11 +24,13 @@ public interface BookService {
 
     Book findBookById(Long id);
 
-    List<Book> findAll();
+    //List<Book> findAll();
+
+    Map<Long, Book> findAll();
 
     Page<Book> findAll(Specification<Book> spec, Pageable pageable);
 
-    List<Book> queryAllBookByUserId(int uid);
+    List<Book> queryAllBookByUserId(Long uid);
 
     void clearCacheBefore();
 }

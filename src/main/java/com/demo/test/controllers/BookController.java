@@ -22,10 +22,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Book Controller class
@@ -39,23 +36,28 @@ import java.util.Set;
 public class BookController {
 
     static Logger logger = LogManager.getLogger(BookController.class);
+    public static final String KEY = "cacheKey";
 
     @Autowired
     private BookService bookService;
 
     /**
-     * 自动根据方法生成缓存
+     * 自动根据方法生成缓存, 第一次调用可以，第二次请求就报错
+     * eException: Could not write JSON: java.lang.String cannot be cast to java.lang.Number; nested exception is
+     * com.fasterxml.jackson.databind.JsonMappingException:
+     * java.lang.String cannot be cast to java.lang.Number (through reference chain: java.util.LinkedHashMap["1"])]
      *
      * @return
      */
     @Cacheable
     @GetMapping(value = "/getBookList")
-    public ResponseEntity getBookList() {
-        return new ResponseEntity(bookService.findAll(), HttpStatus.OK);
+    public Map<Long ,Book> getBookList() {
+        return bookService.findAll();
     }
 
     /**
-     * 带分页
+     * 带分页, Test fail because No primary or default constructor found for
+     * interface org.springframework.data.jpa.domain.Specification
      *
      * @return
      */
@@ -66,35 +68,41 @@ public class BookController {
     }
 
     /**
-     * has Cache
+     * Test OK
      *
      * @param id
      * @return
      */
-    @Cacheable(key = "#id", condition = "id.length()>10")
+    @Cacheable(key = "#root.target.KEY")
     @GetMapping(value = "/findBookById/{id}")
     public ResponseEntity<Book> findBookById(@PathVariable Long id) {
         if (StringUtils.isEmpty(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Book book = bookService.findBookById(id);
+        System.out.println("The book id is : " + id + "================"+ book.getName());
+        logger.info("Book id is : " + id + "================"+ book.getName());
         HttpStatus status = book == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity<>(book, status);
     }
 
     /**
-     * has Cache
+     * org.springframework.expression.spel.SpelEvaluationException: EL1008E: Property or field 'id'
+     * cannot be found on object of type 'org.springframework.cache.interceptor.CacheExpressionRootObject'
+     * - maybe not public or not valid?
      *
      * @param id
      * @return
      */
-    @Cacheable(key = "#id", condition = "id.length()>10")
+    @Cacheable(key = "#root.target.id")
     @GetMapping(value = "/findAllBookByUserId/{id}")
-    public ResponseEntity<List<Book>> findAllBookByUserId(@PathVariable int id) {
+    public ResponseEntity<List<Book>> findAllBookByUserId(@PathVariable Long id) {
         if (StringUtils.isEmpty(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         List<Book> bookList = bookService.queryAllBookByUserId(id);
+        System.out.println("Book id is : " + id + "=======bookList.size========="+ bookList.size());
+        logger.info("Book id is : " + id + "=======bookList.size========="+ bookList.size());
         HttpStatus status = bookList == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity<>(bookList, status);
     }

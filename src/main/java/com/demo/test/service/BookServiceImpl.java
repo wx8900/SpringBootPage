@@ -14,7 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Service class
@@ -41,9 +45,11 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     @Cacheable
-    public List<Book> findAll() {
+    public Map<Long, Book> findAll() {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
-        return bookRepostory.findAll();
+        Map<Long, Book> result = bookRepostory.findAll().stream().collect(
+                Collectors.toMap(x -> x.getId(), x -> x));
+        return result;
     }
 
     /**
@@ -66,7 +72,7 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     @Cacheable(key = "targetClass + methodName +#p0")
-    public List<Book> queryAllBookByUserId(int uid) {
+    public List<Book> queryAllBookByUserId(Long uid) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
         return bookRepostory.queryAllBookByUserId(uid);
     }

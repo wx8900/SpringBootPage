@@ -19,7 +19,7 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
 
     @Query("SELECT b from Book b where b.id in (SELECT sb.bid FROM StudentBook sb left join Student s " +
             "on sb.uid = s.id and s.id=?1)")
-    List<Book> queryAllBookByUserId(int uid);
+    List<Book> queryAllBookByUserId(Long uid);
 
     //void update(Book book);
 }
