@@ -14,45 +14,38 @@ import java.util.concurrent.locks.ReentrantLock;
  * @date 2019/06/22 01:24 AM
  * @date 2019/06/26 13:42 PM
  */
-public class TinyURLUtils implements Runnable {
+public class TinyURLUtils {
 
     private static final int K = 6;
     private static final String BASE_HOST = "http://tinyurl.com/";
     /**
      * private static final AtomicLong atomicLong = new AtomicLong();
      */
-    private static final ConcurrentHashMap<String, String> encodedToUrl = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, String> shortUrlMapping = new ConcurrentHashMap<>();
     static Logger logger = LogManager.getLogger("TinyURLUtils");
     private final String BASE62 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private final int SIZE62 = BASE62.length();
-    String shortUrl = "";
+    static String shortUrl = "";
     Lock lock = new ReentrantLock();
     //Lock lock = new MyLock();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         TinyURLUtils tinyURLUtils = new TinyURLUtils();
-        String encodeString = tinyURLUtils.encode("https://www.youtube.com/watch?v=8aG3Z62rfghk");
-        System.out.println("encode is : " + encodeString);
-        System.out.println("decode is : " + tinyURLUtils.decode(encodeString));
+        String encodeString0 = "https://www.youtube.com/watch?v=8aG3Z62rfghk";
+        String encodeString1 = "https://www.youtube.com/watch?v=8aG3Z62rfdsa";
+        String encodeString2 = "https://www.youtube.com/watch?v=8aG3Z611111";
 
-        String encodeString2 = tinyURLUtils.encode("https://www.youtube.com/watch?v=8aG3Z62rfdsa");
-        System.out.println("encode2 is : " + encodeString2);
-        System.out.println("decode2 is : " + tinyURLUtils.decode(encodeString2));
-
-        String encodeString3 = tinyURLUtils.encode("https://www.youtube.com/watch?v=8aG3Z611111");
-        System.out.println("encode3 is : " + encodeString3);
-        System.out.println("decode3 is : " + tinyURLUtils.decode(encodeString3));
-
-        TinyURLUtils r = new TinyURLUtils();
         // 3个线程同时跑
         for (int i = 0; i < 3; i++) {
-            new Thread(r, "Thread-" + i).start();
+            new Thread(() -> {
+                for (int j = 0; j < 5; j++) {
+                    String shURL = tinyURLUtils.encode(encodeString0);
+                    tinyURLUtils.decode(shURL);
+                }
+            }
+            ).start();
         }
-        try {
-            Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-            logger.error(e.getMessage());
-        }
+        Thread.sleep(1000L);
     }
 
     /**
@@ -72,17 +65,18 @@ public class TinyURLUtils implements Runnable {
             if ("".equals(shortUrl)) {
                 shortUrl = generateRandomShortUrl();
             }
-            while (encodedToUrl.containsKey(shortUrl)) {
+            while (shortUrlMapping.containsKey(shortUrl)) {
                 shortUrl = generateRandomShortUrl();
             }
-            encodedToUrl.put(shortUrl, longUrl);
+            shortUrlMapping.put(shortUrl, longUrl);
         } catch (Exception e) {
-            logger.error("encode Error : " + e.getMessage());
+            logger.error("Encode error : " + e.getMessage());
         } finally {
             lock.unlock();
         }
-
-        return BASE_HOST + shortUrl;
+        System.out.println(Thread.currentThread().getName()
+                + " : encode() -> shortUrl : " + shortUrl + ", longUrl : " +longUrl);
+        return shortUrl;
     }
 
     /**
@@ -95,7 +89,9 @@ public class TinyURLUtils implements Runnable {
         if (shortUrl == null || shortUrl.length() <= 0 || !shortUrl.startsWith(BASE_HOST)) {
             return shortUrl;
         }
-        return encodedToUrl.get(shortUrl.substring(BASE_HOST.length()));
+        System.out.println("decode() ->  shortUrl : " +shortUrl+ " ,longUrl : "
+                + shortUrlMapping.get(shortUrl));
+        return shortUrlMapping.get(shortUrl);
     }
 
     private String generateRandomShortUrl() {
@@ -112,20 +108,15 @@ public class TinyURLUtils implements Runnable {
         } finally {
             lock.unlock();
         }
-
         return sb.toString();
     }
 
-    @Override
+    /*@Override
     public void run() {
-        try {
-            for (int i = 0; i < 100; i++) {
-                shortUrl = generateRandomShortUrl();
-                System.out.println(Thread.currentThread().getName() + " : shortUrl : " + shortUrl);
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        for (int i = 0; i < 100; i++) {
+            shortUrl = generateRandomShortUrl();
+            System.out.println(Thread.currentThread().getName() + " : shortUrl : " + shortUrl);
         }
-    }
+    }*/
 
 }

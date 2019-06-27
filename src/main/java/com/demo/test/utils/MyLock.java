@@ -31,7 +31,7 @@ public class MyLock implements Lock {
     public void unlock() {
         if (owner.compareAndSet(Thread.currentThread(), null)) {
             Object[] objects = waiters.toArray();
-            for (Object object: objects) {
+            for (Object object : objects) {
                 Thread next = (Thread)object;
                 LockSupport.unpark(next);
             }
