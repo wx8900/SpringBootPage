@@ -1,7 +1,8 @@
-package com.demo.test.service;
+package com.demo.test.service.impl;
 
 import com.demo.test.dao.BookRepository;
 import com.demo.test.domain.Book;
+import com.demo.test.service.BookService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

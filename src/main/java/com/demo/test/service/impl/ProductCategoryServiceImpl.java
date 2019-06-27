@@ -1,7 +1,8 @@
-package com.demo.test.service;
+package com.demo.test.service.impl;
 
 import com.demo.test.dao.ProductCategoryRepository;
 import com.demo.test.domain.ProductCategory;
+import com.demo.test.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

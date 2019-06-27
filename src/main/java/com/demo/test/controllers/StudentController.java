@@ -4,7 +4,7 @@ import com.demo.test.domain.Constant;
 import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
 import com.demo.test.service.PersonService;
-import com.demo.test.service.PersonServiceImpl;
+import com.demo.test.service.impl.PersonServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

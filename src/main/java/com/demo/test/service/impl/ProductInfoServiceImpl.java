@@ -1,10 +1,11 @@
-package com.demo.test.service;
+package com.demo.test.service.impl;
 
 import com.demo.test.dao.ProductInfoRepository;
 import com.demo.test.domain.ProductInfo;
 import com.demo.test.dto.CartDTO;
 import com.demo.test.enums.ProductStatusEnum;
 import com.demo.test.enums.ResultEnum;
+import com.demo.test.service.ProductInfoService;
 import com.demo.test.utils.SellException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
