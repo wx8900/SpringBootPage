@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * Swagger Controller Test class
+ *
  * 访问http://localhost:8080/api，则
  * http://localhost:8080/swagger-ui.html
  *
