@@ -42,10 +42,20 @@ public class SwaggerControllerTest {
         return "Swagger Test of Spring Boot!";
     }
 
+    /**
+     * Error: Unable to infer base url. This is common when using dynamic servlet registration
+     * or when the API is behind an API Gateway. The base url is the root of where all the
+     * swagger resources are served. For e.g. if the api is available at
+     * http://example.org/api/v2/api-docs then the base url is http://example.org/api/.
+     * Please enter the location manually:
+     *
+     * @param response
+     * @throws IOException
+     */
     @ApiOperation(value = "展示首页信息", notes = "展示首页信息")
-    @RequestMapping(value = "/api", method = RequestMethod.GET)
+    @RequestMapping(value = "/api", produces = "text/html")
     public void api(HttpServletResponse response) throws IOException {
-        response.sendRedirect("swagger-ui.html");
+        response.sendRedirect("/swagger-ui.html");
     }
 
     @ApiOperation(value = "添加用户信息", notes = "添加用户信息")

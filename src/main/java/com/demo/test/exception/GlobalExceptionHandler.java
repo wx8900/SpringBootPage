@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.Properties;
 
 /**
  * 全局异常捕捉处理类
@@ -26,6 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     static Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
+
+    /*private static Properties properties =
+            ReadPropertiesUtil.getProperties(System.getProperty("user.dir") + CommonUrl.RESPONSE_PROP_URL);*/
 
     /**
      * 构造异常堆栈信息
@@ -147,5 +150,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return new ResponseEntity<>(new ApiErrorResponse(status, "400", "参数转换失败", ""), status);
     }
+
+    /**
+     * 异常捕获
+     *
+     * @param e 捕获的异常
+     * @return 封装的返回对象
+     **/
+    /*@ExceptionHandler(Exception.class)
+    public ApiErrorResponse handlerException(Throwable e) {
+        ApiErrorResponse returnVO = new ApiErrorResponse();
+        String errorName = e.getClass().getName();
+        errorName = errorName.substring(errorName.lastIndexOf(".") + 1);
+        //如果没有定义异常，而是直接抛出一个运行时异常，需要进入以下分支
+        if (e.getClass() == RuntimeException.class) {
+            returnVO.setMessage(properties.getProperty(valueOf("RuntimeException").msg()) +": "+ e.getMessage());
+            returnVO.setError_code(properties.getProperty(valueOf("RuntimeException").val()));
+        } else {
+            returnVO.setMessage(properties.getProperty(valueOf(errorName).msg()));
+            returnVO.setError_code(properties.getProperty(valueOf(errorName).val()));
+        }
+        return returnVO;
+    }*/
 
 }
