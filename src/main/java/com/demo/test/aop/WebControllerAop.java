@@ -94,11 +94,12 @@ public class WebControllerAop {
 
     /**
      * 环绕通知,环绕增强，相当于MethodInterceptor
+     * Note： 如果不关闭这个方法，则不能捕获到全局异常
      *
      * @param pjp
      * @return
      */
-    @Around("webLog()")
+    /*@Around("webLog()")
     public Object arround(ProceedingJoinPoint pjp) {
         try {
             Object o = pjp.proceed();
@@ -107,6 +108,6 @@ public class WebControllerAop {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
 }

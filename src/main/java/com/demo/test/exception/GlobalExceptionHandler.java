@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 全局异常处理类
+ *
+ * @author Jack
+ * @date   2019/07/16
+ */
 @ControllerAdvice
 @ResponseBody
 public class GlobalExceptionHandler {
@@ -48,7 +54,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 所有异常报错
+     * 拦截捕捉所有异常
      *
      * @param request
      * @param exception
@@ -73,8 +79,39 @@ public class GlobalExceptionHandler {
         ApiErrorResponse apiError = new ApiErrorResponse();
         apiError.setStatus(HttpStatus.SERVICE_UNAVAILABLE);
         apiError.setError_code("500");
-        apiError.setMessage("现在服务器异常了，请马上联系管理员！");
-        apiError.setDetail(detail);
+        apiError.setMessage("现在服务器报非自定义异常了，请马上联系管理员！");
+        //apiError.setDetail(detail);
+        return apiError;
+    }
+
+    /**
+     * 拦截捕捉自定义异常
+     *
+     * @param request
+     * @param exception
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @ExceptionHandler(value = ApiErrorResponse.class)
+    public ApiErrorResponse myExceptionHandler(
+            HttpServletRequest request, Exception exception) throws Exception {
+        StringBuffer sb = new StringBuffer();
+        sb.append(buildErrorMessage(exception));
+        String detail = sb.toString();
+        logger.error("myExceptionHandler：" + exception.getLocalizedMessage());
+        logger.error("myExceptionHandler：" + exception.getCause());
+        logger.error("myExceptionHandler：" + exception.getSuppressed());
+        logger.error("myExceptionHandler：" + exception.getMessage());
+        logger.error("myExceptionHandler：" + exception.getStackTrace());
+        logger.error("myExceptionHandler ======> get StackTrace Info : "
+                + detail);
+
+        ApiErrorResponse apiError = new ApiErrorResponse();
+        apiError.setStatus(HttpStatus.SERVICE_UNAVAILABLE);
+        apiError.setError_code("400");
+        apiError.setMessage("现在服务器报自定义异常，请马上联系管理员！");
+        //apiError.setDetail(detail);
         return apiError;
     }
 
