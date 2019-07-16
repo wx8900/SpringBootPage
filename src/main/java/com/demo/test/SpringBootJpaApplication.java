@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Import;
  * @EnableCaching  start cache base on annotations
  *
  * ServletComponentScan: enable filter
+ * 如果想用Swagger，要把@ServletComponentScan注释掉
  *
  * @author Jack
  * @date 2019/04/15

@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * Swagger Controller Test class
- *
+ * <p>
  * 用GET访问 http://localhost:8080/api 带Token，则
  * http://localhost:8080/swagger-ui.html
  *
@@ -68,12 +68,12 @@ public class SwaggerControllerTest {
                 apiError.setStatus(HttpStatus.OK);
                 apiError.setError_code("200");
                 apiError.setMessage(studentList.get(0).getName() + "登录成功了！");
-                apiError.setDetail("Student "+ studentList.get(0).getName() + " login in " + Constant.SUCCESS);
+                apiError.setDetail("Student " + studentList.get(0).getName() + " login in " + Constant.SUCCESS);
             } else {
                 apiError.setStatus(HttpStatus.NOT_FOUND);
                 apiError.setError_code("400");
                 apiError.setMessage("登录失败");
-                apiError.setDetail("Student "+ student.getName() + " login in " + Constant.FAILURE);
+                apiError.setDetail("Student " + student.getName() + " login in " + Constant.FAILURE);
             }
         }
 

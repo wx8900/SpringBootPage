@@ -36,7 +36,7 @@ public class TokenAuthorFilter implements Filter {
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(
             new HashSet<>(Arrays.asList("/v1/api/students/login", "/v1/api/students/isLogin"
                     , "/api", "/swagger-ui.html", "/addStudent", "/loginForMap"
-                    , "/loginForParams", "/exceptionTest/test", "/myException", "/0"))
+                    , "/loginForParams", "/test", "/myException", "/byzero"))
     );
     static Logger logger = LogManager.getLogger(TokenAuthorFilter.class);
 

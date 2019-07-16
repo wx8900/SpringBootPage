@@ -2,22 +2,28 @@ package com.demo.test.exception;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 全局异常处理类
+ * 全局异常捕捉处理类
  *
  * @author Jack
- * @date   2019/07/16
+ * @date 2019/07/16
  */
 @ControllerAdvice
 @ResponseBody
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     static Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
 
@@ -113,6 +119,33 @@ public class GlobalExceptionHandler {
         apiError.setMessage("现在服务器报自定义异常，请马上联系管理员！");
         //apiError.setDetail(detail);
         return apiError;
+    }
+
+    /**
+     * 通用的接口映射异常处理
+     *
+     * @param ex
+     * @param body
+     * @param headers
+     * @param status
+     * @param request
+     * @return
+     */
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(
+            Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        if (ex instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException exception = (MethodArgumentNotValidException) ex;
+            return new ResponseEntity<>(new ApiErrorResponse(status, "400"
+                    , exception.getBindingResult().getAllErrors().get(0).getDefaultMessage(), ""), status);
+        }
+        if (ex instanceof MethodArgumentTypeMismatchException) {
+            MethodArgumentTypeMismatchException exception = (MethodArgumentTypeMismatchException) ex;
+            logger.error("参数转换失败，方法：" + exception.getParameter().getMethod().getName() + "，参数：" + exception.getName()
+                    + ",信息：" + exception.getLocalizedMessage());
+            return new ResponseEntity<>(new ApiErrorResponse(status, "400", "参数转换失败", ""), status);
+        }
+        return new ResponseEntity<>(new ApiErrorResponse(status, "400", "参数转换失败", ""), status);
     }
 
 }

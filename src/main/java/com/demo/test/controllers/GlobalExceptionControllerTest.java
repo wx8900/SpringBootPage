@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 全局异常处理测试类
+ * 全局异常捕捉处理和自定义全局异常处理测试类
  *
  * @author Jack
  * @date   2019/07/16
@@ -30,14 +30,26 @@ public class GlobalExceptionControllerTest {
     /**
      * 测试GlobalExceptionHandler异常
      *
-     * @param id
      * @return
      */
-    @RequestMapping("/{id}")
-    public String test(@PathVariable Integer id){
+    @RequestMapping("/byzero")
+    public String test(){
+        int id = 10;
         if (true) {
-            id = 1/id;
+            id = 1 / 0;
         }
         return "success";
+    }
+
+    @RequestMapping("/test")
+    public String testZero(){
+        Object msg = null;
+        msg.toString();
+        createException();
+        return "success";
+    }
+
+    private void createException(){
+        int i = 5 / 0;
     }
 }
