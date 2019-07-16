@@ -1,12 +1,13 @@
 package com.demo.test.controllers;
 
 import com.demo.test.domain.Constant;
-import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
+import com.demo.test.exception.ApiErrorResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,23 +52,33 @@ public class RedisController {
      * 添加用户
      */
     @PostMapping("/redis/add")
-    public ResultInfo addUser(@Valid @RequestBody Student student) throws Exception {
+    public ApiErrorResponse addUser(@Valid @RequestBody Student student) throws Exception {
         stringRedisTemplate.opsForValue().set("uUserTest0650", student.toString());
         logger.info("redis保存数据为：[{}]" + student.toString());
-        return new ResultInfo(Constant.SUCCESS, "Redis保存数据成功！");
+        ApiErrorResponse apiError = new ApiErrorResponse();
+        apiError.setStatus(HttpStatus.OK);
+        apiError.setError_code("200");
+        apiError.setMessage("Redis保存数据成功！");
+        apiError.setDetail("Add student "+Constant.SUCCESS);
+        return apiError;
     }
 
     /**
      * 获取用户
      */
     @GetMapping("/redis/get")
-    public ResultInfo getUser() throws Exception {
+    public ApiErrorResponse getUser() throws Exception {
         Object uu = stringRedisTemplate.opsForValue().get("uUserTest0650");
         logger.info("redis中获取数据：[{}]" + uu);
         logger.error("redis中获取数据：[{}]" + uu);
         logger.warn("redis中获取数据：[{}]" + uu);
         logger.debug("redis中获取数据：[{}]" + uu);
-        return new ResultInfo(Constant.SUCCESS, "Redis查询数据成功！");
+        ApiErrorResponse apiError = new ApiErrorResponse();
+        apiError.setStatus(HttpStatus.OK);
+        apiError.setError_code("200");
+        apiError.setMessage("Redis查询数据成功！");
+        apiError.setDetail("Query student "+Constant.SUCCESS);
+        return apiError;
     }
 
     /**

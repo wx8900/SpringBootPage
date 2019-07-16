@@ -51,6 +51,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!--<dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
@@ -117,7 +126,8 @@
         </dependency>
     </dependencies>
 
-    <!--<dependencyManagement>
+    <!-- 使用自定义BOM来维护第三方依赖  -->
+    <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -127,7 +137,7 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>-->
+    </dependencyManagement>
 
     <build>
         <plugins>

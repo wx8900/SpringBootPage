@@ -32,14 +32,14 @@ import java.util.Set;
 @WebFilter(filterName = "tokenAuthorFilter", urlPatterns = "/*")
 public class TokenAuthorFilter implements Filter {
 
-    static Logger logger = LogManager.getLogger(TokenAuthorFilter.class);
-
     //在这里面填不需要被拦截的地址
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(
             new HashSet<>(Arrays.asList("/v1/api/students/login", "/v1/api/students/isLogin"
                     , "/swaggertest", "/swaggertest/api", "/swaggertest/addStudent"
-                    , "/swaggertest/loginForMap", "/swaggertest/loginForParams"))
+                    , "/swaggertest/loginForMap", "/swaggertest/loginForParams"
+                    , "/exceptionTest/test"))
     );
+    static Logger logger = LogManager.getLogger(TokenAuthorFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -73,28 +73,36 @@ public class TokenAuthorFilter implements Filter {
             rep.setStatus(HttpServletResponse.SC_OK);
         } else {
             if (!allowePath) {
-                if (null != token || token.length() > 0) {
+                String msg = "", code = "";
+                if (null != token && token.length() > 0) {
                     Student student = (Student) req.getSession().getAttribute("currentUser");
                     if (student != null) {
                         if (TokenUtil.volidateToken(token, student.getId())) {
-                            resultInfo = new ResultInfo(Constant.SUCCESS, "用户授权认证通过!");
+                            msg = "用户授权认证通过!";
+                            code = Constant.SUCCESS;
                             isFilter = true;
                         } else {
-                            String msg = "客户端请求参数Token验证失败！请重新申请 token!";
-                            resultInfo = new ResultInfo(Constant.TOKEN_INVALID, msg);
+                            msg = "客户端请求参数Token验证失败！请重新申请 token!";
+                            code = Constant.TOKEN_INVALID;
                             logger.error(msg);
                         }
                     } else {
-                        resultInfo = new ResultInfo(Constant.NO_LOGIN_USER, "当前没有用户登录，请重新登录!");
+                        msg = "当前没有用户登录，请重新登录!";
+                        code = Constant.NO_LOGIN_USER;
+                        logger.error(msg);
                     }
                 } else {
-                    resultInfo = new ResultInfo(Constant.NO_TOKEN, "客户端请求无参数token信息, 没有访问权限！");
+                    msg = "客户端请求无参数token信息, 没有访问权限！";
+                    code = Constant.NO_TOKEN;
+                    logger.error(msg);
                 }
+                resultInfo = new ResultInfo(code, msg);
+
                 // 验证失败
-                String code = resultInfo.getCode();
-                if (Constant.NO_TOKEN.equals(code)
-                        || Constant.TOKEN_INVALID.equals(code)
-                        || Constant.NO_LOGIN_USER.equals(code)) {
+                String resultCode = resultInfo.getCode();
+                if (Constant.NO_TOKEN.equals(resultCode)
+                        || Constant.TOKEN_INVALID.equals(resultCode)
+                        || Constant.NO_LOGIN_USER.equals(resultCode)) {
                     PrintWriter writer = null;
                     OutputStreamWriter osw = null;
                     try {
@@ -123,7 +131,8 @@ public class TokenAuthorFilter implements Filter {
                     logger.info("token filter过滤ok!");
                     chain.doFilter(request, response);
                 }
-            } else {  //不需要被拦截的方法,直接放行
+            } else {
+                //不需要被拦截的方法,直接放行
                 chain.doFilter(request, response);
             }
         }

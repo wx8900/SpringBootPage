@@ -22,12 +22,14 @@ import org.springframework.context.annotation.Import;
  * Started SpringBootJpaApplication in 8.796 seconds (JVM running for 9.378)
  * @EnableCaching  start cache base on annotations
  *
+ * ServletComponentScan: enable filter
+ *
  * @author Jack
  * @date 2019/04/15
  */
 @SpringBootApplication
 @EnableCaching
-//@ServletComponentScan(basePackages = {"com.demo.test.filter"})
+@ServletComponentScan(basePackages = {"com.demo.test.filter"})
 public class SpringBootJpaApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringBootJpaApplication.class, args);

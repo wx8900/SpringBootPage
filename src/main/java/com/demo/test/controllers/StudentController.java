@@ -1,8 +1,9 @@
 package com.demo.test.controllers;
 
 import com.demo.test.domain.Constant;
-import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
+import com.demo.test.exception.ApiErrorResponse;
+import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.service.PersonService;
 import com.demo.test.service.impl.PersonServiceImpl;
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,7 +74,7 @@ public class StudentController {
 
     @ResponseBody
     @PostMapping(value = "/addStudent")
-    public ResultInfo addStudent(@Valid @RequestBody Student student) {
+    public ApiErrorResponse addStudent(@Valid @RequestBody Student student) {
         logger.info("==========> student properties " + student.toString());
         try {
             studentService.addStudent(student);
@@ -81,9 +83,15 @@ public class StudentController {
             //String errorStackTrace = LogUtils.printErrorStackTrace(e);
             //String errorStackTrace = ExcpUtils.getStackTraceString(e);
             //logger.error(errorStackTrace.replaceAll("'", ""));
-            logger.error("[MyException] validation error! ", e.fillInStackTrace());
+            logger.error("[MyException] validation error! ",
+                    GlobalExceptionHandler.buildErrorMessage(e));
         }
-        return new ResultInfo(Constant.SUCCESS, "用户添加成功！");
+        ApiErrorResponse apiError = new ApiErrorResponse();
+        apiError.setStatus(HttpStatus.OK);
+        apiError.setError_code("200");
+        apiError.setMessage("用户添加成功！");
+        apiError.setDetail("Add student "+Constant.SUCCESS);
+        return apiError;
     }
 
 

@@ -1,7 +1,8 @@
 package com.demo.test.controllers;
 
-import com.demo.test.domain.ResultInfo;
+import com.demo.test.domain.Constant;
 import com.demo.test.domain.Student;
+import com.demo.test.exception.ApiErrorResponse;
 import com.demo.test.service.PersonService;
 import io.swagger.annotations.*;
 import org.apache.logging.log4j.LogManager;
@@ -57,31 +58,40 @@ public class SwaggerControllerTest {
 
     @ApiOperation(value = "登录接口测试")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResultInfo login(@RequestBody @ApiParam(value = "用户实体类") Student student) {
-        ResultInfo result = new ResultInfo();
-        result.setCode("400");
-        result.setMsg("登录失败");
+    public ApiErrorResponse login(@RequestBody @ApiParam(value = "用户实体类") Student student) {
+        ApiErrorResponse apiError = new ApiErrorResponse();
         if (StringUtils.isEmpty(student.getName()) || StringUtils.isEmpty(student.getPassword())) {
-            result.setMsg("请填写登录信息！");
+            apiError.setMessage("请填写登录信息！");
+        } else {
+            List<Student> studentList = studentService.findByNameAndPassword(student.getName(), student.getPassword());
+            if (studentList != null && studentList.size() >= 1) {
+                apiError.setStatus(HttpStatus.OK);
+                apiError.setError_code("200");
+                apiError.setMessage(studentList.get(0).getName() + "登录成功了！");
+                apiError.setDetail("Student "+ studentList.get(0).getName() + " login in " + Constant.SUCCESS);
+            } else {
+                apiError.setStatus(HttpStatus.NOT_FOUND);
+                apiError.setError_code("400");
+                apiError.setMessage("登录失败");
+                apiError.setDetail("Student "+ student.getName() + " login in " + Constant.FAILURE);
+            }
         }
-        List<Student> studentList = studentService.findByNameAndPassword(student.getName(), student.getPassword());
-        if (studentList != null && studentList.size() >= 1) {
-            result.setMsg(studentList.get(0).getName() + "登录成功了！");
-            result.setCode("200");
-        }
-        return result;
+
+        return apiError;
     }
 
     @ApiOperation(value = "登录接口-值传输方式", notes = "输入用户名和密码登录")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Student.class, responseContainer = "userInfo"),
-            @ApiResponse(code = 405, message = "账号名或密码错误")
-    })
+    @RequestMapping(value = "/loginForParams", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "passWord", value = "密码", required = true, dataType = "string", paramType = "query"),
     })
-    @RequestMapping(value = "/loginForParams", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = Student.class, responseContainer = "userInfo"),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
     ResponseEntity<Student> loginForMap(@RequestParam String userName, @RequestParam String passWord) {
         List<Student> studentList = studentService.findByNameAndPassword(userName, passWord);
         if (studentList != null && studentList.size() >= 1) {
@@ -93,12 +103,14 @@ public class SwaggerControllerTest {
     }
 
     @ApiOperation(value = "登录接口-对象传值方式", notes = "输入用户名和密码登录")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Student.class, responseContainer = "resultInfo"),
-            @ApiResponse(code = 405, message = "账号名或密码错误")
-    })
-    @ApiImplicitParam(name = "map", value = "{\"userName\":\"JackMa\",\"passWord\":\"123\"}")
     @RequestMapping(value = "/loginForMap", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiImplicitParam(name = "map", value = "{\"userName\":\"JackMa\",\"passWord\":\"123\"}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = Student.class, responseContainer = "userInfo"),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
     String loginForMap(@RequestBody Map<String, String> map) {
         String userName = "", passWord = "";
         if (!map.isEmpty()) {
@@ -115,7 +127,6 @@ public class SwaggerControllerTest {
                 }
             }
         }
-
         return "success";
     }
 
