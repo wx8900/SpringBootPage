@@ -1,9 +1,9 @@
 package com.demo.test.domain;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,10 +27,11 @@ public class Student implements java.io.Serializable {
      * We’ll use @Column to indicate specific characteristics of the physical database column.
      * Let’s use the length attribute of the @Column annotation to specify the string-valued column length:
      */
-    //@Column
+    @ApiModelProperty("用户名")
     @Size(min = 3, max = 20, message = "用户名长度必须在 {min} - {max} 之间")
     private String name;
 
+    @ApiModelProperty("密码")
     @Size(min = 8, max = 20, message = "密码长度必须在 {min} - {max} 之间")
     private String password;
 
