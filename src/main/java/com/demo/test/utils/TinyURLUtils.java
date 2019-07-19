@@ -16,16 +16,15 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class TinyURLUtils {
 
-    private static final int K = 6;
     private static final String BASE_HOST = "http://tinyurl.com/";
+    private static final String BASE62 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final int K = 6;
+    private static final int SIZE62 = BASE62.length();
     /**
      * private static final AtomicLong atomicLong = new AtomicLong();
      */
     private static final ConcurrentHashMap<String, String> shortUrlMapping = new ConcurrentHashMap<>();
     static Logger logger = LogManager.getLogger("TinyURLUtils");
-    private final String BASE62 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private final int SIZE62 = BASE62.length();
-    static String shortUrl = "";
     Lock lock = new ReentrantLock();
     //Lock lock = new MyLock();
 
@@ -61,6 +60,7 @@ public class TinyURLUtils {
         /** String uniqueURL = String.valueOf(atomicLong.getAndIncrement()); */
         /** encodedToUrl.put(uniqueURL, longUrl); */
         lock.lock();
+        String shortUrl = "";
         try {
             if ("".equals(shortUrl)) {
                 shortUrl = generateRandomShortUrl();

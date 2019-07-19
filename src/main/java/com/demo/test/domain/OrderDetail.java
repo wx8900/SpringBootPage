@@ -1,9 +1,6 @@
 package com.demo.test.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -20,6 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @DynamicUpdate
+@ToString
 public class OrderDetail {
 
     /**

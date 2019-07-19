@@ -22,9 +22,10 @@ import java.time.Duration;
 
 /**
  * Redis Configuration class
+ * 用Redis来作为缓存的，所以启动项目之前，先要启动Redis数据库
  *
  * @author Jack
- * @date 2019/06/22 03:12 AM
+ * @date 2019/07/19 03:12 AM
  */
 @Configuration
 @EnableCaching

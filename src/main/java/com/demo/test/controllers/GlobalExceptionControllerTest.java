@@ -23,8 +23,8 @@ public class GlobalExceptionControllerTest {
      */
     @RequestMapping(value = "/myException")
     public String index() throws Exception{
-        throw ApiErrorResponse.builder().status(HttpStatus.BAD_REQUEST).withError_code("empty")
-                .withDetail("/API/getUserName").withMessage("在获取用户名字的时候为空").build();
+        throw ApiErrorResponse.builder().status(HttpStatus.BAD_REQUEST).error_code("empty")
+                .detail("/API/getUserName").message("在获取用户名字的时候为空").build();
     }
 
     /**
@@ -36,7 +36,8 @@ public class GlobalExceptionControllerTest {
     public String test(){
         int id = 10;
         if (true) {
-            id = 1 / 0;
+            // open when do testing
+            //id = 1 / 0;
         }
         return "success";
     }
@@ -44,12 +45,14 @@ public class GlobalExceptionControllerTest {
     @RequestMapping("/test")
     public String testZero(){
         Object msg = null;
-        msg.toString();
+        // open when do testing
+        //msg.toString();
         createException();
         return "success";
     }
 
     private void createException(){
-        int i = 5 / 0;
+        // open when do testing
+        // int i = 5 / 0;
     }
 }

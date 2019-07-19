@@ -26,7 +26,7 @@ import java.util.List;
 public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Autowired
-    private ProductInfoRepository repository;
+    ProductInfoRepository repository;
 
     @Override
     @Cacheable

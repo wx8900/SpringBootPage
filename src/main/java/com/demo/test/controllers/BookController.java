@@ -99,9 +99,9 @@ public class BookController {
         if (StringUtils.isEmpty(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        logger.info("bookId : " + id);
         List<Book> bookList = bookService.queryAllBookByUserId(id);
-        logger.info("{book.id} : " + id + "{bookList.size} : "+ bookList.size());
-        HttpStatus status = bookList == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+        HttpStatus status = (bookList == null || bookList.size() == 0) ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity<>(bookList, status);
     }
 
@@ -127,10 +127,10 @@ public class BookController {
                 if ((null != bookName) && (!"".equals(bookName))) {
                     list.add(criteriaBuilder.like(root.get("bookName"), "%" + bookName + "%"));
                 }
-                if ((null != minBookPrice) && (!"".equals(minBookPrice))) {
+                if ((null != minBookPrice) && (BigDecimal.ZERO.compareTo(minBookPrice) != 0)) {
                     list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("bookPrice"), minBookPrice));
                 }
-                if ((null != maxBookPrice) && (!"".equals(maxBookPrice))) {
+                if ((null != maxBookPrice) && (!BigDecimal.ZERO.equals(maxBookPrice))) {
                     list.add(criteriaBuilder.lessThanOrEqualTo(root.get("bookPrice"), maxBookPrice));
                 }
                 Predicate[] p = new Predicate[list.size()];

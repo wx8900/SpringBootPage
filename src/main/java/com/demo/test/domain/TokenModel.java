@@ -14,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"userId", "token", "timeStamp", "signature"})
+@ToString(exclude = {"id", "token", "timeStamp", "jwt", "signature"})
 public class TokenModel {
 
     /**

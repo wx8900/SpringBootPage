@@ -2,8 +2,8 @@ package com.demo.test.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.demo.test.domain.Constant;
-import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
+import com.demo.test.exception.ApiErrorResponse;
 import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.utils.TokenUtil;
 import org.apache.logging.log4j.LogManager;
@@ -66,7 +66,7 @@ public class TokenAuthorFilter implements Filter {
                 .replaceAll("[/]+$", "");
         boolean allowedPath = ALLOWED_PATHS.contains(path);
         boolean isFilter = false;
-        ResultInfo resultInfo;
+        ApiErrorResponse apiErrorResponse;
 
         String method = ((HttpServletRequest) request).getMethod();
         if (Constant.OPTIONS.equals(method)) {
@@ -82,31 +82,31 @@ public class TokenAuthorFilter implements Filter {
                             code = Constant.SUCCESS;
                             isFilter = true;
                         } else {
-                            msg = "客户端请求参数Token验证失败！请重新申请 token!";
                             code = Constant.TOKEN_INVALID;
+                            msg = "客户端请求参数Token验证失败！请重新申请 token!";
                             logger.error(msg + token);
                         }
                     } else {
-                        msg = "当前没有用户登录，请重新登录!";
                         code = Constant.NO_LOGIN_USER;
+                        msg = "当前没有用户登录，请重新登录!";
                         logger.error(msg + token);
                     }
                 } else {
-                    msg = "客户端请求无参数token信息, 没有访问权限！";
                     code = Constant.NO_TOKEN;
+                    msg = "客户端请求无参数token信息, 没有访问权限！";
                     logger.error(msg + token);
                 }
-                resultInfo = ResultInfo.builder().code(code).msg(msg).build();
+                apiErrorResponse = ApiErrorResponse.builder().error_code(code).message(msg).build();
 
                 // 验证失败
-                String resultCode = resultInfo.getCode();
+                String resultCode = apiErrorResponse.getError_code();
                 if (Constant.NO_TOKEN.equals(resultCode)
                         || Constant.TOKEN_INVALID.equals(resultCode)
                         || Constant.NO_LOGIN_USER.equals(resultCode)) {
                     try (OutputStreamWriter osw =
                                  new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8);
                          PrintWriter writer = new PrintWriter(osw, true)) {
-                        String jsonStr = JSON.toJSONString(resultInfo);
+                        String jsonStr = JSON.toJSONString(apiErrorResponse);
                         writer.write(jsonStr);
                         writer.flush();
                     } catch (IOException e) {

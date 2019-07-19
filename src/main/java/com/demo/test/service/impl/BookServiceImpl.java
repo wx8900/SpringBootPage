@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class BookServiceImpl implements BookService {
     static Logger logger = LogManager.getLogger(BookServiceImpl.class);
 
     @Autowired
-    private BookRepository bookRepostory;
+    BookRepository bookRepository;
 
     /**
      * @return
@@ -46,7 +47,7 @@ public class BookServiceImpl implements BookService {
     @Cacheable
     public Map<Long, Book> findAll() {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
-        Map<Long, Book> result = bookRepostory.findAll().stream().collect(
+        Map<Long, Book> result = bookRepository.findAll().stream().collect(
                 Collectors.toMap(x -> x.getId(), x -> x));
         return result;
     }
@@ -60,7 +61,7 @@ public class BookServiceImpl implements BookService {
     @Cacheable
     public Page<Book> findAll(Specification<Book> spec, Pageable pageable) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
-        return bookRepostory.findAll(spec, pageable);
+        return bookRepository.findAll(spec, pageable);
     }
 
     /**
@@ -73,7 +74,7 @@ public class BookServiceImpl implements BookService {
     @Cacheable(key = "targetClass + methodName +#p0")
     public List<Book> queryAllBookByUserId(Long uid) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
-        return bookRepostory.queryAllBookByUserId(uid);
+        return bookRepository.queryAllBookByUserId(uid).orElse(new ArrayList<>());
     }
 
     /**
@@ -88,16 +89,23 @@ public class BookServiceImpl implements BookService {
     @Cacheable(key = "#id", condition = "#id lt 20", unless = "#result eq null")
     public Book findById(Long id) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
-        return bookRepostory.findById(id).orElse(null);
+        return bookRepository.findById(id).orElse(null);
     }
 
+    /**
+     * nested exception is java.lang.IllegalArgumentException: Validation failed for query for method
+     * public abstract java.util.Optional com.demo.test.dao.BookRepository.findBookByISBN(java.lang.String)!
+     * ==> 把unless = "#result eq null"删掉就好了
+     *
+     * @param isbn
+     * @return
+     */
     @Override
-    @Cacheable(key = "#id", condition = "#id lt 20", unless = "#result eq null")
+    @Cacheable(key = "#id", condition = "#id lt 20")
     public Book findByISBN(String isbn) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
-        return bookRepostory.findBookByISBN(isbn);
+        return bookRepository.findBookByISBN(isbn).orElse(Book.builder().build());
     }
-
 
     /**
      * @param book
@@ -107,7 +115,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @CachePut(key = "#book.id")
     public void save(Book book) {
-        bookRepostory.save(book);
+        bookRepository.save(book);
     }
 
     /**
@@ -125,7 +133,7 @@ public class BookServiceImpl implements BookService {
         oldBook.setName(newBook.getName());
         oldBook.setPrice(newBook.getPrice());
         oldBook.setDesc(newBook.getDesc());
-        bookRepostory.save(oldBook);
+        bookRepository.save(oldBook);
     }
 
     /**
@@ -138,7 +146,7 @@ public class BookServiceImpl implements BookService {
     @CacheEvict(allEntries = true)
     public void delete(Book books) {
         logger.info("删除成功！....");
-        bookRepostory.delete(books);
+        bookRepository.delete(books);
     }
 
     /**
@@ -151,7 +159,7 @@ public class BookServiceImpl implements BookService {
     @CacheEvict(key = "#book.id")
     public void deleteById(Long id) {
         logger.info("删除成功！....");
-        bookRepostory.deleteById(id);
+        bookRepository.deleteById(id);
     }
 
     /**
@@ -160,7 +168,7 @@ public class BookServiceImpl implements BookService {
     @CacheEvict(allEntries = true)
     public void deleteAll() {
         logger.info("删除缓存成功！....");
-        bookRepostory.deleteAll();
+        bookRepository.deleteAll();
     }
 
     /**
@@ -172,7 +180,7 @@ public class BookServiceImpl implements BookService {
     @CacheEvict(beforeInvocation = true)
     public void clearCacheBefore() {
         logger.info("清空缓存成功！....");
-        bookRepostory.deleteAll();
+        bookRepository.deleteAll();
     }
 
 }

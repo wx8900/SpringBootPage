@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 
 /**
  * 获取发出request请求的客户端ip, 如果是自己发出的请求,那么获取的是自己的ip
- * Note:
+ * 注意:
  * 如果使用此工具,获取到的不是客户端的ip地址;而是虚拟机的ip地址(d当客户端安装有VMware时,可能出现此情况);
  * 那么需要在客户端的[控制面板\网络和 Internet\网络连接]中禁用虚拟机网络适配器
  *
@@ -31,7 +31,7 @@ public class IPUtils {
             }
             if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
                 ipAddress = request.getRemoteAddr();
-                if (ipAddress.equals("127.0.0.1")) {
+                if ("127.0.0.1".equals(ipAddress)) {
                     // 根据网卡取本机配置的IP
                     InetAddress inet = null;
                     try {

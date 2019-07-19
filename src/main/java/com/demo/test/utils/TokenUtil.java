@@ -137,7 +137,7 @@ public class TokenUtil {
      */
     public final static String MD5(String s) {
         try {
-            byte[] btInput = s.getBytes();
+            byte[] btInput = s.getBytes("UTF-8");
             // 获得MD5摘要算法的 MessageDigest 对象
             MessageDigest mdInst = MessageDigest.getInstance("MD5");
             // 使用指定的字节更新摘要

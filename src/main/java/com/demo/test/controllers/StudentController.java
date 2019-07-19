@@ -76,21 +76,20 @@ public class StudentController {
     @PostMapping(value = "/addStudent")
     public ApiErrorResponse addStudent(@Valid @RequestBody Student student) {
         logger.info("==========> student properties " + student.toString());
+        ApiErrorResponse apiError = null;
         try {
             studentService.addStudent(student);
-            logger.info(" Calling the API ======> addStudent");
+            apiError = ApiErrorResponse.builder().status(HttpStatus.OK).error_code("200")
+                    .message("用户添加成功！").detail("Add student " + Constant.SUCCESS).build();
         } catch (Exception e) {
             //String errorStackTrace = LogUtils.printErrorStackTrace(e);
             //String errorStackTrace = ExcpUtils.getStackTraceString(e);
             //logger.error(errorStackTrace.replaceAll("'", ""));
             logger.error("[MyException] validation error! ",
                     GlobalExceptionHandler.buildErrorMessage(e));
+            apiError = ApiErrorResponse.builder().status(HttpStatus.BAD_REQUEST).error_code("400")
+                    .message("用户添加失败！").detail("Add student " + Constant.FAILURE).build();
         }
-        ApiErrorResponse apiError = ApiErrorResponse.builder().build();
-        apiError.setStatus(HttpStatus.OK);
-        apiError.setError_code("200");
-        apiError.setMessage("用户添加成功！");
-        apiError.setDetail("Add student " + Constant.SUCCESS);
         return apiError;
     }
 

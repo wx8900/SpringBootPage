@@ -42,7 +42,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String stackTrace = getStackTraceString(ex);
         String exceptionType = ex.toString();
         String exceptionMessage = ex.getMessage();
-        result = String.format("%s : %s \r\n %s", exceptionType, exceptionMessage, stackTrace);
+        result = String.format("%s : %s \r%n %s", exceptionType, exceptionMessage, stackTrace);
         return result;
     }
 
@@ -80,9 +80,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String detail = sb.toString();
         logger.error("GlobalExceptionHandler：" + exception.getLocalizedMessage());
         logger.error("GlobalExceptionHandler：" + exception.getCause());
-        logger.error("GlobalExceptionHandler：" + exception.getSuppressed());
+        logger.error("GlobalExceptionHandler：" + exception.getSuppressed().toString());
         logger.error("GlobalExceptionHandler：" + exception.getMessage());
-        logger.error("GlobalExceptionHandler：" + exception.getStackTrace());
+        logger.error("GlobalExceptionHandler：" + exception.getStackTrace().toString());
         logger.error("GlobalExceptionHandler =========> get StackTrace Info : "
                 + detail);
 
@@ -110,9 +110,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String detail = sb.toString();
         logger.error("myExceptionHandler：" + exception.getLocalizedMessage());
         logger.error("myExceptionHandler：" + exception.getCause());
-        logger.error("myExceptionHandler：" + exception.getSuppressed());
+        logger.error("myExceptionHandler：" + exception.getSuppressed().toString());
         logger.error("myExceptionHandler：" + exception.getMessage());
-        logger.error("myExceptionHandler：" + exception.getStackTrace());
+        logger.error("myExceptionHandler：" + exception.getStackTrace().toString());
         logger.error("myExceptionHandler ======> get StackTrace Info : "
                 + detail);
 
@@ -175,9 +175,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ApiErrorResponse handleNotFoundException(CustomNotFoundException ex) {
 
         ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
-                .withStatus(HttpStatus.NOT_FOUND)
-                .withError_code("NOT_FOUND")
-                .withMessage(ex.getLocalizedMessage()).build();
+                .status(HttpStatus.NOT_FOUND)
+                .error_code("NOT_FOUND")
+                .message(ex.getLocalizedMessage()).build();
 
         return response;
     }
@@ -202,10 +202,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status, WebRequest request) {
         String error = "Malformed JSON request ";
         ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
-                .withStatus(status)
-                .withError_code("BAD_DATA")
-                .withMessage(ex.getLocalizedMessage())
-                .withDetail(error + ex.getMessage()).build();
+                .status(status)
+                .error_code("BAD_DATA")
+                .message(ex.getLocalizedMessage())
+                .detail(error + ex.getMessage()).build();
         return new ResponseEntity<>(response, response.getStatus());
     }
 
@@ -224,10 +224,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status, WebRequest request) {
 
         ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
-                .withStatus(status)
-                .withError_code(HttpStatus.NOT_FOUND.name())
-                .withMessage(ex.getLocalizedMessage())
-                .withDetail(ex.getMessage())
+                .status(status)
+                .error_code(HttpStatus.NOT_FOUND.name())
+                .message(ex.getLocalizedMessage())
+                .detail(ex.getMessage())
                 .build();
         return new ResponseEntity<>(response, response.getStatus());
     }
@@ -247,9 +247,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status, WebRequest request) {
 
         ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
-                .withStatus(status)
-                .withError_code(HttpStatus.BAD_REQUEST.name())
-                .withMessage(ex.getLocalizedMessage()).build();
+                .status(status)
+                .error_code(HttpStatus.BAD_REQUEST.name())
+                .message(ex.getLocalizedMessage()).build();
 
         return new ResponseEntity<>(response, response.getStatus());
     }

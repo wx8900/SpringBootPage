@@ -2,10 +2,7 @@ package com.demo.test.domain;
 
 import com.demo.test.enums.OrderStatusEnum;
 import com.demo.test.enums.PayStatusEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -22,6 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @DynamicUpdate
+@ToString
 public class OrderMaster {
 
     /**

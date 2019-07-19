@@ -2,6 +2,7 @@ package com.demo.test.controllers;
 
 import com.demo.test.domain.Student;
 import com.demo.test.domain.Token;
+import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.service.PersonService;
 import com.demo.test.utils.TokenUtil;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -38,20 +40,26 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String login(@Size(min = 3, max = 20) String name, @Size(min = 8, max = 20) String password,
                         HttpSession session) {
+        String result = "";
+        Student student;
         try {
-            Student student = Optional.ofNullable(studentService.findByNameAndPassword(name, password))
-                    .map(x -> x.get(0)).orElse(
-                            Student.builder().id(0).name("defaultUser").password("000").branch("N/A")
-                                    .percentage("0").phone("00000000000").email("testAccount@gmail.com").build());
-            session.setAttribute("currentUser", student);
-            //String token = TokenUtils.createToken(student.getId()); // old version
-            Token token = TokenUtil.generateToken(student.getName(), student.getId());
-            logger.info(name + " has login the website. The {userId} is " + student.getId()
-                    + " and {token} is " + token.getSignature());
+            List<Student> studentList = studentService.findByNameAndPassword(name, password);
+            if(studentList != null && studentList.size() > 0) {
+                student = studentList.get(0);
+                session.setAttribute("currentUser", student);
+                //String token = TokenUtils.createToken(student.getId()); // old version
+                Token token = TokenUtil.generateToken(student.getName(), student.getId());
+                logger.info(name + " has login the website. The {userId} is " + student.getId()
+                        + " and {token} is " + token.getSignature());
+                result = "Login successful!";
+            } else {
+                result = "Username or password error!";
+            }
         } catch (Exception e) {
-            logger.error("[MyException] happen in login!!!" + e.getMessage().replaceAll("'", ""));
+            logger.error("[MyException] happen in login!!!" + GlobalExceptionHandler.buildErrorMessage(e));
+            result = "Login failure!";
         }
-        return "Login successful!";
+        return result;
     }
 
     @GetMapping(value = "/logOff")

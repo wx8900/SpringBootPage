@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 public class RedisServiceImpl implements RedisService {
 
     @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    RedisTemplate<String, Object> redisTemplate;
 
     @Override
     @Cacheable

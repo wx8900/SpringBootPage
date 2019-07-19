@@ -1,10 +1,6 @@
 package com.demo.test.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -18,6 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 @Table(name = "tbl_book")
 public class Book implements java.io.Serializable {
     @Id

@@ -26,12 +26,7 @@ import java.util.Optional;
 public class PersonServiceImpl implements PersonService {
 
     @Autowired
-    private final StudentRepository studentRepository;
-
-    @Autowired
-    public PersonServiceImpl(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+    StudentRepository studentRepository;
 
     @Override
     @Cacheable
@@ -40,25 +35,37 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Cacheable
+    @Cacheable(key = "#student.name")
     public Page<Student> findByName(String name, Pageable pageable) {
         return studentRepository.findByName(name, pageable);
     }
 
+    /**
+     * 用户登录API不用缓存，直接查数据库
+     * @param name
+     * @param password
+     * @return
+     */
     @Override
-    @Cacheable
     public List<Student> findByNameAndPassword(String name, String password) {
         return studentRepository.findByNameAndPassword(name, password);
     }
 
+    /**
+     * 保存Student之前，要连接Redis数据库，不然会报错！
+     * Unable to connect to Redis; RedisConnectionException: Unable to connect to localhost:6379
+     * ==》用Redis来作为缓存的，所以启动项目之前，先要启动Redis数据库
+     *
+     * @param student
+     */
     @Override
-    @Cacheable
+    @Cacheable(value = "students")
     public void addStudent(Student student) {
         studentRepository.save(student);
     }
 
     @Override
-    @Cacheable
+    @Cacheable(key = "#student.id", value = "students")
     public Optional<Student> findById(Long id) {
         return studentRepository.findById(id);
     }
