@@ -7,10 +7,13 @@ import com.demo.test.service.OrderService;
 import com.demo.test.utils.SellException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service
+@CacheConfig(cacheNames = "buyerCache")
 @Slf4j
 public class BuyerServiceImpl implements BuyerService {
 
@@ -18,11 +21,13 @@ public class BuyerServiceImpl implements BuyerService {
     OrderService orderService;
 
     @Override
+    @Cacheable
     public OrderDTO findOrderOne(String openid, String orderId) {
         return checkOwner(openid, orderId);
     }
 
     @Override
+    @Cacheable
     public OrderDTO cancelOrder(String openid, String orderId) {
         OrderDTO orderDTO = checkOwner(openid, orderId);
         if (orderDTO == null) {
@@ -32,6 +37,7 @@ public class BuyerServiceImpl implements BuyerService {
         return orderService.cancel(orderDTO);
     }
 
+    @Cacheable
     private OrderDTO checkOwner(String openid, String orderId) {
         if (StringUtils.isEmpty(openid)) {
             log.error("【查询订单】openid为空");

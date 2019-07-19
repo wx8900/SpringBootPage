@@ -1,10 +1,16 @@
 package com.demo.test.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class OrderForm {
 
     @NotEmpty(message = "姓名必填")

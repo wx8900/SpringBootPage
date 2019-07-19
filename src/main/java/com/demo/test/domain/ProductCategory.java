@@ -1,6 +1,9 @@
 package com.demo.test.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -15,6 +18,9 @@ import javax.persistence.Id;
 @Entity
 @DynamicUpdate
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ProductCategory {
 
     @Id
@@ -30,9 +36,6 @@ public class ProductCategory {
      * 种类类型
      */
     private Integer categoryType;
-
-    public ProductCategory() {
-    }
 
     public ProductCategory(String categoryName, Integer categoryType) {
         this.categoryName = categoryName;

@@ -18,6 +18,8 @@ import com.demo.test.utils.SellException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@CacheConfig(cacheNames = "orderCache")
 @Slf4j
 public class OrderServiceImpl implements OrderService {
 
@@ -42,6 +45,7 @@ public class OrderServiceImpl implements OrderService {
     OrderMasterRepository orderMasterRepository;
 
     @Override
+    @Cacheable
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
 
@@ -86,6 +90,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Cacheable
     public OrderDTO findByOrderId(String orderId) {
         OrderMaster orderMaster = orderMasterRepository.findById(orderId).get();
         if (orderMaster == null) {
@@ -102,6 +107,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Cacheable
     public Page<OrderDTO> findList(String buyerOpenid, Pageable pageable) {
         Page<OrderMaster> page = orderMasterRepository.findByBuyerOpenid(buyerOpenid, pageable);
         List<OrderMaster> orderMasterList = page.getContent();
@@ -110,6 +116,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Cacheable
     @Transactional
     public OrderDTO cancel(OrderDTO orderDTO) {
         //判断订单状态。只有新下单可以取消
@@ -147,6 +154,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Cacheable
     @Transactional
     public OrderDTO finish(OrderDTO orderDTO) {
         //判断订单状态
@@ -168,6 +176,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Cacheable
     @Transactional
     public OrderDTO paid(OrderDTO orderDTO) {
         //判断订单状态

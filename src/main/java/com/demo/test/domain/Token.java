@@ -1,8 +1,6 @@
 package com.demo.test.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -13,6 +11,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Builder
 @ToString(exclude = {"id", "signature", "timestamp"})
 public class Token implements Serializable {
 

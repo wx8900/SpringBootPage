@@ -8,6 +8,8 @@ import com.demo.test.enums.ResultEnum;
 import com.demo.test.service.ProductInfoService;
 import com.demo.test.utils.SellException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,33 +17,43 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author Jack
+ * @date 2019/07/19
+ */
 @Service
+@CacheConfig(cacheNames = "productInfoCache")
 public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Autowired
     private ProductInfoRepository repository;
 
     @Override
+    @Cacheable
     public ProductInfo findById(String id) {
         return repository.findById(id).get();
     }
 
     @Override
+    @Cacheable
     public List<ProductInfo> findUpAll() {
         return repository.findByProductStatus(ProductStatusEnum.UP.getCode());
     }
 
     @Override
+    @Cacheable
     public Page<ProductInfo> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
     @Override
+    @Cacheable
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
     }
 
     @Override
+    @Cacheable
     public void increaseStock(List<CartDTO> cartDTOList) {
         for (CartDTO cartDto : cartDTOList) {
             ProductInfo info = findById(cartDto.getProductId());
@@ -56,6 +68,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
+    @Cacheable
     @Transactional
     public void decreaseStock(List<CartDTO> cartDTOList) {
         for (CartDTO cartDTO : cartDTOList) {

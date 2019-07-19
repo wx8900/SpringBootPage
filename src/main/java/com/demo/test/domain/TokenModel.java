@@ -1,7 +1,6 @@
 package com.demo.test.domain;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Token的Model类，可以增加字段提高安全性，例如时间戳、url签名
@@ -12,6 +11,9 @@ import lombok.ToString;
  * @version  old version, no use now
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @ToString(exclude = {"userId", "token", "timeStamp", "signature"})
 public class TokenModel {
 
