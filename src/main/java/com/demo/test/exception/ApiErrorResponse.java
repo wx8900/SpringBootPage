@@ -17,20 +17,21 @@ import org.springframework.http.HttpStatus;
 public class ApiErrorResponse extends RuntimeException {
 
     private HttpStatus status;
-    private String error_code; //异常状态码
-    private String message;    //异常信息
-    //private String method;     //发生的方法，位置等
-    private String detail;     //描述
+    /** 异常状态码 */
+    private String error_code;
+    /** 异常信息 */
+    private String message;
+    /** 异常描述 */
+    private String detail;
 
-    // Builder
+    /** Builder */
     public static final class ApiErrorResponseBuilder {
         private HttpStatus status;
         private String error_code;
         private String message;
         private String detail;
 
-        ApiErrorResponseBuilder() {
-        }
+        ApiErrorResponseBuilder() {}
 
         public static ApiErrorResponseBuilder anApiErrorResponse() {
             return new ApiErrorResponseBuilder();

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.demo.test.domain.Constant;
 import com.demo.test.domain.ResultInfo;
 import com.demo.test.domain.Student;
+import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.utils.TokenUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,7 +64,7 @@ public class TokenAuthorFilter implements Filter {
         String token = req.getHeader("token");
         String path = req.getRequestURI().substring(req.getContextPath().length())
                 .replaceAll("[/]+$", "");
-        boolean allowePath = ALLOWED_PATHS.contains(path);
+        boolean allowedPath = ALLOWED_PATHS.contains(path);
         boolean isFilter = false;
         ResultInfo resultInfo;
 
@@ -72,7 +72,7 @@ public class TokenAuthorFilter implements Filter {
         if (Constant.OPTIONS.equals(method)) {
             rep.setStatus(HttpServletResponse.SC_OK);
         } else {
-            if (!allowePath) {
+            if (!allowedPath) {
                 String msg = "", code = "";
                 if (null != token && token.length() > 0) {
                     Student student = (Student) req.getSession().getAttribute("currentUser");
@@ -84,17 +84,17 @@ public class TokenAuthorFilter implements Filter {
                         } else {
                             msg = "客户端请求参数Token验证失败！请重新申请 token!";
                             code = Constant.TOKEN_INVALID;
-                            logger.error(msg);
+                            logger.error(msg + token);
                         }
                     } else {
                         msg = "当前没有用户登录，请重新登录!";
                         code = Constant.NO_LOGIN_USER;
-                        logger.error(msg);
+                        logger.error(msg + token);
                     }
                 } else {
                     msg = "客户端请求无参数token信息, 没有访问权限！";
                     code = Constant.NO_TOKEN;
-                    logger.error(msg);
+                    logger.error(msg + token);
                 }
                 resultInfo = new ResultInfo(code, msg);
 
@@ -103,32 +103,20 @@ public class TokenAuthorFilter implements Filter {
                 if (Constant.NO_TOKEN.equals(resultCode)
                         || Constant.TOKEN_INVALID.equals(resultCode)
                         || Constant.NO_LOGIN_USER.equals(resultCode)) {
-                    PrintWriter writer = null;
-                    OutputStreamWriter osw = null;
-                    try {
-                        osw = new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8);
-                        writer = new PrintWriter(osw, true);
+                    try (OutputStreamWriter osw =
+                                 new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8);
+                         PrintWriter writer = new PrintWriter(osw, true)) {
                         String jsonStr = JSON.toJSONString(resultInfo);
                         writer.write(jsonStr);
                         writer.flush();
-                        writer.close();
-                        osw.close();
-                    } catch (UnsupportedEncodingException e) {
-                        logger.error("过滤器返回信息失败，不支持的编码错误:" + e.getMessage(), e);
                     } catch (IOException e) {
-                        logger.error("过滤器返回信息失败，IO错误:" + e.getMessage(), e);
-                    } finally {
-                        if (null != writer) {
-                            writer.close();
-                        }
-                        if (null != osw) {
-                            osw.close();
-                        }
+                        logger.error("过滤器返回信息失败，错误:" + e.getMessage(),
+                                GlobalExceptionHandler.buildErrorMessage(e));
                     }
                     return;
                 }
                 if (isFilter) {
-                    logger.info("token filter过滤ok!");
+                    logger.info("token filter过滤OK!");
                     chain.doFilter(request, response);
                 }
             } else {

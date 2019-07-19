@@ -1,7 +1,8 @@
 package com.demo.test.aop;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -21,6 +22,9 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class WebControllerAop {
+
+    static Logger logger = LogManager.getLogger(WebControllerAop.class);
+
     /**
      * 指定切点
      * 匹配 com.example.demo.controller包及其子包下的所有类的所有方法
@@ -36,28 +40,29 @@ public class WebControllerAop {
      */
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) {
-        System.out.println("我是前置通知!!!");
+        logger.info("我是前置通知!!!");
         //获取目标方法的参数信息
         Object[] obj = joinPoint.getArgs();
         Signature signature = joinPoint.getSignature();
         //代理的是哪一个方法
-        System.out.println("方法：" + signature.getName());
+        logger.info("方法：" + signature.getName());
         //AOP代理类的名字
-        System.out.println("方法所在包:" + signature.getDeclaringTypeName());
+        logger.info("方法所在包:" + signature.getDeclaringTypeName());
         //AOP代理类的类（class）信息
         signature.getDeclaringType();
         MethodSignature methodSignature = (MethodSignature) signature;
         String[] strings = methodSignature.getParameterNames();
-        System.out.println("参数名：" + Arrays.toString(strings));
-        System.out.println("参数值ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        logger.info("参数名：" + Arrays.toString(strings));
+        logger.info("参数值ARGS : " + Arrays.toString(joinPoint.getArgs()));
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest req = attributes.getRequest();
         // 记录下请求内容
-        System.out.println("请求URL : " + req.getRequestURL().toString());
-        System.out.println("HTTP_METHOD : " + req.getMethod());
-        System.out.println("IP : " + req.getRemoteAddr());
-        System.out.println("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        logger.info("请求URL : " + req.getRequestURL().toString());
+        logger.info("HTTP_METHOD : " + req.getMethod());
+        logger.info("IP : " + req.getRemoteAddr());
+        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "."
+                + joinPoint.getSignature().getName());
     }
 
     /**
@@ -68,8 +73,7 @@ public class WebControllerAop {
      */
     @AfterReturning(returning = "ret", pointcut = "webLog()")
     public void doAfterReturning(Object ret) throws Throwable {
-        // 处理完请求，返回内容
-        System.out.println("方法的返回值 : " + ret);
+        logger.info("方法的返回值 : " + ret);
     }
 
     /**
@@ -79,7 +83,7 @@ public class WebControllerAop {
      */
     @AfterThrowing("webLog()")
     public void throwss(JoinPoint jp) {
-        System.out.println("方法异常时执行.....");
+        logger.info("方法异常时执行.....");
     }
 
     /**
@@ -94,7 +98,7 @@ public class WebControllerAop {
 
     /**
      * 环绕通知,环绕增强，相当于MethodInterceptor
-     * Note： 如果不关闭这个方法，则不能捕获到全局异常
+     * 注意： 如果不关闭这个方法，则不能捕获到全局异常
      *
      * @param pjp
      * @return

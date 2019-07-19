@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,14 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.Properties;
 
 /**
- * 全局异常捕捉处理类
+ * Spring Boot REST 全局异常捕捉,统一处理类
  *
  * @author Jack
- * @date 2019/07/16
+ * @date 2019/07/17
  */
 @ControllerAdvice
 @ResponseBody
@@ -53,13 +54,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      */
     public static String getStackTraceString(Throwable ex) {//(Exception ex) {
         StackTraceElement[] traceElements = ex.getStackTrace();
-        StringBuilder traceBuilder = new StringBuilder(1500);
+        StringBuilder traceBuilder = new StringBuilder(2000);
         if (traceElements != null && traceElements.length > 0) {
             for (StackTraceElement traceElement : traceElements) {
                 traceBuilder.append(traceElement.toString()).append("\n");
             }
         }
-        return traceBuilder.toString().substring(0, 1450);
+        return traceBuilder.toString().substring(0, 1900);
     }
 
     /**
@@ -82,14 +83,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         logger.error("GlobalExceptionHandler：" + exception.getSuppressed());
         logger.error("GlobalExceptionHandler：" + exception.getMessage());
         logger.error("GlobalExceptionHandler：" + exception.getStackTrace());
-        logger.error("GlobalExceptionHandler ======> get StackTrace Info : "
+        logger.error("GlobalExceptionHandler =========> get StackTrace Info : "
                 + detail);
 
         ApiErrorResponse apiError = new ApiErrorResponse();
         apiError.setStatus(HttpStatus.SERVICE_UNAVAILABLE);
-        apiError.setError_code("500");
+        apiError.setError_code("503");
         apiError.setMessage("现在服务器报非自定义异常了，请马上联系管理员！");
-        //apiError.setDetail(detail);
         return apiError;
     }
 
@@ -117,10 +117,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 + detail);
 
         ApiErrorResponse apiError = new ApiErrorResponse();
-        apiError.setStatus(HttpStatus.SERVICE_UNAVAILABLE);
-        apiError.setError_code("400");
+        apiError.setStatus(HttpStatus.EXPECTATION_FAILED);
+        apiError.setError_code("417");
         apiError.setMessage("现在服务器报自定义异常，请马上联系管理员！");
-        //apiError.setDetail(detail);
         return apiError;
     }
 
@@ -154,7 +153,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     /**
      * 异常捕获
      *
-     * @param e 捕获的异常
+     * @param //e 捕获的异常
      * @return 封装的返回对象
      **/
     /*@ExceptionHandler(Exception.class)
@@ -172,5 +171,87 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return returnVO;
     }*/
+    @ExceptionHandler(CustomNotFoundException.class)
+    public ApiErrorResponse handleNotFoundException(CustomNotFoundException ex) {
+
+        ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
+                .withStatus(HttpStatus.NOT_FOUND)
+                .withError_code("NOT_FOUND")
+                .withMessage(ex.getLocalizedMessage()).build();
+
+        return response;
+    }
+
+    /**
+     * 当API无法读取HTTP消息时，抛出HttpMessageNotReadable异常
+     * BeanCreationException:
+     * Caused by: java.lang.IllegalStateException: Ambiguous @ExceptionHandler method
+     * mapped for [class org.springframework.web.bind.MethodArgumentNotValidException]
+     * 只要重写父类方法即可。不要在重写的方法上声明拦截异常。
+     * 对于ResponseEntityExceptionHandler已经定义好的异常，不需要重新定义，只要重写方法就可以了
+     *
+     * @param ex
+     * @param headers
+     * @param status
+     * @param request
+     * @return
+     */
+    //@ExceptionHandler({HttpMessageNotReadableException.class})
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex, com.google.common.net.HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
+        String error = "Malformed JSON request ";
+        ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
+                .withStatus(status)
+                .withError_code("BAD_DATA")
+                .withMessage(ex.getLocalizedMessage())
+                .withDetail(error + ex.getMessage()).build();
+        return new ResponseEntity<>(response, response.getStatus());
+    }
+
+    /**
+     * 处理自定义异常，将自定义异常返回给客户端API
+     *
+     * @param ex
+     * @param headers
+     * @param status
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(CustomServiceException.class)
+    protected ResponseEntity<Object> handleCustomAPIException(
+            HttpMessageNotReadableException ex, com.google.common.net.HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
+
+        ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
+                .withStatus(status)
+                .withError_code(HttpStatus.NOT_FOUND.name())
+                .withMessage(ex.getLocalizedMessage())
+                .withDetail(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(response, response.getStatus());
+    }
+
+    /**
+     * 当方法参数不是预期类型时，抛出MethodArgumentTypeMismatchException异常
+     *
+     * @param ex
+     * @param headers
+     * @param status
+     * @param request
+     * @return
+     */
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, com.google.common.net.HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
+
+        ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
+                .withStatus(status)
+                .withError_code(HttpStatus.BAD_REQUEST.name())
+                .withMessage(ex.getLocalizedMessage()).build();
+
+        return new ResponseEntity<>(response, response.getStatus());
+    }
 
 }
