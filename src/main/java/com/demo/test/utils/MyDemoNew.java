@@ -6,11 +6,6 @@ public class MyDemoNew {
     //int i = 0;
     AtomicInteger i = new AtomicInteger(0);
 
-    public void increase() {
-        //i++;
-        i.getAndIncrement();
-    }
-
     public static void main(String[] args) throws Exception {
         MyDemoNew demoNew = new MyDemoNew();
         for (int i = 0; i < 2; i++) {
@@ -24,5 +19,10 @@ public class MyDemoNew {
         }
         Thread.sleep(1000L);
         System.out.println(demoNew.i);
+    }
+
+    public void increase() {
+        //i++;
+        i.getAndIncrement();
     }
 }

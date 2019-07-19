@@ -2,6 +2,7 @@ package com.demo.test.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -36,9 +37,9 @@ public class IPUtils {
                     InetAddress inet = null;
                     try {
                         inet = InetAddress.getLocalHost();
-                        LoggerUtils.logInfo(logger,"IP Address is :" + inet);
+                        LoggerUtils.logInfo(logger, "IP Address is :" + inet);
                     } catch (UnknownHostException e) {
-                        LoggerUtils.logError(logger,"UnknownHostException happen in getIpAddr()", e.getStackTrace());
+                        LoggerUtils.logError(logger, "UnknownHostException happen in getIpAddr()", e.getStackTrace());
                     }
                     ipAddress = inet.getHostAddress();
                 }
@@ -52,7 +53,7 @@ public class IPUtils {
             }
         } catch (Exception e) {
             ipAddress = "";
-            LoggerUtils.logError(logger,"Exception happen in getIpAddr()", e.getStackTrace());
+            LoggerUtils.logError(logger, "Exception happen in getIpAddr()", e.getStackTrace());
         }
 
         return ipAddress;

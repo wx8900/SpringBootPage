@@ -4,6 +4,7 @@ import com.demo.test.domain.Token;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
@@ -137,7 +138,7 @@ public class TokenUtil {
      */
     public final static String MD5(String s) {
         try {
-            byte[] btInput = s.getBytes("UTF-8");
+            byte[] btInput = s.getBytes(StandardCharsets.UTF_8);
             // 获得MD5摘要算法的 MessageDigest 对象
             MessageDigest mdInst = MessageDigest.getInstance("MD5");
             // 使用指定的字节更新摘要

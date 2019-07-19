@@ -37,7 +37,6 @@ public class RedisController {
      */
     /*@Autowired
     private RedisService redisService;*/
-
     @PostMapping(value = "/redisAdd")
     public void saveRedis() {
         stringRedisTemplate.opsForValue().set("admin2019062211", "test062211");
@@ -59,7 +58,7 @@ public class RedisController {
         apiError.setStatus(HttpStatus.OK);
         apiError.setError_code("200");
         apiError.setMessage("Redis保存数据成功！");
-        apiError.setDetail("Add student "+Constant.SUCCESS);
+        apiError.setDetail("Add student " + Constant.SUCCESS);
         return apiError;
     }
 
@@ -77,7 +76,7 @@ public class RedisController {
         apiError.setStatus(HttpStatus.OK);
         apiError.setError_code("200");
         apiError.setMessage("Redis查询数据成功！");
-        apiError.setDetail("Query student "+Constant.SUCCESS);
+        apiError.setDetail("Query student " + Constant.SUCCESS);
         return apiError;
     }
 

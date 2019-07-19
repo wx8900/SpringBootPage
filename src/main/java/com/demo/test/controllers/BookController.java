@@ -35,9 +35,8 @@ import java.util.*;
 @RequestMapping(value = "/v1/api/book")
 public class BookController {
 
-    static Logger logger = LogManager.getLogger(BookController.class);
     public static final String KEY = "cacheKey";
-
+    static Logger logger = LogManager.getLogger(BookController.class);
     @Autowired
     private BookService bookService;
 
@@ -51,7 +50,7 @@ public class BookController {
      */
     @Cacheable
     @GetMapping(value = "/getBookList")
-    public Map<Long ,Book> getBookList() {
+    public Map<Long, Book> getBookList() {
         return bookService.findAll();
     }
 
@@ -80,7 +79,7 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Book book = bookService.findById(id);
-        logger.info("{book.id} : " + id + ", {bookName} : "+ book.getName());
+        logger.info("{book.id} : " + id + ", {bookName} : " + book.getName());
         HttpStatus status = book == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity<>(book, status);
     }
@@ -106,7 +105,6 @@ public class BookController {
     }
 
     /**
-     *
      * @param bookName
      * @param minBookPrice
      * @param maxBookPrice

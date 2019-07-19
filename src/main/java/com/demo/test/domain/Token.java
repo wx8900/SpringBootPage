@@ -1,13 +1,16 @@
 package com.demo.test.domain;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 /**
  * @author Jack
- * @date   2019/06/02
  * @version latest version, current use
+ * @date 2019/06/02
  */
 @Data
 @NoArgsConstructor
@@ -17,7 +20,9 @@ public class Token implements Serializable {
 
     private String signature;
     private long timestamp;
-    /**  userId  */
+    /**
+     * userId
+     */
     private long id;
 
     public Token(String signature, long timestamp, long id) {

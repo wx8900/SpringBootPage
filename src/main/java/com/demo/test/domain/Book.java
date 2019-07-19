@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 /**
  * @author Jack
- * @date   2019/06/24
+ * @date 2019/06/24
  */
 
 @Entity

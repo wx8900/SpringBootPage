@@ -44,7 +44,7 @@ public class LoginController {
         Student student;
         try {
             List<Student> studentList = studentService.findByNameAndPassword(name, password);
-            if(studentList != null && studentList.size() > 0) {
+            if (studentList != null && studentList.size() > 0) {
                 student = studentList.get(0);
                 session.setAttribute("currentUser", student);
                 //String token = TokenUtils.createToken(student.getId()); // old version

@@ -8,15 +8,6 @@ public class MyDemoUpdate {
     //Lock lock = new ReentrantLock();
     Lock lock = new MyLock();
 
-    public void increase() {
-        lock.lock();
-        try{
-            i++;
-        } finally {
-            lock.unlock();
-        }
-    }
-
     public static void main(String[] args) throws Exception {
         MyDemoUpdate myDemoUpdate = new MyDemoUpdate();
         for (int i = 0; i < 2; i++) {
@@ -30,5 +21,14 @@ public class MyDemoUpdate {
         }
         Thread.sleep(1000L);
         System.out.println(myDemoUpdate.i);
+    }
+
+    public void increase() {
+        lock.lock();
+        try {
+            i++;
+        } finally {
+            lock.unlock();
+        }
     }
 }

@@ -13,13 +13,16 @@ import java.util.Optional;
  */
 public interface PersonService {
 
+    Optional<Student> findById(Long id);
+
+    List<Student> findAll();
+
     Page<Student> findByName(String name, Pageable pageable);
 
     List<Student> findByNameAndPassword(String name, String password);
 
     Page<Student> listByPage(Pageable pageable);
 
-    Optional<Student> findById(Long id);
-
     void addStudent(Student student);
+
 }

@@ -1,13 +1,12 @@
 package com.demo.test.domain;
 
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 /**
  * @author Jack
- * @date   2019/06/25
+ * @date 2019/06/25
  */
 
 @Entity

@@ -75,7 +75,7 @@ public class TinyURLUtils {
             lock.unlock();
         }
         System.out.println(Thread.currentThread().getName()
-                + " : encode() -> shortUrl : " + shortUrl + ", longUrl : " +longUrl);
+                + " : encode() -> shortUrl : " + shortUrl + ", longUrl : " + longUrl);
         return shortUrl;
     }
 
@@ -89,7 +89,7 @@ public class TinyURLUtils {
         if (shortUrl == null || shortUrl.length() <= 0 || !shortUrl.startsWith(BASE_HOST)) {
             return shortUrl;
         }
-        System.out.println("decode() ->  shortUrl : " +shortUrl+ " ,longUrl : "
+        System.out.println("decode() ->  shortUrl : " + shortUrl + " ,longUrl : "
                 + shortUrlMapping.get(shortUrl));
         return shortUrlMapping.get(shortUrl);
     }

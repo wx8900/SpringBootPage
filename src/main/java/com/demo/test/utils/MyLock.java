@@ -9,13 +9,12 @@ import java.util.concurrent.locks.LockSupport;
 
 /**
  * @author Jack
- * @date  2019/06/26 14:08 PM
+ * @date 2019/06/26 14:08 PM
  */
 public class MyLock implements Lock {
 
-    AtomicReference<Thread> owner = new AtomicReference<>();
-
     public LinkedBlockingQueue<Thread> waiters = new LinkedBlockingQueue<>();
+    AtomicReference<Thread> owner = new AtomicReference<>();
 
     @Override
     public void lock() {
@@ -32,7 +31,7 @@ public class MyLock implements Lock {
         if (owner.compareAndSet(Thread.currentThread(), null)) {
             Object[] objects = waiters.toArray();
             for (Object object : objects) {
-                Thread next = (Thread)object;
+                Thread next = (Thread) object;
                 LockSupport.unpark(next);
             }
         }

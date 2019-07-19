@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jack
@@ -128,9 +130,22 @@ public class StudentController {
             pageInfo = studentService.findByName(name, pageable);
             logger.info(" Calling the API ======> queryByName : name is " + name);
         } catch (Exception e) {
-            logger.error("[MyException] happen in findByName!" + e.getMessage().replaceAll("'", ""));
+            logger.error("[MyException] happen in findByName!" + GlobalExceptionHandler.buildErrorMessage(e));
         }
         return pageInfo;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/findAll")
+    public List<Student> findAll() {
+        List<Student> list = new ArrayList<>();
+        try {
+            list = studentService.findAll();
+            logger.info(" Calling the API ======> findAll ");
+        } catch (Exception e) {
+            logger.error("[MyException] happen in findByName!" + GlobalExceptionHandler.buildErrorMessage(e));
+        }
+        return list;
     }
 
 }

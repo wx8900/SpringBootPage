@@ -27,8 +27,10 @@ import java.time.Duration;
  * @author Jack
  * @date 2019/07/19 03:12 AM
  */
-@Configuration
-@EnableCaching
+
+
+//@Configuration
+//@EnableCaching
 public class RedisConfiguration extends CachingConfigurerSupport {
 
     /**
@@ -37,7 +39,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
      * 因为使用的连接客户端为：Lettuce,所以RedisConnectionFactory实际传入数据为 LettuceConnectionFactory
      * 使用StringRedisSerializer来序列化和反序列化redis的key值
      */
-    @Bean(name = "redisTemplate")
+    /*@Bean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
@@ -46,7 +48,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         redisTemplate.setValueSerializer(valueSerializer());
         redisTemplate.setHashValueSerializer(valueSerializer());
         return redisTemplate;
-    }
+    }*/
 
     /**
      * for String Redis Template
@@ -66,20 +68,21 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         template.afterPropertiesSet();
         return template;
     }*/
-    private RedisSerializer<String> keySerializer() {
+
+    /*private RedisSerializer<String> keySerializer() {
         return new StringRedisSerializer();
     }
 
     private RedisSerializer<Object> valueSerializer() {
         return new GenericJackson2JsonRedisSerializer();
-    }
+    }*/
 
     /***
      * CacheManager 缓存管理器，管理各种缓存（cache）组件
      * @param factory
      * @return
      */
-    @Bean
+    /*@Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
@@ -95,12 +98,12 @@ public class RedisConfiguration extends CachingConfigurerSupport {
                 .cacheDefaults(redisCacheConfiguration)
                 .build();
         return cacheManager;
-    }
+    }*/
 
     /**
      * 缓存数据时key生成策略: 缓存的key是 包名+方法名+参数列表
      */
-    @Bean
+    /*@Bean
     @Override
     public KeyGenerator keyGenerator() {
         return new KeyGenerator() {
@@ -133,11 +136,6 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         return template;
     }
 
-    /**
-     * json序列化
-     *
-     * @return
-     */
     @Bean
     public RedisSerializer<Object> jackson2JsonRedisSerializer() {
         //使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值
@@ -147,7 +145,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         serializer.setObjectMapper(mapper);
         return serializer;
-    }
+    }*/
 
     /*@Bean
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
@@ -222,7 +220,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
      * @param redisTemplate
      * @param factory
      */
-    private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
+    /*private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
         //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
@@ -231,6 +229,6 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         // 开启事务
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setConnectionFactory(factory);
-    }
+    }*/
 
 }

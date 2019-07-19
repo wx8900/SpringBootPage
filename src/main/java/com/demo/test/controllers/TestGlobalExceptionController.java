@@ -2,7 +2,6 @@ package com.demo.test.controllers;
 
 import com.demo.test.exception.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
  * 全局异常捕捉处理和自定义全局异常处理测试类
  *
  * @author Jack
- * @date   2019/07/16
+ * @date 2019/07/16
  */
 @RestController
-public class GlobalExceptionControllerTest {
+public class TestGlobalExceptionController {
 
     /**
      * 测试myExceptionHandler异常
@@ -22,7 +21,7 @@ public class GlobalExceptionControllerTest {
      * @throws Exception
      */
     @RequestMapping(value = "/myException")
-    public String index() throws Exception{
+    public String index() throws Exception {
         throw ApiErrorResponse.builder().status(HttpStatus.BAD_REQUEST).error_code("empty")
                 .detail("/API/getUserName").message("在获取用户名字的时候为空").build();
     }
@@ -33,7 +32,7 @@ public class GlobalExceptionControllerTest {
      * @return
      */
     @RequestMapping("/byzero")
-    public String test(){
+    public String test() {
         int id = 10;
         if (true) {
             // open when do testing
@@ -43,7 +42,7 @@ public class GlobalExceptionControllerTest {
     }
 
     @RequestMapping("/test")
-    public String testZero(){
+    public String testZero() {
         Object msg = null;
         // open when do testing
         //msg.toString();
@@ -51,7 +50,7 @@ public class GlobalExceptionControllerTest {
         return "success";
     }
 
-    private void createException(){
+    private void createException() {
         // open when do testing
         // int i = 5 / 0;
     }

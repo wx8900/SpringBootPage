@@ -3,6 +3,7 @@ package com.demo.test.utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,7 @@ import java.net.URLEncoder;
  * Cookie Utils类
  *
  * @author Jack
- * @date   2019/05/30 14:36 PM
+ * @date 2019/05/30 14:36 PM
  */
 public class CookieUtils {
 
@@ -22,7 +23,8 @@ public class CookieUtils {
 
     private static int iDefaultValidSecond = -1;
 
-    private CookieUtils() {}
+    private CookieUtils() {
+    }
 
     /**
      * 将值存入cookie，浏览器关闭后失效

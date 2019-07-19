@@ -2,9 +2,6 @@ package com.demo.test.utils;
 
 public class MyDemo {
     int i = 0;
-    public void increase() {
-        i++;
-    }
 
     public static void main(String[] args) throws Exception {
         MyDemo demo = new MyDemo();
@@ -19,5 +16,9 @@ public class MyDemo {
         }
         Thread.sleep(1000L);
         System.out.println(demo.i);
+    }
+
+    public void increase() {
+        i++;
     }
 }

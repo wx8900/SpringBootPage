@@ -6,9 +6,9 @@ import lombok.*;
  * Token的Model类，可以增加字段提高安全性，例如时间戳、url签名
  * “请求的API参数”+“时间戳”+“盐”进行MD5算法加密
  *
- * @author   Jack
- * @date     2019/05/30 23:40 PM
- * @version  old version, no use now
+ * @author Jack
+ * @version old version, no use now
+ * @date 2019/05/30 23:40 PM
  */
 @Data
 @AllArgsConstructor

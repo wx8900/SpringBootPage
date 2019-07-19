@@ -30,8 +30,8 @@ import java.util.Map;
  */
 @RestController
 @Api(tags = "swaggercontroller", value = "test")
-public class SwaggerControllerTest {
-    private static Logger logger = LogManager.getLogger(SwaggerControllerTest.class);
+public class SwaggerController {
+    private static Logger logger = LogManager.getLogger(SwaggerController.class);
 
     @Autowired
     private PersonService studentService;

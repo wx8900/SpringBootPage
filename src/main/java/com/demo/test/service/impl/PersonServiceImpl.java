@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ import java.util.Optional;
  * @date 2019/05/30 14:36 PM
  */
 @Service("studentService")
-@CacheConfig(cacheNames = {"personCache"})
+@CacheConfig(cacheNames = {"userCache"})
 @Transactional(rollbackOn = Exception.class)
 public class PersonServiceImpl implements PersonService {
 
@@ -42,6 +43,7 @@ public class PersonServiceImpl implements PersonService {
 
     /**
      * 用户登录API不用缓存，直接查数据库
+     *
      * @param name
      * @param password
      * @return
@@ -59,15 +61,29 @@ public class PersonServiceImpl implements PersonService {
      * @param student
      */
     @Override
-    @Cacheable(value = "students")
+    @Cacheable
     public void addStudent(Student student) {
         studentRepository.save(student);
     }
 
     @Override
-    @Cacheable(key = "#student.id", value = "students")
+    @Cacheable(key = "#student.id")
     public Optional<Student> findById(Long id) {
         return studentRepository.findById(id);
+    }
+
+    @Override
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
+    public List<Student> findAll() {
+        List<Student> list = null;
+        Iterable<Student> iterable = studentRepository.findAll();
+        if (iterable != null) {
+            list = new ArrayList<>();
+            for (Student item : iterable) {
+                list.add(item);
+            }
+        }
+        return list;
     }
 
 }

@@ -138,9 +138,9 @@ public class BookServiceImpl implements BookService {
 
     /**
      * 删除书本
-     * @CacheEvict(allEntries = true) : flush all the cache
      *
      * @param books
+     * @CacheEvict(allEntries = true) : flush all the cache
      */
     @Override
     @CacheEvict(allEntries = true)
@@ -151,9 +151,9 @@ public class BookServiceImpl implements BookService {
 
     /**
      * 清除一条缓存，key为要清空的数据
-     * @CacheEvict(key = "#book.id") : remove item by key
      *
      * @param id
+     * @CacheEvict(key = "#book.id") : remove item by key
      */
     @Override
     @CacheEvict(key = "#book.id")
