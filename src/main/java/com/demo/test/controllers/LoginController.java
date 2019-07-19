@@ -41,13 +41,13 @@ public class LoginController {
         try {
             Student student = Optional.ofNullable(studentService.findByNameAndPassword(name, password))
                     .map(x -> x.get(0)).orElse(
-                            new Student(0, "defaultUser", "00000000", "N/A",
-                                    "0", "00000000000", "testAccount@gmail.com"));
+                            Student.builder().id(0).name("defaultUser").password("000").branch("N/A")
+                                    .percentage("0").phone("00000000000").email("testAccount@gmail.com").build());
             session.setAttribute("currentUser", student);
             //String token = TokenUtils.createToken(student.getId()); // old version
             Token token = TokenUtil.generateToken(student.getName(), student.getId());
-            logger.info(name + " has login the website. The userId is " + student.getId()
-                    + " and token is " + token.getSignature());
+            logger.info(name + " has login the website. The {userId} is " + student.getId()
+                    + " and {token} is " + token.getSignature());
         } catch (Exception e) {
             logger.error("[MyException] happen in login!!!" + e.getMessage().replaceAll("'", ""));
         }
@@ -71,7 +71,7 @@ public class LoginController {
     @GetMapping("/user/{id}")
     public Student getUserById(@PathVariable Long id) {
         Optional<Student> student = studentService.findById(id);
-        return student.orElse(new Student());
+        return student.orElse(Student.builder().build());
     }
 
 }

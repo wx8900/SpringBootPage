@@ -55,7 +55,7 @@ public class RedisController {
     public ApiErrorResponse addUser(@Valid @RequestBody Student student) throws Exception {
         stringRedisTemplate.opsForValue().set("uUserTest0650", student.toString());
         logger.info("redis保存数据为：[{}]" + student.toString());
-        ApiErrorResponse apiError = new ApiErrorResponse();
+        ApiErrorResponse apiError = ApiErrorResponse.builder().build();
         apiError.setStatus(HttpStatus.OK);
         apiError.setError_code("200");
         apiError.setMessage("Redis保存数据成功！");
@@ -73,7 +73,7 @@ public class RedisController {
         logger.error("redis中获取数据：[{}]" + uu);
         logger.warn("redis中获取数据：[{}]" + uu);
         logger.debug("redis中获取数据：[{}]" + uu);
-        ApiErrorResponse apiError = new ApiErrorResponse();
+        ApiErrorResponse apiError = ApiErrorResponse.builder().build();
         apiError.setStatus(HttpStatus.OK);
         apiError.setError_code("200");
         apiError.setMessage("Redis查询数据成功！");

@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Import;
 
 /**
  * Started SpringBootJpaApplication in 8.796 seconds (JVM running for 9.378)
- * @EnableCaching  start cache base on annotations
+ * @EnableCaching: start cache base on annotations
  *
  * ServletComponentScan: enable filter
  * 如果想用Swagger，要把@ServletComponentScan注释掉

@@ -69,7 +69,7 @@ public class SwaggerControllerTest {
     @ApiOperation(value = "登录接口测试")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ApiErrorResponse login(@RequestBody @ApiParam(value = "用户实体类") Student student) {
-        ApiErrorResponse apiError = new ApiErrorResponse();
+        ApiErrorResponse apiError = ApiErrorResponse.builder().build();
         if (StringUtils.isEmpty(student.getName()) || StringUtils.isEmpty(student.getPassword())) {
             apiError.setMessage("请填写登录信息！");
         } else {
@@ -86,7 +86,6 @@ public class SwaggerControllerTest {
                 apiError.setDetail("Student " + student.getName() + " login in " + Constant.FAILURE);
             }
         }
-
         return apiError;
     }
 

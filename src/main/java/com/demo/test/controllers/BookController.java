@@ -79,9 +79,8 @@ public class BookController {
         if (StringUtils.isEmpty(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Book book = bookService.findBookById(id);
-        System.out.println("The book id is : " + id + "================"+ book.getName());
-        logger.info("Book id is : " + id + "================"+ book.getName());
+        Book book = bookService.findById(id);
+        logger.info("{book.id} : " + id + ", {bookName} : "+ book.getName());
         HttpStatus status = book == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity<>(book, status);
     }
@@ -101,13 +100,13 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         List<Book> bookList = bookService.queryAllBookByUserId(id);
-        System.out.println("Book id is : " + id + "=======bookList.size========="+ bookList.size());
-        logger.info("Book id is : " + id + "=======bookList.size========="+ bookList.size());
+        logger.info("{book.id} : " + id + "{bookList.size} : "+ bookList.size());
         HttpStatus status = bookList == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity<>(bookList, status);
     }
 
     /**
+     *
      * @param bookName
      * @param minBookPrice
      * @param maxBookPrice
@@ -179,9 +178,9 @@ public class BookController {
     @GetMapping(value = "/getBook/{id}")
     private Book getBook(@PathVariable Long id) throws Exception {
         if (StringUtils.isEmpty(id) || 0L == id) {
-            return new Book();
+            return Book.builder().id(0L).build();
         }
-        Book book = bookService.findBookById(id);
+        Book book = bookService.findById(id);
         if (null == book) {
             logger.error("操作失败， 单条查询为空! [BookController.getBook(Long id)] ");
             throw new Exception("操作失败， 单条查询为空!");
@@ -197,7 +196,7 @@ public class BookController {
             return books;
         }
         for (Long id : ids) {
-            Book book = bookService.findBookById(id);
+            Book book = bookService.findById(id);
             if (null == book) {
                 logger.error("操作失败， 单条查询为空! [BookController.getBook(List<Long> ids)] ");
                 throw new Exception("操作失败， 单条查询为空!");

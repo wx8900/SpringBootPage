@@ -6,15 +6,17 @@ import com.demo.test.enums.ResultEnum;
 import com.demo.test.utils.SellException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 @Slf4j
+@Builder
 public class OrderForm2OrderDTO {
 
     public static OrderDTO convert(OrderForm orderForm) {
-        OrderDTO orderDTO = new OrderDTO();
+        OrderDTO orderDTO = OrderDTO.builder().build();
         orderDTO.setBuyerName(orderForm.getName());
         orderDTO.setBuyerPhone(orderForm.getPhone());
         orderDTO.setBuyerAddress(orderForm.getAddress());

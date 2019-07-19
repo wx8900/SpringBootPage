@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -72,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetailRepository.save(orderDetail);
         }
         //4. 将订单主表写入数据库
-        OrderMaster orderMaster = new OrderMaster();
+        OrderMaster orderMaster = OrderMaster.builder().build();
         //注意顺序，拷贝之后null值也会被拷贝，所以在拷贝之后再赋值
         orderDTO.setOrderId(orderId);
         BeanUtils.copyProperties(orderDTO, orderMaster);
@@ -82,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
         orderMasterRepository.save(orderMaster);
         //5. 减库存
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
-                new CartDTO(e.getProductId(), e.getProductQuantity())
+                CartDTO.builder().productId(e.getProductId()).productQuantity(e.getProductQuantity()).build()
         ).collect(Collectors.toList());
         productInfoService.decreaseStock(cartDTOList);
 
@@ -100,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
         if (detailList == null) {
             throw new SellException(ResultEnum.ORDER_DETAIL_NOT_EXIST);
         }
-        OrderDTO dto = new OrderDTO();
+        OrderDTO dto = OrderDTO.builder().build();
         BeanUtils.copyProperties(orderMaster, dto);
         dto.setOrderDetailList(detailList);
         return dto;
@@ -112,11 +113,11 @@ public class OrderServiceImpl implements OrderService {
         Page<OrderMaster> page = orderMasterRepository.findByBuyerOpenid(buyerOpenid, pageable);
         List<OrderMaster> orderMasterList = page.getContent();
         List<OrderDTO> orderDTOS = OrderMaster2OrderDTO.convertList(orderMasterList);
-        return new PageImpl<OrderDTO>(orderDTOS, pageable, page.getTotalElements());
+        return new PageImpl<>(orderDTOS, pageable, page.getTotalElements());
     }
 
     @Override
-    @Cacheable
+    @CachePut(key = "#order.id")
     @Transactional
     public OrderDTO cancel(OrderDTO orderDTO) {
         //判断订单状态。只有新下单可以取消
@@ -125,7 +126,7 @@ public class OrderServiceImpl implements OrderService {
             throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
         }
         //更改订单状态
-        OrderMaster orderMaster = new OrderMaster();
+        OrderMaster orderMaster = OrderMaster.builder().build();
         orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
         BeanUtils.copyProperties(orderDTO, orderMaster);
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
@@ -141,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
             throw new SellException(ResultEnum.ORDER_DETAIL_EMPTY);
         }
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream()
-                .map(e -> new CartDTO(e.getProductId(), e.getProductQuantity()))
+                .map(e -> CartDTO.builder().productId(e.getProductId()).productQuantity(e.getProductQuantity()).build())
                 .collect(Collectors.toList());
         productInfoService.increaseStock(cartDTOList);
 
@@ -164,7 +165,7 @@ public class OrderServiceImpl implements OrderService {
         }
         //更改状态
         orderDTO.setOrderStatus(OrderStatusEnum.FINISH.getCode());
-        OrderMaster orderMaster = new OrderMaster();
+        OrderMaster orderMaster = OrderMaster.builder().build();
         BeanUtils.copyProperties(orderDTO, orderMaster);
         //保存更新
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
@@ -189,7 +190,7 @@ public class OrderServiceImpl implements OrderService {
             log.error("【支付订单】订单支付状态不正确，orderDTO={}", orderDTO);
             throw new SellException(ResultEnum.ORDER_PAID_STATUS_ERROR);
         }
-        OrderMaster orderMaster = new OrderMaster();
+        OrderMaster orderMaster = OrderMaster.builder().build();
         orderDTO.setPayStatus(PayStatusEnum.SUCCESS.getCode());
         BeanUtils.copyProperties(orderDTO, orderMaster);
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);

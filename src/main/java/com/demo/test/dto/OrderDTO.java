@@ -5,6 +5,7 @@ import com.demo.test.enums.OrderStatusEnum;
 import com.demo.test.enums.PayStatusEnum;
 import com.demo.test.utils.Date2LongSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Builder
 public class OrderDTO {
     /**
      * 订单id

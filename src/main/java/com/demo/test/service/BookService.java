@@ -22,9 +22,9 @@ public interface BookService {
 
     void deleteById(Long id);
 
-    Book findBookById(Long id);
+    Book findById(Long id);
 
-    //List<Book> findAll();
+    Book findByISBN(String isbn);
 
     Map<Long, Book> findAll();
 

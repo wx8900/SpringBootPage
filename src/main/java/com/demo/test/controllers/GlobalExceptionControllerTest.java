@@ -23,8 +23,8 @@ public class GlobalExceptionControllerTest {
      */
     @RequestMapping(value = "/myException")
     public String index() throws Exception{
-        throw new ApiErrorResponse(HttpStatus.BAD_REQUEST,"empty"
-                ,"/API/getUserName","在获取用户名字的时候为空");
+        throw ApiErrorResponse.builder().status(HttpStatus.BAD_REQUEST).withError_code("empty")
+                .withDetail("/API/getUserName").withMessage("在获取用户名字的时候为空").build();
     }
 
     /**

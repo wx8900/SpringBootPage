@@ -86,12 +86,25 @@ public class StudentController {
             logger.error("[MyException] validation error! ",
                     GlobalExceptionHandler.buildErrorMessage(e));
         }
-        ApiErrorResponse apiError = new ApiErrorResponse();
+        ApiErrorResponse apiError = ApiErrorResponse.builder().build();
         apiError.setStatus(HttpStatus.OK);
         apiError.setError_code("200");
         apiError.setMessage("用户添加成功！");
-        apiError.setDetail("Add student "+Constant.SUCCESS);
+        apiError.setDetail("Add student " + Constant.SUCCESS);
         return apiError;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/findById")
+    public Student findById(@Valid Long id) {
+        Student student = Student.builder().id(0).build();
+        try {
+            student = studentService.findById(id).orElse(null);
+            logger.info(" Calling the API ======> findById + {id} : " + id);
+        } catch (Exception e) {
+            logger.error("[MyException] happen in listByPage!" + e.getMessage().replaceAll("'", ""));
+        }
+        return student;
     }
 
 

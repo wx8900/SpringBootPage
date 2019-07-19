@@ -96,7 +96,7 @@ public class TokenAuthorFilter implements Filter {
                     code = Constant.NO_TOKEN;
                     logger.error(msg + token);
                 }
-                resultInfo = new ResultInfo(code, msg);
+                resultInfo = ResultInfo.builder().code(code).msg(msg).build();
 
                 // 验证失败
                 String resultCode = resultInfo.getCode();

@@ -21,5 +21,8 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
             "on sb.uid = s.id and s.id=?1)")
     List<Book> queryAllBookByUserId(Long uid);
 
+    @Query("SELECT b from Book b where b.isbn = ?1")
+    Book findBookByISBN(String isbn);
+
     //void update(Book book);
 }

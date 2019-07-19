@@ -86,9 +86,16 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     @Cacheable(key = "#id", condition = "#id lt 20", unless = "#result eq null")
-    public Book findBookById(Long id) {
+    public Book findById(Long id) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
         return bookRepostory.findById(id).orElse(null);
+    }
+
+    @Override
+    @Cacheable(key = "#id", condition = "#id lt 20", unless = "#result eq null")
+    public Book findByISBN(String isbn) {
+        logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
+        return bookRepostory.findBookByISBN(isbn);
     }
 
 
@@ -105,6 +112,8 @@ public class BookServiceImpl implements BookService {
 
     /**
      * 修改单个书本
+     * 注意：@CachePut — always lets the method execute. It is used
+     * to update the cache with the result of the method execution
      *
      * @param oldBook
      * @param newBook
@@ -112,7 +121,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @CachePut(key = "#book.id")
     public void update(Book oldBook, Book newBook) {
-        logger.info("执行这里，更新数据库，更新缓存....");
+        logger.info("执行这里，更新数据库，更新book缓存....");
         oldBook.setName(newBook.getName());
         oldBook.setPrice(newBook.getPrice());
         oldBook.setDesc(newBook.getDesc());
@@ -121,11 +130,12 @@ public class BookServiceImpl implements BookService {
 
     /**
      * 删除书本
+     * @CacheEvict(allEntries = true) : flush all the cache
      *
      * @param books
      */
     @Override
-    @CacheEvict(key = "#book.id")
+    @CacheEvict(allEntries = true)
     public void delete(Book books) {
         logger.info("删除成功！....");
         bookRepostory.delete(books);
@@ -133,11 +143,12 @@ public class BookServiceImpl implements BookService {
 
     /**
      * 清除一条缓存，key为要清空的数据
+     * @CacheEvict(key = "#book.id") : remove item by key
      *
      * @param id
      */
     @Override
-    @CacheEvict(key = "#id")
+    @CacheEvict(key = "#book.id")
     public void deleteById(Long id) {
         logger.info("删除成功！....");
         bookRepostory.deleteById(id);
