@@ -41,6 +41,8 @@ public class BookServiceImpl implements BookService {
     BookRepository bookRepository;
 
     /**
+     * 不带分页
+     *
      * @return
      */
     @Override
@@ -53,6 +55,8 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
+     * 带分页
+     *
      * @param spec
      * @param pageable
      * @return

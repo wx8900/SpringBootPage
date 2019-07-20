@@ -61,7 +61,7 @@ public class PersonServiceImpl implements PersonService {
      * @param student
      */
     @Override
-    @Cacheable
+    @Cacheable(key = "#student.id")
     public void addStudent(Student student) {
         studentRepository.save(student);
     }
