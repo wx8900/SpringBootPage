@@ -56,7 +56,7 @@ public class RedisController {
         logger.info("redis保存数据为：[{}]" + student.toString());
         ApiErrorResponse apiError = ApiErrorResponse.builder().build();
         apiError.setStatus(HttpStatus.OK);
-        apiError.setError_code("200");
+        apiError.setCode("200");
         apiError.setMessage("Redis保存数据成功！");
         apiError.setDetail("Add student " + Constant.SUCCESS);
         return apiError;
@@ -74,7 +74,7 @@ public class RedisController {
         logger.debug("redis中获取数据：[{}]" + uu);
         ApiErrorResponse apiError = ApiErrorResponse.builder().build();
         apiError.setStatus(HttpStatus.OK);
-        apiError.setError_code("200");
+        apiError.setCode("200");
         apiError.setMessage("Redis查询数据成功！");
         apiError.setDetail("Query student " + Constant.SUCCESS);
         return apiError;

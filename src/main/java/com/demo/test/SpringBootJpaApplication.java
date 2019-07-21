@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 /**
  * Started SpringBootJpaApplication in 8.796 seconds (JVM running for 9.378)
+ * Started SpringBootJpaApplication in 10.516 seconds (JVM running for 11.511)  2019/07/20
  *
  * @author Jack
  * @EnableCaching: start cache base on annotations

@@ -73,7 +73,7 @@ public class TokenAuthorFilter implements Filter {
             rep.setStatus(HttpServletResponse.SC_OK);
         } else {
             if (!allowedPath) {
-                String msg = "", code = "";
+                String msg, code;
                 if (null != token && token.length() > 0) {
                     Student student = (Student) req.getSession().getAttribute("currentUser");
                     if (student != null) {
@@ -84,22 +84,22 @@ public class TokenAuthorFilter implements Filter {
                         } else {
                             code = Constant.TOKEN_INVALID;
                             msg = "客户端请求参数Token验证失败！请重新申请 token!";
-                            logger.error(msg + token);
+                            logger.error(msg + " {token} : " + token);
                         }
                     } else {
                         code = Constant.NO_LOGIN_USER;
                         msg = "当前没有用户登录，请重新登录!";
-                        logger.error(msg + token);
+                        logger.error(msg + " {token} : " + token);
                     }
                 } else {
                     code = Constant.NO_TOKEN;
                     msg = "客户端请求无参数token信息, 没有访问权限！";
-                    logger.error(msg + token);
+                    logger.error(msg + " {token} : " + token);
                 }
-                apiErrorResponse = ApiErrorResponse.builder().error_code(code).message(msg).build();
+                apiErrorResponse = ApiErrorResponse.builder().code(code).message(msg).build();
 
                 // 验证失败
-                String resultCode = apiErrorResponse.getError_code();
+                String resultCode = apiErrorResponse.getCode();
                 if (Constant.NO_TOKEN.equals(resultCode)
                         || Constant.TOKEN_INVALID.equals(resultCode)
                         || Constant.NO_LOGIN_USER.equals(resultCode)) {
@@ -110,13 +110,12 @@ public class TokenAuthorFilter implements Filter {
                         writer.write(jsonStr);
                         writer.flush();
                     } catch (IOException e) {
-                        logger.error("过滤器返回信息失败，错误:" + e.getMessage(),
-                                GlobalExceptionHandler.buildErrorMessage(e));
+                        logger.error("过滤器返回信息失败，错误:" + GlobalExceptionHandler.buildErrorMessage(e));
                     }
                     return;
                 }
                 if (isFilter) {
-                    logger.info("token filter过滤OK!");
+                    logger.info("token filter OK!");
                     chain.doFilter(request, response);
                 }
             } else {

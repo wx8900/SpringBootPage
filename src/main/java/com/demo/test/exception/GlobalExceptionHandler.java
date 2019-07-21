@@ -82,13 +82,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         logger.error("GlobalExceptionHandler：" + exception.getCause());
         logger.error("GlobalExceptionHandler：" + exception.getSuppressed().toString());
         logger.error("GlobalExceptionHandler：" + exception.getMessage());
-        logger.error("GlobalExceptionHandler：" + exception.getStackTrace().toString());
         logger.error("GlobalExceptionHandler =========> get StackTrace Info : "
                 + detail);
 
         ApiErrorResponse apiError = new ApiErrorResponse();
         apiError.setStatus(HttpStatus.SERVICE_UNAVAILABLE);
-        apiError.setError_code("503");
+        apiError.setCode("503");
         apiError.setMessage("现在服务器报非自定义异常了，请马上联系管理员！");
         return apiError;
     }
@@ -118,7 +117,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         ApiErrorResponse apiError = new ApiErrorResponse();
         apiError.setStatus(HttpStatus.EXPECTATION_FAILED);
-        apiError.setError_code("417");
+        apiError.setCode("417");
         apiError.setMessage("现在服务器报自定义异常，请马上联系管理员！");
         return apiError;
     }
@@ -176,7 +175,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
                 .status(HttpStatus.NOT_FOUND)
-                .error_code("NOT_FOUND")
+                .code("NOT_FOUND")
                 .message(ex.getLocalizedMessage()).build();
 
         return response;
@@ -203,7 +202,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String error = "Malformed JSON request ";
         ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
                 .status(status)
-                .error_code("BAD_DATA")
+                .code("BAD_DATA")
                 .message(ex.getLocalizedMessage())
                 .detail(error + ex.getMessage()).build();
         return new ResponseEntity<>(response, response.getStatus());
@@ -225,7 +224,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
                 .status(status)
-                .error_code(HttpStatus.NOT_FOUND.name())
+                .code(HttpStatus.NOT_FOUND.name())
                 .message(ex.getLocalizedMessage())
                 .detail(ex.getMessage())
                 .build();
@@ -248,7 +247,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         ApiErrorResponse response = new ApiErrorResponse.ApiErrorResponseBuilder()
                 .status(status)
-                .error_code(HttpStatus.BAD_REQUEST.name())
+                .code(HttpStatus.BAD_REQUEST.name())
                 .message(ex.getLocalizedMessage()).build();
 
         return new ResponseEntity<>(response, response.getStatus());

@@ -76,12 +76,12 @@ public class SwaggerController {
             List<Student> studentList = studentService.findByNameAndPassword(student.getName(), student.getPassword());
             if (studentList != null && studentList.size() >= 1) {
                 apiError.setStatus(HttpStatus.OK);
-                apiError.setError_code("200");
+                apiError.setCode("200");
                 apiError.setMessage(studentList.get(0).getName() + "登录成功了！");
                 apiError.setDetail("Student " + studentList.get(0).getName() + " login in " + Constant.SUCCESS);
             } else {
                 apiError.setStatus(HttpStatus.NOT_FOUND);
-                apiError.setError_code("400");
+                apiError.setCode("400");
                 apiError.setMessage("登录失败");
                 apiError.setDetail("Student " + student.getName() + " login in " + Constant.FAILURE);
             }
@@ -132,7 +132,7 @@ public class SwaggerController {
                     Student stu = studentList.get(0);
                     logger.info(stu.getName() + "登录成功啦！");
                 } else {
-                    logger.info("用户名" + userName + "或密码不正确！");
+                    logger.info("用户名或密码不正确！");
                 }
             }
         }

@@ -22,7 +22,7 @@ public class TestGlobalExceptionController {
      */
     @RequestMapping(value = "/myException")
     public String index() throws Exception {
-        throw ApiErrorResponse.builder().status(HttpStatus.BAD_REQUEST).error_code("empty")
+        throw ApiErrorResponse.builder().status(HttpStatus.BAD_REQUEST).code("empty")
                 .detail("/API/getUserName").message("在获取用户名字的时候为空").build();
     }
 

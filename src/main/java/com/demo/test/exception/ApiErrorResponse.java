@@ -17,12 +17,14 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @Builder
 public class ApiErrorResponse extends RuntimeException {
-
+    /**
+     * HTTP状态码
+     */
     private HttpStatus status;
     /**
      * 异常状态码
      */
-    private String error_code;
+    private String code;
     /**
      * 异常信息
      */
