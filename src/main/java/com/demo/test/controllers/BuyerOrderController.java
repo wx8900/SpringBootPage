@@ -4,6 +4,7 @@ import com.demo.test.domain.OrderForm;
 import com.demo.test.dto.OrderDTO;
 import com.demo.test.dto.OrderForm2OrderDTO;
 import com.demo.test.enums.ResultEnum;
+import com.demo.test.security.SignMD5;
 import com.demo.test.service.BuyerService;
 import com.demo.test.service.OrderService;
 import com.demo.test.utils.SellException;
@@ -37,10 +38,26 @@ public class BuyerOrderController {
     @Autowired
     BuyerService buyerService;
 
-    //创建订单
+    /**
+     * 创建订单
+     *
+     * @param orderForm
+     * @param sign           安全校验位
+     * @param bindingResult
+     * @return
+     */
     @PostMapping(value = "/create")
     @ApiOperation(value = "创建订单")
-    public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm, BindingResult bindingResult) {
+    public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm,
+                                                @RequestParam("sign") String sign,
+                                                BindingResult bindingResult) {
+        String sb = "name="+orderForm.getName()+"&phone="+orderForm.getPhone();
+        String mde5Str = SignMD5.getMD5(sb);
+        if (!sign.equals(mde5Str)) {
+            log.error("警告：接口被篡改！");
+            return ResultVOUtils.error(400, "警告：接口被篡改！");
+        }
+
         if (bindingResult.hasErrors()) {
             log.error("【创建订单】参数错误，orderForm={}", orderForm);
             throw new SellException(ResultEnum.PARAMS_ERROR.getCode(),

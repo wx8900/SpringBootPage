@@ -94,7 +94,8 @@ public class TokenAuthorFilter implements Filter {
                     }
                 } else {
                     code = Constant.NO_TOKEN;
-                    msg = "客户端请求无参数token信息, 没有访问权限！";
+                    //msg = "客户端请求无参数token信息, 没有访问权限！";
+                    msg = "用户没有登录, 没有访问权限！";
                     logger.error(msg + " {token} : " + token);
                 }
                 apiErrorResponse = ApiErrorResponse.builder().code(code).message(msg).build();

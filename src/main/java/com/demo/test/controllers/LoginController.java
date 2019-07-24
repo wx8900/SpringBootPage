@@ -3,6 +3,7 @@ package com.demo.test.controllers;
 import com.demo.test.domain.Student;
 import com.demo.test.domain.Token;
 import com.demo.test.exception.GlobalExceptionHandler;
+import com.demo.test.security.CookieUtils;
 import com.demo.test.security.RSA;
 import com.demo.test.security.RSAKey;
 import com.demo.test.service.PersonService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +45,17 @@ public class LoginController {
         Student student;
         // Login successful!
         password = RSA.priDecode(password);
-        //password = RSAKey.builder().build().priDecode(password); // RSAKey - Data must not be longer than 64 bytes
+        /** // RSAKey - Data must not be longer than 64 bytes
+        RSAKey rsaKey = new RSAKey();
+        password = rsaKey.priDecode(password);*/
+
+        String time = password.substring(password.length() - 13);
+        if (System.currentTimeMillis() - Long.parseLong(time) > 2 * 60 * 1000) {
+            return "登录异常，时间超时";
+        }
+
+        password = password.substring(0, password.length() - 13);
+
         try {
             List<Student> studentList = studentService.findByNameAndPassword(name, password);
             if (studentList != null && studentList.size() > 0) {
@@ -51,9 +63,11 @@ public class LoginController {
                 session.setAttribute("currentUser", student);
                 //String token = TokenUtils.createToken(student.getId()); // old version
                 Token token = TokenUtil.generateToken(student.getName(), student.getId());
+                //CookieUtils.flushCookie(token, response);
+
                 logger.info(name + " has login the website. The {userId} is " + student.getId()
                         + " and {token} is " + token.getSignature());
-                result = "Login successful!";
+                result = "Login success!";
             } else {
                 result = "Username or password error!";
             }

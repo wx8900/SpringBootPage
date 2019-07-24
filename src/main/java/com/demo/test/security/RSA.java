@@ -119,7 +119,7 @@ public class RSA {
     }
 
     public static void main(String[] args) throws IOException {
-        String pwd = "12345678";
+        String pwd = "12345678" + System.currentTimeMillis();  //随机串
         String passwordStr = pubEncode(pwd);
         System.out.println("11111passwordStr is "+passwordStr);
         System.out.println("22222decrypt is " + priDecode(passwordStr));

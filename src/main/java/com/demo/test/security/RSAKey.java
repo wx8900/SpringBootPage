@@ -1,9 +1,11 @@
 package com.demo.test.security;
 
+import com.sun.security.sasl.Provider;
 import lombok.Builder;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sun.misc.BASE64Decoder;
 
 import javax.crypto.Cipher;
 import java.io.File;
@@ -11,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.Security;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
@@ -91,14 +95,12 @@ public class RSAKey {
     public String priDecode(String src) {
         String res = "";
         try {
-            /*PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(rsaPrivateKey.getEncoded());
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);*/
             Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, rsaPrivateKey);
-            byte[] result = cipher.doFinal(src.getBytes());
-            res = result.toString();
-            System.out.println("公钥加密、私钥解密——解密：" + res);
+            BASE64Decoder decoder = new BASE64Decoder();
+            byte[] b1 = decoder.decodeBuffer(src);
+            byte[] b = cipher.doFinal(b1);
+            res = new String(b);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
