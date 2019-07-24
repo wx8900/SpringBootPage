@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,7 +78,7 @@ public class StudentController {
     public ApiErrorResponse addStudent(@Valid @RequestBody Student student) {
         ApiErrorResponse apiError;
         try {
-            studentService.addStudent(student);
+            studentService.save(student);
             apiError = ApiErrorResponse.builder().status(HttpStatus.OK).code("200")
                     .message("用户添加成功！").detail("Add student " + Constant.SUCCESS).build();
             logger.info(" Calling the API Success ======> addStudent : student " + student.toString());
@@ -91,8 +91,16 @@ public class StudentController {
         return apiError;
     }
 
+
     @ResponseBody
-    @GetMapping(value = "/findById")
+    @GetMapping(value = "/findAll")
+    public List<Student> findAll() {
+        logger.info(" Calling the API Success ======> findAll ");
+        return studentService.findAll();
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/findById/{id}")
     public Student findById(@Valid Long id) {
         Student student = Student.builder().id(0).build();
         try {
@@ -104,13 +112,21 @@ public class StudentController {
         return student;
     }
 
-
+    /**
+     * No primary or default constructor found for interface org.springframework.data.domain.Pageable
+     * ==> 把Pageable拆开成2个参数
+     *
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
     @ResponseBody
     @GetMapping(value = "/queryByPage")
-    public Page<Student> queryByPage(@Valid Pageable pageable) {
-        Page<Student> pageInfo = null;
+    public List<Student> queryByPage(@RequestParam("page") int pageIndex,
+                                     @RequestParam("size") int pageSize) {
+        List<Student> pageInfo = null;
         try {
-            pageInfo = studentService.listByPage(pageable);
+            pageInfo = studentService.listByPage(PageRequest.of(pageIndex, pageSize)).getContent();
             logger.info(" Calling the API Success ======> queryByPage");
         } catch (Exception e) {
             logger.error("[MyException] happen in queryByPage!" + GlobalExceptionHandler.buildErrorMessage(e));
@@ -118,12 +134,21 @@ public class StudentController {
         return pageInfo;
     }
 
+    /**
+     * No primary or default constructor found for interface org.springframework.data.domain.Pageable
+     * ==> 把@Valid Pageable pageable拆开成2个参数
+     *
+     * @param name
+     * @return
+     */
     @ResponseBody
     @GetMapping(value = "/queryByName")
-    public Page<Student> queryByName(@Size(min = 1, max = 20) String name, @Valid Pageable pageable) {
-        Page<Student> pageInfo = null;
+    public List<Student> queryByName(@Size(min = 1, max = 20) String name,
+                                     @RequestParam("page") int pageIndex,
+                                     @RequestParam("size") int pageSize) {
+        List<Student> pageInfo = null;
         try {
-            pageInfo = studentService.findByName(name, pageable);
+            pageInfo = (List<Student>) studentService.findByName(name, PageRequest.of(pageIndex, pageSize));
             logger.info(" Calling the API Success ======> queryByName : name is " + name);
         } catch (Exception e) {
             logger.error("[MyException] happen in queryByName!" + GlobalExceptionHandler.buildErrorMessage(e));
@@ -131,17 +156,14 @@ public class StudentController {
         return pageInfo;
     }
 
-    @ResponseBody
-    @GetMapping(value = "/findAll")
-    public List<Student> findAll() {
-        List<Student> list = new ArrayList<>();
-        try {
-            list = studentService.findAll();
-            logger.info(" Calling the API Success ======> findAll ");
-        } catch (Exception e) {
-            logger.error("[MyException] happen in findAll!" + GlobalExceptionHandler.buildErrorMessage(e));
-        }
-        return list;
+    @DeleteMapping("/deleteById/{id}")
+    public void deleteById(Long id) {
+        studentService.deleteById(id);
+    }
+
+    @PutMapping("/updateStudent")
+    public void updateStudent(Student user) {
+        studentService.save(user);
     }
 
 }

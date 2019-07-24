@@ -3,19 +3,17 @@ package com.demo.test.controllers;
 import com.demo.test.domain.Student;
 import com.demo.test.domain.Token;
 import com.demo.test.exception.GlobalExceptionHandler;
+import com.demo.test.security.RSA;
+import com.demo.test.security.RSAKey;
 import com.demo.test.service.PersonService;
 import com.demo.test.utils.TokenUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,11 +35,15 @@ public class LoginController {
     @Autowired
     private PersonService studentService;
 
-    @GetMapping(value = "/login")
-    public String login(@Size(min = 3, max = 20) String name, @Size(min = 8, max = 20) String password,
+    @PostMapping(value = "/login")
+    public String login(@RequestParam("name") String name,
+                        @RequestParam("password") String password,
                         HttpSession session) {
         String result = "";
         Student student;
+        // Login successful!
+        password = RSA.priDecode(password);
+        //password = RSAKey.builder().build().priDecode(password); // RSAKey - Data must not be longer than 64 bytes
         try {
             List<Student> studentList = studentService.findByNameAndPassword(name, password);
             if (studentList != null && studentList.size() > 0) {

@@ -62,7 +62,7 @@ public class SwaggerController {
     @ApiImplicitParam(name = "student", value = "Student", required = true, dataType = "Student")
     @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
     public Object addStudent(@RequestBody Student student) {
-        studentService.addStudent(student);
+        studentService.save(student);
         return "success";
     }
 

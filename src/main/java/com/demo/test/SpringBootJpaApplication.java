@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @SpringBootApplication
 @EnableCaching
-@ServletComponentScan(basePackages = {"com.demo.test.filter"})
+//@ServletComponentScan(basePackages = {"com.demo.test.filter"})
 public class SpringBootJpaApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringBootJpaApplication.class, args);

@@ -23,6 +23,8 @@ public interface PersonService {
 
     Page<Student> listByPage(Pageable pageable);
 
-    void addStudent(Student student);
+    void deleteById(Long id);
+
+    void save(Student student);
 
 }

@@ -5,6 +5,7 @@ import com.demo.test.domain.Student;
 import com.demo.test.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,7 +63,7 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Cacheable(key = "#student.id")
-    public void addStudent(Student student) {
+    public void save(Student student) {
         studentRepository.save(student);
     }
 
@@ -84,6 +85,12 @@ public class PersonServiceImpl implements PersonService {
             }
         }
         return list;
+    }
+
+    @Override
+    @CacheEvict(key = "#student.id")
+    public void deleteById(Long id) {
+        studentRepository.deleteById(id);
     }
 
 }
