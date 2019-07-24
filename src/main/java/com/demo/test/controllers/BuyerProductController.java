@@ -43,7 +43,7 @@ public class BuyerProductController {
     public ResultVO list(HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
 
         // 1.查询所有上架商品

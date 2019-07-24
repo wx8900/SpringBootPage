@@ -70,7 +70,8 @@ public class StudentController {
     private PersonService studentService;
 
     /**
-     * 添加学生需要先启动Redis服务器，不然会报错Unable to connect to Redis
+     * start Redis server before call this method
+     * Otherwise, it will shows unable to connect to Redis
      *
      * @param student
      * @return
@@ -82,11 +83,11 @@ public class StudentController {
         try {
             studentService.save(student);
             apiError = ApiErrorResponse.builder().status(HttpStatus.OK).code("200")
-                    .message("用户添加成功！").detail("Add student " + Constant.SUCCESS).build();
+                    .message("Add user success!").detail("Add user " + Constant.SUCCESS).build();
             logger.info(" Calling the API Success ======> addStudent : student " + student.toString());
         } catch (Exception e) {
             apiError = ApiErrorResponse.builder().status(HttpStatus.BAD_REQUEST).code("400")
-                    .message("用户添加失败！").detail("Add student " + Constant.FAILURE).build();
+                    .message("Add user failure!").detail("Add user " + Constant.FAILURE).build();
             logger.error("[MyException] Add student " + Constant.FAILURE
                     + GlobalExceptionHandler.buildErrorMessage(e));
         }
@@ -115,8 +116,8 @@ public class StudentController {
     }
 
     /**
-     * No primary or default constructor found for interface org.springframework.data.domain.Pageable
-     * ==> 把Pageable拆开成2个参数
+     * No primary or default constructor found for interface org.spring framework.data.domain.Pageable
+     * separate Pageable pageable to two parameters: pageIndex, pageSize
      *
      * @param pageIndex
      * @param pageSize
@@ -130,7 +131,7 @@ public class StudentController {
         List<Student> studentList = new ArrayList<>(0);
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
             return studentList;
         }
 
@@ -144,8 +145,8 @@ public class StudentController {
     }
 
     /**
-     * No primary or default constructor found for interface org.springframework.data.domain.Pageable
-     * ==> 把@Valid Pageable pageable拆开成2个参数
+     * No primary or default constructor found for interface org.spring framework.data.domain.Pageable
+     * Separate Pageable pageable to two parameters: pageIndex, pageSize
      *
      * @param name
      * @return
@@ -159,7 +160,7 @@ public class StudentController {
         List<Student> studentList = new ArrayList<>(0);
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
             return studentList;
         }
 
@@ -176,7 +177,7 @@ public class StudentController {
     public void deleteById(Long id, HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         studentService.deleteById(id);
     }
@@ -185,7 +186,7 @@ public class StudentController {
     public void updateStudent(Student user, HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         studentService.save(user);
     }

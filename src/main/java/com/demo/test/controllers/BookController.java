@@ -56,7 +56,7 @@ public class BookController {
     public Map<Long, Book> getBookList(HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         return bookService.findAll();
     }
@@ -73,7 +73,7 @@ public class BookController {
                               HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         return bookService.findAll(spec, pageable);
     }
@@ -93,7 +93,7 @@ public class BookController {
         }
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         Book book = bookService.findById(id);
         logger.info("{book.id} : " + id + ", {bookName} : " + book.getName());
@@ -115,7 +115,7 @@ public class BookController {
                                                           HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         if (StringUtils.isEmpty(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

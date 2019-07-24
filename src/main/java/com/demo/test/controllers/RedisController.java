@@ -27,16 +27,18 @@ public class RedisController {
     static Logger logger = LogManager.getLogger(RedisController.class);
 
     /**
-     * 操作key-value都是字符串
+     * operate all the key-value are String
      */
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
     /**
-     * 操作key-value都是对象
+     * operate all the key-value are Object
      */
     /*@Autowired
-    private RedisService redisService;*/
+    private RedisService redisService;
+    */
+
     @PostMapping(value = "/redisAdd")
     public void saveRedis() {
         stringRedisTemplate.opsForValue().set("admin2019062211", "test062211");
@@ -48,30 +50,30 @@ public class RedisController {
     }
 
     /**
-     * 添加用户
+     * Add user
      */
     @PostMapping("/redis/add")
     public ApiErrorResponse addUser(@Valid @RequestBody Student student) throws Exception {
         stringRedisTemplate.opsForValue().set("uUserTest0650", student.toString());
-        logger.info("redis保存数据为：[{}]" + student.toString());
+        logger.info("Redis save data as ：[{}]" + student.toString());
         ApiErrorResponse apiError = ApiErrorResponse.builder().build();
         apiError.setStatus(HttpStatus.OK);
         apiError.setCode("200");
-        apiError.setMessage("Redis保存数据成功！");
+        apiError.setMessage("Redis save data success!");
         apiError.setDetail("Add student " + Constant.SUCCESS);
         return apiError;
     }
 
     /**
-     * 获取用户
+     * get user
      */
     @GetMapping("/redis/get")
     public ApiErrorResponse getUser() throws Exception {
         Object uu = stringRedisTemplate.opsForValue().get("uUserTest0650");
-        logger.info("redis中获取数据：[{}]" + uu);
-        logger.error("redis中获取数据：[{}]" + uu);
-        logger.warn("redis中获取数据：[{}]" + uu);
-        logger.debug("redis中获取数据：[{}]" + uu);
+        logger.info("Got the data from Redis ：[{}]" + uu);
+        logger.error("Got the data from Redis [{}]" + uu);
+        logger.warn("Got the data from Redis [{}]" + uu);
+        logger.debug("Got the data from Redis [{}]" + uu);
         ApiErrorResponse apiError = ApiErrorResponse.builder().build();
         apiError.setStatus(HttpStatus.OK);
         apiError.setCode("200");

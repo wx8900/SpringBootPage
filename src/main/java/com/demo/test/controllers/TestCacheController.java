@@ -23,7 +23,7 @@ public class TestCacheController implements Serializable {
     private StudentRepository studentRepository;
 
     /**
-     * 查询出一条数据并且添加到缓存
+     * Query one and add to cache
      *
      * @param userId
      * @return
@@ -31,12 +31,12 @@ public class TestCacheController implements Serializable {
     @RequestMapping("/getUser")
     @Cacheable("userCache")
     public Student getUser(@RequestParam(required = true) Long userId) {
-        System.out.println("如果没有缓存，就会调用下面方法，如果有缓存，则直接输出，不会输出此段话");
+        System.out.println("If no cache, it will call below method; if has cache，it will output and doesn't print this line!");
         return studentRepository.findById(userId).orElse(Student.builder().build());
     }
 
     /**
-     * 返回结果userPassword中含有nocache字符串就不缓存
+     * if result of userPassword contains nocache String, it doesn't do cache
      *
      * @param userId
      * @return
@@ -44,21 +44,27 @@ public class TestCacheController implements Serializable {
     @RequestMapping("/getUser2")
     @CachePut(value = "userCache", unless = "#result.userPassword.contains('nocache')")
     public Student getUser2(@RequestParam(required = true) Long userId) {
-        System.out.println("如果走到这里说明，说明缓存没有生效！");
+        System.out.println("If print this line, it means the cache is invalid!");
         Student student = Student.builder().id(userId).name("name_nocache" + userId).password("nocache").build();
         return student;
     }
 
 
+    /**
+     *
+     *
+     * @param userId
+     * @return
+     */
     @RequestMapping("/getUser3")
     @Cacheable(value = "userCache", key = "#root.targetClass.getName() + #root.methodName + #userId")
     public Student getUser3(@RequestParam(required = true) Long userId) {
-        System.out.println("如果第二次没有走到这里说明缓存被添加了");
+        System.out.println("If don't print this line at the second time, it means add to the cache!");
         return studentRepository.findById(userId).orElse(Student.builder().build());
     }
 
     /**
-     * 删除一个缓存
+     * Delete a cache
      *
      * @param userId
      * @return
@@ -66,11 +72,11 @@ public class TestCacheController implements Serializable {
     @RequestMapping(value = "/deleteUser")
     @CacheEvict("userCache")
     public String deleteUser(@RequestParam(required = true) String userId) {
-        return "删除成功";
+        return "Delete success!";
     }
 
     /**
-     * 添加一条保存的数据到缓存，缓存的key是当前user的id
+     * Add one saved data to the cache, the cached key is current user ID
      *
      * @param user
      * @return

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 全局异常捕捉处理和自定义全局异常处理测试类
+ * Test class for the catching and handler global Exceptions and customized Exceptions
  *
  * @author Jack
  * @date 2019/07/16
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestGlobalExceptionController {
 
     /**
-     * 测试myExceptionHandler异常
+     * test exceptions of myExceptionHandler
      *
      * @return
      * @throws Exception
@@ -27,7 +27,7 @@ public class TestGlobalExceptionController {
     }
 
     /**
-     * 测试GlobalExceptionHandler异常
+     * test exceptions of GlobalExceptionHandler
      *
      * @return
      */
@@ -41,6 +41,11 @@ public class TestGlobalExceptionController {
         return "success";
     }
 
+    /**
+     * open when do testing
+     *
+     * @return
+     */
     @RequestMapping("/test")
     public String testZero() {
         Object msg = null;
@@ -50,6 +55,9 @@ public class TestGlobalExceptionController {
         return "success";
     }
 
+    /**
+     * open when do testing
+     */
     private void createException() {
         // open when do testing
         // int i = 5 / 0;

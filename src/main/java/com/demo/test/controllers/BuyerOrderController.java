@@ -61,7 +61,7 @@ public class BuyerOrderController {
                                                 HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         String sb = "name=" + orderForm.getName() + "&phone=" + orderForm.getPhone();
         String mde5Str = SignMD5.getMD5(sb);

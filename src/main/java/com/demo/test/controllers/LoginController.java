@@ -82,7 +82,7 @@ public class LoginController {
     public void logOff(HttpSession session, HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         try {
             //String id = RequestContextHolder.currentRequestAttributes().getSessionId();
@@ -100,7 +100,7 @@ public class LoginController {
     public Student getUserById(@PathVariable Long id, HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
-            logger.error("请登录系统！");
+            logger.error("Please login the system!");
         }
         Optional<Student> student = studentService.findById(id);
         return student.orElse(Student.builder().build());
