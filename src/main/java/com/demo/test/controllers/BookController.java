@@ -1,7 +1,9 @@
 package com.demo.test.controllers;
 
 import com.demo.test.domain.Book;
+import com.demo.test.security.CookieUtils;
 import com.demo.test.service.BookService;
+import com.demo.test.utils.TokenUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -50,7 +53,11 @@ public class BookController {
      */
     @Cacheable
     @GetMapping(value = "/getBookList")
-    public Map<Long, Book> getBookList() {
+    public Map<Long, Book> getBookList(HttpServletRequest request) {
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+        }
         return bookService.findAll();
     }
 
@@ -62,7 +69,12 @@ public class BookController {
      */
     @Cacheable
     @GetMapping(value = "/findAll")
-    public Page<Book> findAll(Specification<Book> spec, Pageable pageable) {
+    public Page<Book> findAll(Specification<Book> spec, Pageable pageable,
+                              HttpServletRequest request) {
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+        }
         return bookService.findAll(spec, pageable);
     }
 
@@ -74,9 +86,14 @@ public class BookController {
      */
     @Cacheable(key = "#root.target.KEY")
     @GetMapping(value = "/findBookById/{id}")
-    public ResponseEntity<Book> findBookById(@PathVariable Long id) {
+    public ResponseEntity<Book> findBookById(@PathVariable Long id,
+                                             HttpServletRequest request) {
         if (StringUtils.isEmpty(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
         }
         Book book = bookService.findById(id);
         logger.info("{book.id} : " + id + ", {bookName} : " + book.getName());
@@ -94,7 +111,12 @@ public class BookController {
      */
     @Cacheable(key = "#root.target.id")
     @GetMapping(value = "/findAllBookByUserId/{id}")
-    public ResponseEntity<List<Book>> findAllBookByUserId(@PathVariable Long id) {
+    public ResponseEntity<List<Book>> findAllBookByUserId(@PathVariable Long id,
+                                                          HttpServletRequest request) {
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+        }
         if (StringUtils.isEmpty(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

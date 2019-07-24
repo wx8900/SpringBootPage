@@ -4,15 +4,19 @@ import com.demo.test.domain.OrderForm;
 import com.demo.test.dto.OrderDTO;
 import com.demo.test.dto.OrderForm2OrderDTO;
 import com.demo.test.enums.ResultEnum;
+import com.demo.test.security.CookieUtils;
 import com.demo.test.security.SignMD5;
 import com.demo.test.service.BuyerService;
 import com.demo.test.service.OrderService;
 import com.demo.test.utils.SellException;
+import com.demo.test.utils.TokenUtils;
 import com.demo.test.vo.ResultVO;
 import com.demo.test.vo.ResultVOUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +25,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +37,8 @@ import java.util.Map;
 @Api("买家订单服务")
 public class BuyerOrderController {
 
+    static Logger logger = LogManager.getLogger(BuyerOrderController.class);
+
     @Autowired
     OrderService orderService;
 
@@ -42,7 +49,7 @@ public class BuyerOrderController {
      * 创建订单
      *
      * @param orderForm
-     * @param sign           安全校验位
+     * @param sign          安全校验位
      * @param bindingResult
      * @return
      */
@@ -50,8 +57,13 @@ public class BuyerOrderController {
     @ApiOperation(value = "创建订单")
     public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm,
                                                 @RequestParam("sign") String sign,
-                                                BindingResult bindingResult) {
-        String sb = "name="+orderForm.getName()+"&phone="+orderForm.getPhone();
+                                                BindingResult bindingResult,
+                                                HttpServletRequest request) {
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+        }
+        String sb = "name=" + orderForm.getName() + "&phone=" + orderForm.getPhone();
         String mde5Str = SignMD5.getMD5(sb);
         if (!sign.equals(mde5Str)) {
             log.error("警告：接口被篡改！");

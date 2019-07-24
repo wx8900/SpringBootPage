@@ -4,19 +4,21 @@ import com.demo.test.domain.Constant;
 import com.demo.test.domain.Student;
 import com.demo.test.exception.ApiErrorResponse;
 import com.demo.test.exception.GlobalExceptionHandler;
+import com.demo.test.security.CookieUtils;
 import com.demo.test.service.PersonService;
+import com.demo.test.utils.TokenUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -123,15 +125,22 @@ public class StudentController {
     @ResponseBody
     @GetMapping(value = "/queryByPage")
     public List<Student> queryByPage(@RequestParam("page") int pageIndex,
-                                     @RequestParam("size") int pageSize) {
-        List<Student> pageInfo = null;
+                                     @RequestParam("size") int pageSize,
+                                     HttpServletRequest request) {
+        List<Student> studentList = new ArrayList<>(0);
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+            return studentList;
+        }
+
         try {
-            pageInfo = studentService.listByPage(PageRequest.of(pageIndex, pageSize)).getContent();
+            studentList = studentService.listByPage(PageRequest.of(pageIndex, pageSize)).getContent();
             logger.info(" Calling the API Success ======> queryByPage");
         } catch (Exception e) {
             logger.error("[MyException] happen in queryByPage!" + GlobalExceptionHandler.buildErrorMessage(e));
         }
-        return pageInfo;
+        return studentList;
     }
 
     /**
@@ -145,24 +154,39 @@ public class StudentController {
     @GetMapping(value = "/queryByName")
     public List<Student> queryByName(@Size(min = 1, max = 20) String name,
                                      @RequestParam("page") int pageIndex,
-                                     @RequestParam("size") int pageSize) {
-        List<Student> pageInfo = null;
+                                     @RequestParam("size") int pageSize,
+                                     HttpServletRequest request) {
+        List<Student> studentList = new ArrayList<>(0);
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+            return studentList;
+        }
+
         try {
-            pageInfo = (List<Student>) studentService.findByName(name, PageRequest.of(pageIndex, pageSize));
+            studentList = (List<Student>) studentService.findByName(name, PageRequest.of(pageIndex, pageSize));
             logger.info(" Calling the API Success ======> queryByName : name is " + name);
         } catch (Exception e) {
             logger.error("[MyException] happen in queryByName!" + GlobalExceptionHandler.buildErrorMessage(e));
         }
-        return pageInfo;
+        return studentList;
     }
 
     @DeleteMapping("/deleteById/{id}")
-    public void deleteById(Long id) {
+    public void deleteById(Long id, HttpServletRequest request) {
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+        }
         studentService.deleteById(id);
     }
 
     @PutMapping("/updateStudent")
-    public void updateStudent(Student user) {
+    public void updateStudent(Student user, HttpServletRequest request) {
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+        }
         studentService.save(user);
     }
 

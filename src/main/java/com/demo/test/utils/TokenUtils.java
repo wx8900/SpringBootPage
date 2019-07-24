@@ -71,4 +71,11 @@ public class TokenUtils {
         tokenMap.remove(userId);
         LoggerUtils.logInfo(logger, "deleteToken =====> userId : " + userId);
     }
+
+    public static boolean hasToken(String token) {
+        if (token == null || token.trim().length() <= 0) {
+            return false;
+        }
+        return true;
+    }
 }

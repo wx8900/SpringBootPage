@@ -5,16 +5,16 @@ import com.demo.test.domain.Token;
 import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.security.CookieUtils;
 import com.demo.test.security.RSA;
-import com.demo.test.security.RSAKey;
 import com.demo.test.service.PersonService;
 import com.demo.test.utils.TokenUtil;
+import com.demo.test.utils.TokenUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
@@ -46,8 +46,8 @@ public class LoginController {
         // Login successful!
         password = RSA.priDecode(password);
         /** // RSAKey - Data must not be longer than 64 bytes
-        RSAKey rsaKey = new RSAKey();
-        password = rsaKey.priDecode(password);*/
+         RSAKey rsaKey = new RSAKey();
+         password = rsaKey.priDecode(password);*/
 
         String time = password.substring(password.length() - 13);
         if (System.currentTimeMillis() - Long.parseLong(time) > 2 * 60 * 1000) {
@@ -79,7 +79,11 @@ public class LoginController {
     }
 
     @GetMapping(value = "/logOff")
-    public void logOff(HttpSession session) {
+    public void logOff(HttpSession session, HttpServletRequest request) {
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+        }
         try {
             //String id = RequestContextHolder.currentRequestAttributes().getSessionId();
             Student student = (Student) session.getAttribute("currentUser");
@@ -93,7 +97,11 @@ public class LoginController {
     }
 
     @GetMapping("/user/{id}")
-    public Student getUserById(@PathVariable Long id) {
+    public Student getUserById(@PathVariable Long id, HttpServletRequest request) {
+        String token = CookieUtils.getRequestedToken(request);
+        if (!TokenUtils.hasToken(token)) {
+            logger.error("请登录系统！");
+        }
         Optional<Student> student = studentService.findById(id);
         return student.orElse(Student.builder().build());
     }
