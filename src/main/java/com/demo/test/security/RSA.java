@@ -1,7 +1,9 @@
 package com.demo.test.security;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.crypto.Cipher;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,19 +12,17 @@ import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
-
 /**
+ * RSA class with the key is String type
  * @author Jack
  * @date 2019/07/23  02:49
  */
 public class RSA {
 
-    private static Logger logger = LogManager.getLogger(RSA.class);
     public static final String CHARSET = "UTF-8";
     public static final String RSA_ALGORITHM = "RSA";
     public static final String RSA_ALGORITHM_SIGN = "SHA256WithRSA";
-
+    private static Logger logger = LogManager.getLogger(RSA.class);
     private static String rsaPublicKey = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJcBeOb97IdkkirBmx3MOY5e4eRwh0uvC2BcNlY1rDo0lZ8ibR1bl1RJXWkHv7U0ASO/5DBlnnnGbQRtsJlsCPMCAwEAAQ==";
     private static String rsaPrivateKey = "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAlwF45v3sh2SSKsGbHcw5jl7h5HCHS68LYFw2VjWsOjSVnyJtHVuXVEldaQe/tTQBI7/kMGWeecZtBG2wmWwI8wIDAQABAkAdSkPRSl+ew3s2n+cemIZxfyYB0XHs1D84qapAfpixkUNvWL0A4ovrwsnwt4MEjAtWVTufNvTxIZcZdx+Q5DbBAiEA9TzzYMGRU+3mdlAx0ICF+NIqwvlqyvedKa4KSx55gVUCIQCdoeX6mqGRP78aQjYKWeogwliszjU5fN/LFvKZrcgBJwIhAMvbBLzzaykHY0IKW75kd/lkSyOUTY+20bAp+miDRqGZAiA6r36eeRkzqUbtcL8LxYPb5F79HtxD5dCvnIB/ZGp0uwIgWtXI7IxHjYCsNomSJdu1J3dU9KqQuW/eOHxrk/OgUYE=";
 
@@ -35,25 +35,17 @@ public class RSA {
 
             rsaPublicKey = Base64.encodeBase64String(keyPair.getPublic().getEncoded());
             rsaPrivateKey = Base64.encodeBase64String(keyPair.getPrivate().getEncoded());
-            System.out.println("Public Key is "+ rsaPublicKey);
-            System.out.println("Private Key is "+ rsaPrivateKey);
+            System.out.println("Public Key is " + rsaPublicKey);
+            System.out.println("Private Key is " + rsaPrivateKey);
             System.out.println();
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
     }
 
-    public void writeToFile(String path, byte[] key) throws IOException {
-        File f = new File(path);
-        f.getParentFile().mkdirs();
-        FileOutputStream fos = new FileOutputStream(f);
-        fos.write(key);
-        fos.flush();
-        fos.close();
-    }
-
     /**
-     * 解码PublicKey
+     * Decode the publicKey
+     *
      * @param key
      * @return
      */
@@ -69,12 +61,14 @@ public class RSA {
         }
         return null;
     }
+
     /**
-     * 解码PrivateKey
+     * Decode the privateKey
+     *
      * @param key
      * @return
      */
-    public static PrivateKey  getPrivateKey(String key) {
+    public static PrivateKey getPrivateKey(String key) {
         try {
             byte[] byteKey = java.util.Base64.getDecoder().decode(key);
             PKCS8EncodedKeySpec x509EncodedKeySpec = new PKCS8EncodedKeySpec(byteKey);
@@ -87,7 +81,7 @@ public class RSA {
     }
 
     /**
-     * 公钥加密
+     * Encrypt the publicKey
      *
      * @param src
      * @return
@@ -118,10 +112,19 @@ public class RSA {
         return res;
     }
 
-    public static void main(String[] args) throws IOException {
-        String pwd = "12345678" + System.currentTimeMillis();  //随机串
+    public static void main(String[] args) {
+        String pwd = "12345678" + System.currentTimeMillis();
         String passwordStr = pubEncode(pwd);
-        System.out.println("11111passwordStr is "+passwordStr);
+        System.out.println("11111passwordStr is " + passwordStr);
         System.out.println("22222decrypt is " + priDecode(passwordStr));
+    }
+
+    public void writeToFile(String path, byte[] key) throws IOException {
+        File f = new File(path);
+        f.getParentFile().mkdirs();
+        FileOutputStream fos = new FileOutputStream(f);
+        fos.write(key);
+        fos.flush();
+        fos.close();
     }
 }

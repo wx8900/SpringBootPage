@@ -1,6 +1,5 @@
 package com.demo.test.security;
 
-import com.sun.security.sasl.Provider;
 import lombok.Builder;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.LogManager;
@@ -13,14 +12,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.Security;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
 /**
- * 1、公钥加密，私钥解密用于信息加密
- * 2、私钥加密，公钥解密用于数字签名
+ * RSA Key class with the key is object type
+ *
+ * 1. encrypt the public key , decrypt private key for information encryption
+ * 2. encrypt the private key, decrypt public key for digital signature
  *
  * @author Jack
  * @date 2019/07/23  02:49
@@ -35,7 +34,7 @@ public class RSAKey {
     private static RSAPublicKey rsaPublicKey;
     private static RSAPrivateKey rsaPrivateKey;
 
-    public RSAKey () {
+    public RSAKey() {
         KeyPairGenerator keyPairGenerator;
         try {
             keyPairGenerator = KeyPairGenerator.getInstance("RSA");
@@ -62,7 +61,7 @@ public class RSAKey {
     }
 
     /**
-     * 公钥加密、私钥解密——加密
+     * encrypt the public key , decrypt private key -- encrypt
      *
      * @param src
      * @return
@@ -85,9 +84,8 @@ public class RSAKey {
     }
 
     /**
-     * 公钥加密、私钥解密——解密
-     * Note: 取到的rsaPrivateKey一直为空，程序报错 No installed provider supports this key: (null)
-     * 所以key使用String类型
+     * encrypt the public key , decrypt private key -- decrypt
+     * Note: get the rsaPrivateKey always null，"No installed provider supports this key: (null)"
      *
      * @param src
      * @return
@@ -111,7 +109,7 @@ public class RSAKey {
         //writeToFile("RSA/publicKey", getRsaPublicKey().getBytes());
         //writeToFile("RSA/privateKey", getRsaPrivateKey().getBytes());
 
-        RSAKey rsaKey  = new RSAKey();
+        RSAKey rsaKey = new RSAKey();
         String password = "12345678";
         String passwordStr = rsaKey.pubEncode(password);
         System.out.println("password 加密之后：" + passwordStr);
