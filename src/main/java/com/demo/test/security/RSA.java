@@ -101,6 +101,9 @@ public class RSA {
 
     public static String priDecode(String cipherText) {
         String res = "";
+        if (cipherText == null || cipherText.length() == 0) {
+            return res;
+        }
         try {
             byte[] bytes = java.util.Base64.getDecoder().decode(cipherText);
             Cipher decriptCipher = Cipher.getInstance(RSA_ALGORITHM);

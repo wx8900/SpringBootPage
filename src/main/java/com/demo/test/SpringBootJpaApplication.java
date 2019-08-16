@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -60,7 +59,7 @@ public class SpringBootJpaApplication {
     public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         return new RedisCacheManager(
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
-                this.getRedisCacheConfigurationWithTtl(30*60), // 默认策略，未配置的 key 会使用这个
+                this.getRedisCacheConfigurationWithTtl(30 * 60), // 默认策略，未配置的 key 会使用这个
                 this.getRedisCacheConfigurationMap() // 指定 key 策略
         );
     }
@@ -68,8 +67,8 @@ public class SpringBootJpaApplication {
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
         // 自定义设置缓存时间SsoCache和userCache进行过期时间配置
-        redisCacheConfigurationMap.put("SsoCache", this.getRedisCacheConfigurationWithTtl(24*60*60));
-        redisCacheConfigurationMap.put("userCache", this.getRedisCacheConfigurationWithTtl(30*60));
+        redisCacheConfigurationMap.put("SsoCache", this.getRedisCacheConfigurationWithTtl(24 * 60 * 60));
+        redisCacheConfigurationMap.put("userCache", this.getRedisCacheConfigurationWithTtl(30 * 60));
         return redisCacheConfigurationMap;
     }
 
@@ -98,7 +97,7 @@ public class SpringBootJpaApplication {
                 StringBuilder sb = new StringBuilder();
                 sb.append(target.getClass().getName());
                 sb.append("." + method.getName());
-                if(params==null||params.length==0||params[0]==null){
+                if (params == null || params.length == 0 || params[0] == null) {
                     return null;
                 }
                 String join = String.join("&", Arrays.stream(params).map(Object::toString).collect(Collectors.toList()));

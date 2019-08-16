@@ -35,10 +35,9 @@ public class TokenAuthorFilter implements Filter {
     //在这里面填不需要被拦截的地址
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(
             new HashSet<>(Arrays.asList("/v1/api/students/login", "/v1/api/students/isLogin"
-                    , "/api", "/swagger-ui.html", "/swagger-resources/**"
-                    , "/swagger-ui.html", "/v2/api-docs", "/webjars/*", "/addStudent"
-                    , "/loginForMap", "/loginForParams", "/test", "/myException", "/byzero"
-                    , "/druid/login.html", "/druid/*"))
+                    , "/api", "/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs"
+                    , "/webjars/*", "/addStudent", "/loginForMap", "/loginForParams"
+                    , "/test", "/myException", "/byzero", "/druid/login.html", "/druid/*"))
     );
     static Logger logger = LogManager.getLogger(TokenAuthorFilter.class);
 

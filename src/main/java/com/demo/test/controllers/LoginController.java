@@ -44,17 +44,18 @@ public class LoginController {
         String result = "";
         Student student;
         // Login successful!
-        password = RSA.priDecode(password);
+        //password = RSA.priDecode(password);
         /** // RSAKey - Data must not be longer than 64 bytes
          RSAKey rsaKey = new RSAKey();
          password = rsaKey.priDecode(password);*/
 
-        String time = password.substring(password.length() - 13);
+        /*String time = password.substring(password.length() - 13);
         if (System.currentTimeMillis() - Long.parseLong(time) > 2 * 60 * 1000) {
             return "登录异常，时间超时";
         }
 
         password = password.substring(0, password.length() - 13);
+         */
 
         try {
             List<Student> studentList = studentService.findByNameAndPassword(name, password);
@@ -67,7 +68,7 @@ public class LoginController {
 
                 logger.info(name + " has login the website. The {userId} is " + student.getId()
                         + " and {token} is " + token.getSignature());
-                result = "Login success!";
+                result = "Login success! "+ token.getSignature();
             } else {
                 result = "Username or password error!";
             }

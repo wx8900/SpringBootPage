@@ -6,7 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 特殊字符检测工具, 防止传入非法字符和SQL注入攻击
+ * Special character detection tool to prevent from
+ * illegal characters input and SQL injection attacks
  *
  * @author Jack
  * @date 2019/07/16
@@ -18,11 +19,11 @@ public class IllegalStrFilterUtils {
     private static final String REGX = "!|！|@|◎|#|＃|(\\$)|￥|%|％|(\\^)|……|(&)|※|(\\*)|×|(\\()|（|(\\))|）|_|——|(\\+)|＋|(\\|)|§ ";
 
     /**
-     * 对常见的sql注入攻击进行拦截
+     * Intercepting common SQL injection attacks
      *
      * @param sInput
-     * @return true 表示参数不存在SQL注入风险
-     * false 表示参数存在SQL注入风险
+     * @return true only if no risk for SQL injection
+     * false
      */
     public static Boolean sqlStrFilter(String sInput) {
         if (sInput == null || sInput.trim().length() == 0) {
@@ -36,19 +37,19 @@ public class IllegalStrFilterUtils {
                 || sInput.indexOf("DROP") >= 0 || sInput.indexOf("EXECUTE") >= 0 || sInput.indexOf("EXEC") >= 0
                 || sInput.indexOf("TRUNCATE") >= 0 || sInput.indexOf("INTO") >= 0 || sInput.indexOf("DECLARE") >= 0
                 || sInput.indexOf("MASTER") >= 0) {
-            Logger.error("该参数怎么SQL注入风险：sInput=" + sInput);
+            Logger.error("input String has SQL injection risk: sInput=" + sInput);
             return false;
         }
-        Logger.info("通过sql检测");
+        Logger.info("Successfully passed the intercept");
         return true;
     }
 
     /**
-     * 对非法字符进行检测
+     * Detect illegal characters
      *
      * @param sInput
-     * @return true 表示参数不包含非法字符
-     * false 表示参数包含非法字符
+     * @return true only if the input String doesn't contains illegal characters
+     *
      */
     public static Boolean isIllegalStr(String sInput) {
 

@@ -16,6 +16,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * Swagger2 Config class
  *
+ * http://localhost:8080/swagger-ui.html
+ *
  * @author Jack
  * @date 2019/07/15
  */
