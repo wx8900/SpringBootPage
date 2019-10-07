@@ -23,11 +23,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * token验证拦截
+ * token验证拦截类------该类在2019/10/07之后已废弃
  *
  * @author Jack
  * @version 2.0, use now
  * @date 2019/06/02
+ * @date 2019/10/07 no longer used
  */
 @WebFilter(filterName = "tokenAuthorFilter", urlPatterns = "/*")
 public class TokenAuthorFilter implements Filter {

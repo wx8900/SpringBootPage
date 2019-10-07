@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  *  * redis-cli
  *  * redis-cli shutdown
  *  3. http://localhost:8080/swagger-ui.html
- *  4. 用swagger与用token有冲突
+ *  4. 用swagger与用token有冲突,已解决
  *
  */
 @SpringBootApplication

@@ -6,11 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.*;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -19,14 +22,12 @@ import java.util.List;
 
 
 /**
- *
  * @author Jack
  * @date 2019/10/07  update
- *
  * @Profile 注解 标识加载在dev和test文件使用
- *
  */
 @Configuration
+@EnableWebMvc
 @EnableSwagger2
 @Profile({"dev", "test"})
 public class SwaggerConfig extends WebMvcConfigurationSupport {
@@ -41,25 +42,52 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .apiInfo(apiInfo())
                 // 生产环境的时候关闭 swagger 比较安全
                 .enable(enableSwagger)
+                //将Timestamp类型全部转为Long类型
+                //.directModelSubstitute(Timestamp.class, Long.class)
+                // 将Date类型全部转为Long类型
+                //.directModelSubstitute(Date.class, Long.class)
+                .forCodeGeneration(true)
                 //设置全局参数
                 .globalOperationParameters(globalParamBuilder())
                 //设置全局响应参数
-                .globalResponseMessage(RequestMethod.GET,responseBuilder())
-                .globalResponseMessage(RequestMethod.POST,responseBuilder())
-                .globalResponseMessage(RequestMethod.PUT,responseBuilder())
-                .globalResponseMessage(RequestMethod.DELETE,responseBuilder())
+                .globalResponseMessage(RequestMethod.GET, responseBuilder())
+                .globalResponseMessage(RequestMethod.POST, responseBuilder())
+                .globalResponseMessage(RequestMethod.PUT, responseBuilder())
+                .globalResponseMessage(RequestMethod.DELETE, responseBuilder())
                 .select()
-                //加载swagger 扫描包
+                //加载swagger 扫描包 扫描接口的包路径，不要忘记改成自己的
                 .apis(RequestHandlerSelectors.basePackage(Constant.BASE_PACKAGE))
+                //.paths(regex("^.*(?<!error)$"))
                 .paths(PathSelectors.any())
                 .build()
                 //设置安全认证
-                .securitySchemes(securitySchemes());
+                .securitySchemes(securitySchemes())
+                .securityContexts(securityContexts());
 
+    }
+
+    private List<SecurityContext> securityContexts() {
+        List<SecurityContext> securityContexts = new ArrayList<>();
+        securityContexts.add(
+                SecurityContext.builder()
+                        .securityReferences(defaultAuth())
+                        .forPaths(PathSelectors.regex("^(?!token).*$"))
+                        .build());
+        return securityContexts;
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        List<SecurityReference> securityReferences = new ArrayList<>();
+        securityReferences.add(new SecurityReference("Authorization", authorizationScopes));
+        return securityReferences;
     }
 
     /**
      * 获取swagger创建初始化信息
+     *
      * @return
      */
     private ApiInfo apiInfo() {
@@ -76,36 +104,43 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
     /**
      * 安全认证参数
+     *
      * @return
      */
     private List<ApiKey> securitySchemes() {
-        List<ApiKey> list=new ArrayList<>();
+        List<ApiKey> list = new ArrayList<>();
         list.add(new ApiKey("token", "token", "header"));
         return list;
     }
 
     /**
      * 构建全局参数列表
+     *
      * @return
      */
-    private List<Parameter> globalParamBuilder(){
+    private List<Parameter> globalParamBuilder() {
         List<Parameter> pars = new ArrayList<>();
-        pars.add(parameterBuilder("token","令牌","string","header",false).build());
+        pars.add(parameterBuilder("token", "令牌", "string"
+                , "header", false).build());
         return pars;
     }
 
     /**
      * 创建参数
+     *
      * @return
      */
-    private ParameterBuilder parameterBuilder(String name,String desc,String type ,String parameterType,boolean required) {
+    private ParameterBuilder parameterBuilder(String name, String desc, String type,
+                                              String parameterType, boolean required) {
         ParameterBuilder tokenPar = new ParameterBuilder();
-        tokenPar.name(name).description(desc).modelRef(new ModelRef(type)).parameterType(parameterType).required(required).build();
+        tokenPar.name(name).description(desc).modelRef(new ModelRef(type))
+                .parameterType(parameterType).required(required).build();
         return tokenPar;
     }
 
     /**
      * 创建全局响应值
+     *
      * @return
      */
     private List<ResponseMessage> responseBuilder() {
@@ -113,6 +148,14 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         responseMessageList.add(new ResponseMessageBuilder().code(200).message("响应成功").build());
         responseMessageList.add(new ResponseMessageBuilder().code(500).message("服务器内部错误").build());
         return responseMessageList;
+    }
+
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
 }
