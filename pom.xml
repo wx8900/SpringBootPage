@@ -10,8 +10,7 @@
     <packaging>jar</packaging>
 
     <name>spring-boot-jpa</name>
-    <description>Micro-service project for Spring Boot 2 JPA and pagination</description>
-
+    <description>Micro-service project using Spring-boot2 and JPA pagination</description>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
