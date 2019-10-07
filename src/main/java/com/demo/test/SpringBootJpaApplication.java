@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -24,26 +23,25 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- *
  * @author Jack
+ * @date 2019/04/15
  * @EnableCaching: start cache base on annotations
  * <p>
  * ServletComponentScan: enable filter
  * 如果想用Swagger，要把@ServletComponentScan注释掉
- * @date 2019/04/15
- *
+ * <p>
  * 1. 要先启动数据库
  * 2. cd /Users/Jack_Cai/redis-4.0.11
- *  * src/redis-server
- *  * redis-cli
- *  * redis-cli shutdown
- *  3. http://localhost:8080/swagger-ui.html
- *  4. 用swagger与用token有冲突,已解决
- *
+ * * src/redis-server
+ * * redis-cli
+ * * redis-cli shutdown
+ * 3. http://localhost:8080/swagger-ui.html
+ * 4. 用swagger与用token有冲突,已解决
  */
 @SpringBootApplication
 @EnableCaching
-//@ServletComponentScan(basePackages = {"com.demo.test.filter"}) // filter现在已经废弃
+// filter现在已经废弃
+//@ServletComponentScan(basePackages = {"com.demo.test.filter"})
 public class SpringBootJpaApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringBootJpaApplication.class, args);
