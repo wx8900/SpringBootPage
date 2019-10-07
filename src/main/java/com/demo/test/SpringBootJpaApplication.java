@@ -23,8 +23,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Started SpringBootJpaApplication in 8.796 seconds (JVM running for 9.378)
- * Started SpringBootJpaApplication in 10.516 seconds (JVM running for 11.511)  2019/07/20
  *
  * @author Jack
  * @EnableCaching: start cache base on annotations
@@ -32,6 +30,15 @@ import java.util.stream.Collectors;
  * ServletComponentScan: enable filter
  * 如果想用Swagger，要把@ServletComponentScan注释掉
  * @date 2019/04/15
+ *
+ * 1. 要先启动数据库
+ * 2. cd /Users/Jack_Cai/redis-4.0.11
+ *  * src/redis-server
+ *  * redis-cli
+ *  * redis-cli shutdown
+ *  3. http://localhost:8080/swagger-ui.html
+ *  4. 用swagger与用token有冲突
+ *
  */
 @SpringBootApplication
 @EnableCaching

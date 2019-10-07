@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * cd /Users/Jack_Cai/redis-4.0.11
- * src/redis-server
- * redis-cli
- * redis-cli shutdown
+ * Redis Controller
+ *
+ * Redis 4.0.11
  */
 @RestController
 @Validated

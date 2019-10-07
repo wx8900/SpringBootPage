@@ -36,7 +36,7 @@ public class PropertiesWrite {
             String desktop = System.getProperty ("user.home") + "/Desktop/";
             FileOutputStream out = new FileOutputStream(
                     //desktop +
-                    "/src/main/sources/example.properties");
+                    "/src/main/resources/example.properties");
             grades.store(out, null);
             out.close();
         } catch (IOException e) {

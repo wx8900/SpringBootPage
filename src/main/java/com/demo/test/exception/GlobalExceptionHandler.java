@@ -53,14 +53,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return
      */
     public static String getStackTraceString(Throwable ex) {//(Exception ex) {
+        StringBuilder traceBuilder = new StringBuilder(1);
+        int minSize = 5000;
+        String result = "";
         StackTraceElement[] traceElements = ex.getStackTrace();
-        StringBuilder traceBuilder = new StringBuilder(2000);
         if (traceElements != null && traceElements.length > 0) {
+            traceBuilder = new StringBuilder(traceElements.length);
             for (StackTraceElement traceElement : traceElements) {
                 traceBuilder.append(traceElement.toString()).append("\n");
             }
         }
-        return traceBuilder.toString().substring(0, 1900);
+        result = traceBuilder.toString();
+        if (traceElements.length < minSize) {
+            result = result.substring(0, traceElements.length);
+        } else {
+            result = result.substring(0, 20000);
+        }
+        return result;
     }
 
     /**
