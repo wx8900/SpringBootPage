@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +43,7 @@ import java.util.stream.Collectors;
  */
 @SpringBootApplication
 @EnableCaching
-//@ServletComponentScan(basePackages = {"com.demo.test.filter"})
+//@ServletComponentScan(basePackages = {"com.demo.test.filter"}) // filter现在已经废弃
 public class SpringBootJpaApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringBootJpaApplication.class, args);
