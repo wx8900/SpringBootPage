@@ -2,6 +2,14 @@ package com.demo.test.testing;
 
 import java.util.concurrent.CountDownLatch;
 
+/**
+ *
+ * Test class
+ *
+ * @author Jack
+ * @date 2019/10/08 19:47 PM
+ *
+ */
 public class MyThread implements Runnable {
 
     private String para1;

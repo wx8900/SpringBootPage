@@ -5,7 +5,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * ExecutorService 的实现类不适合CountDownLatch的使用，只能使用new Thread()
+ */
 public class CountDownLatchTest {
+
+    /**
+     * 开始时间
+     */
+    private static long startTime = 0L;
 
     public static void main(String[] args) {
         CountDownLatchTest ct = new CountDownLatchTest();
@@ -20,27 +28,49 @@ public class CountDownLatchTest {
 
     //@Test
     public void waitToComplete() throws InterruptedException {
-        ExecutorService executor = Executors.newFixedThreadPool(5);
-        CountDownLatch latch = new CountDownLatch(5);
-        executor.execute(new FiniterThreadNamePrinterLatch(latch));
-        latch.await(5, TimeUnit.SECONDS);
+        try {
+            startTime = System.currentTimeMillis();
+            System.out.println("CountDownLatch started at: " + startTime);
+            // 初始化计数器为1
+            CountDownLatch countDownLatch = new CountDownLatch(1);
+            for (int i = 0; i < 100; i++) {
+                new Thread(new CountDownLatchTest.FiniterThreadNamePrinter(countDownLatch)).start();
+            }
+
+            // 启动多个线程
+            countDownLatch.countDown();
+
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
+
+        /*ExecutorService executor = Executors.newFixedThreadPool(100);
+        CountDownLatch latch = new CountDownLatch(1);
+        for (int i = 0; i < 10; i++) {
+            executor.execute(new CountDownLatchTest.FiniterThreadNamePrinter(latch));
+        }
+        latch.countDown();*/
     }
 
-    private static class FiniterThreadNamePrinterLatch implements Runnable {
+    private static class FiniterThreadNamePrinter implements Runnable {
 
-        CountDownLatch latch;
+        private final CountDownLatch latch;
 
-        public FiniterThreadNamePrinterLatch(CountDownLatch latch) {
-            this.latch = latch;
+        public FiniterThreadNamePrinter(CountDownLatch clatch) {
+            this.latch = clatch;
         }
 
         @Override
         public final void run() {
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             for (int i = 0; i < 25; i++) {
                 System.out.println("Run from Thread : "
                         + Thread.currentThread().getName() + " =====" + Thread.currentThread().getId());
             }
-            latch.countDown();
         }
 
     }

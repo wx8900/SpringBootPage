@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 //import org.im4java.process.ProcessStarter;
 
+/**
+ *  Test is Good!
+ */
 //@Service
 public class ApiTest {
 
@@ -30,13 +33,10 @@ public class ApiTest {
     @PostConstruct
     public void init() {
         try {
-
             startTime = System.currentTimeMillis();
             System.out.println("CountDownLatch started at: " + startTime);
-
             // 初始化计数器为1
             CountDownLatch countDownLatch = new CountDownLatch(1);
-
             for (int i = 0; i < THREAD_NUM; i++) {
                 new Thread(new Run(countDownLatch)).start();
             }
@@ -62,12 +62,11 @@ public class ApiTest {
         @Override
         public void run() {
             try {
-                // 线程等待
+                /** 线程等待 */
                 startLatch.await();
 
-                // 执行操作
-                /**
-                 这里调用你要测试的接口
+                /** 执行操作
+                 *  这里调用你要测试的接口
                  */
                 HttpClientUtil httpClientUtil = new HttpClientUtil();
                 List<NameValuePair> formParams = new ArrayList<>();
@@ -75,7 +74,8 @@ public class ApiTest {
                 formParams.add(new BasicNameValuePair("editType", "center"));
                 formParams.add(new BasicNameValuePair("width", "400"));
                 formParams.add(new BasicNameValuePair("height", "400"));
-                httpClientUtil.post("http://localhost:8080/test.action", formParams);
+                //httpClientUtil.post("http://localhost:8080/test.action", formParams);
+                httpClientUtil.post("https://www.baidu.com", formParams);
                 long endTime = System.currentTimeMillis();
                 System.out.println(Thread.currentThread().getName() + " ended at: " + endTime + ", cost: " + (endTime - startTime) + " ms.");
             } catch (Exception e) {
