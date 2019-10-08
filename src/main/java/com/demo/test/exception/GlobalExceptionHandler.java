@@ -29,7 +29,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     static Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
 
     /*private static Properties properties =
-            ReadPropertiesUtil.getProperties(System.getProperty("user.dir") + CommonUrl.RESPONSE_PROP_URL);*/
+      ReadPropertiesUtil.getProperties(System.getProperty("user.dir")
+      + CommonUrl.RESPONSE_PROP_URL);*/
 
     /**
      * 构造异常堆栈信息
@@ -53,9 +54,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return
      */
     public static String getStackTraceString(Throwable ex) {//(Exception ex) {
-        StringBuilder traceBuilder = new StringBuilder(1);
         int minSize = 5000;
-        String result = "";
+        String result;
+        StringBuilder traceBuilder = new StringBuilder(1);
+
         StackTraceElement[] traceElements = ex.getStackTrace();
         if (traceElements != null && traceElements.length > 0) {
             traceBuilder = new StringBuilder(traceElements.length);
@@ -152,10 +154,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         if (ex instanceof MethodArgumentTypeMismatchException) {
             MethodArgumentTypeMismatchException exception = (MethodArgumentTypeMismatchException) ex;
             logger.error("参数转换失败，方法：" + exception.getParameter().getMethod().getName() + "，参数：" + exception.getName()
-                    + ",信息：" + exception.getLocalizedMessage());
-            return new ResponseEntity<>(new ApiErrorResponse(status, "400", "参数转换失败", ""), status);
+                    + "" +
+                    ",信息：" + exception.getLocalizedMessage());
+            return new ResponseEntity<>(
+                    new ApiErrorResponse(status, "400", "参数转换失败", ""), status);
         }
-        return new ResponseEntity<>(new ApiErrorResponse(status, "400", "参数转换失败", ""), status);
+        return new ResponseEntity<>(new ApiErrorResponse(status, "400",
+                "参数转换失败", ""), status);
     }
 
     /**
