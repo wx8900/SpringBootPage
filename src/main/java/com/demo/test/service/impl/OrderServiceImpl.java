@@ -14,7 +14,7 @@ import com.demo.test.enums.ResultEnum;
 import com.demo.test.service.OrderService;
 import com.demo.test.service.ProductInfoService;
 import com.demo.test.utils.KeyUtils;
-import com.demo.test.utils.SellException;
+import com.demo.test.exception.SellException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

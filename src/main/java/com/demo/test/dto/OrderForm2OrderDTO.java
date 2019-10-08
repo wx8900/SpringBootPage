@@ -3,7 +3,7 @@ package com.demo.test.dto;
 import com.demo.test.domain.OrderDetail;
 import com.demo.test.domain.OrderForm;
 import com.demo.test.enums.ResultEnum;
-import com.demo.test.utils.SellException;
+import com.demo.test.exception.SellException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Builder;

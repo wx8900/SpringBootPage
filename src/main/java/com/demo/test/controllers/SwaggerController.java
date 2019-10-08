@@ -32,6 +32,7 @@ import java.util.Map;
 @Api(tags = "swaggercontroller", value = "test")
 @RestController
 public class SwaggerController {
+
     private static Logger logger = LogManager.getLogger(SwaggerController.class);
 
     @Autowired

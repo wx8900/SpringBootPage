@@ -5,7 +5,7 @@ import com.demo.test.constant.Constant;
 import com.demo.test.domain.Student;
 import com.demo.test.exception.ApiErrorResponse;
 import com.demo.test.exception.GlobalExceptionHandler;
-import com.demo.test.utils.TokenUtil;
+import com.demo.test.utils.TokenUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +23,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * token验证拦截类------该类在2019/10/07之后已废弃
+ * 已废弃
+ * token验证拦截类————在2019/10/07之后该类已废弃
  *
  * @author Jack
  * @version 2.0, use now
@@ -32,6 +33,8 @@ import java.util.Set;
  */
 @WebFilter(filterName = "tokenAuthorFilter", urlPatterns = "/*")
 public class TokenAuthorFilter implements Filter {
+
+    static Logger logger = LogManager.getLogger(TokenAuthorFilter.class);
 
     //在这里面填不需要被拦截的地址
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(
@@ -42,7 +45,6 @@ public class TokenAuthorFilter implements Filter {
                     , "/swagger-resources/configuration/ui", "/swagger-resources"
                     , "/swagger-resources/configuration/security"))
     );
-    static Logger logger = LogManager.getLogger(TokenAuthorFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -80,7 +82,7 @@ public class TokenAuthorFilter implements Filter {
                 if (null != token && token.length() > 0) {
                     Student student = (Student) req.getSession().getAttribute("currentUser");
                     if (student != null) {
-                        if (TokenUtil.volidateToken(token, student.getId())) {
+                        if (TokenUtils.volidateToken(token, student.getId())) {
                             msg = "用户授权认证通过!";
                             code = Constant.SUCCESS;
                             isFilter = true;

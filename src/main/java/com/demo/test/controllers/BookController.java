@@ -41,8 +41,8 @@ import java.util.*;
 @RequestMapping(value = "/v1/api/book")
 public class BookController {
 
-    public static final String KEY = "cacheKey";
     static Logger logger = LogManager.getLogger(BookController.class);
+
     @Autowired
     private BookService bookService;
 

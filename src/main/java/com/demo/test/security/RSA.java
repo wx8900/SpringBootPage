@@ -1,5 +1,6 @@
 package com.demo.test.security;
 
+import com.demo.test.constant.Constant;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,9 +21,6 @@ import java.security.spec.X509EncodedKeySpec;
  */
 public class RSA {
 
-    public static final String CHARSET = "UTF-8";
-    public static final String RSA_ALGORITHM = "RSA";
-    public static final String RSA_ALGORITHM_SIGN = "SHA256WithRSA";
     private static Logger logger = LogManager.getLogger(RSA.class);
     private static String rsaPublicKey = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJcBeOb97IdkkirBmx3MOY5e4eRwh0uvC2BcNlY1rDo0lZ8ibR1bl1RJXWkHv7U0ASO/5DBlnnnGbQRtsJlsCPMCAwEAAQ==";
     private static String rsaPrivateKey = "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAlwF45v3sh2SSKsGbHcw5jl7h5HCHS68LYFw2VjWsOjSVnyJtHVuXVEldaQe/tTQBI7/kMGWeecZtBG2wmWwI8wIDAQABAkAdSkPRSl+ew3s2n+cemIZxfyYB0XHs1D84qapAfpixkUNvWL0A4ovrwsnwt4MEjAtWVTufNvTxIZcZdx+Q5DbBAiEA9TzzYMGRU+3mdlAx0ICF+NIqwvlqyvedKa4KSx55gVUCIQCdoeX6mqGRP78aQjYKWeogwliszjU5fN/LFvKZrcgBJwIhAMvbBLzzaykHY0IKW75kd/lkSyOUTY+20bAp+miDRqGZAiA6r36eeRkzqUbtcL8LxYPb5F79HtxD5dCvnIB/ZGp0uwIgWtXI7IxHjYCsNomSJdu1J3dU9KqQuW/eOHxrk/OgUYE=";
@@ -90,9 +88,9 @@ public class RSA {
     public static String pubEncode(String src) {
         String res = "";
         try {
-            Cipher encryptCipher = Cipher.getInstance(RSA_ALGORITHM);
+            Cipher encryptCipher = Cipher.getInstance(Constant.RSA_ALGORITHM);
             encryptCipher.init(Cipher.ENCRYPT_MODE, getPublicKey(rsaPublicKey));
-            byte[] cipherText = encryptCipher.doFinal(src.getBytes(CHARSET));
+            byte[] cipherText = encryptCipher.doFinal(src.getBytes(Constant.CHARSET));
             res = java.util.Base64.getEncoder().encodeToString(cipherText);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -107,9 +105,9 @@ public class RSA {
         }
         try {
             byte[] bytes = java.util.Base64.getDecoder().decode(cipherText);
-            Cipher decriptCipher = Cipher.getInstance(RSA_ALGORITHM);
+            Cipher decriptCipher = Cipher.getInstance(Constant.RSA_ALGORITHM);
             decriptCipher.init(Cipher.DECRYPT_MODE, getPrivateKey(rsaPrivateKey));
-            res = new String(decriptCipher.doFinal(bytes), CHARSET);
+            res = new String(decriptCipher.doFinal(bytes), Constant.CHARSET);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

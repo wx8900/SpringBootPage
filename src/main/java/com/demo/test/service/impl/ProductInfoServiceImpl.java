@@ -6,7 +6,7 @@ import com.demo.test.dto.CartDTO;
 import com.demo.test.enums.ProductStatusEnum;
 import com.demo.test.enums.ResultEnum;
 import com.demo.test.service.ProductInfoService;
-import com.demo.test.utils.SellException;
+import com.demo.test.exception.SellException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;

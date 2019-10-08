@@ -1,11 +1,10 @@
 package com.demo.test.controllers;
 
 import com.demo.test.domain.Student;
-import com.demo.test.domain.Token;
+import com.demo.test.domain.TokenModel;
 import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.security.CookieUtils;
 import com.demo.test.service.PersonService;
-import com.demo.test.utils.TokenUtil;
 import com.demo.test.utils.TokenUtils;
 import io.swagger.annotations.Api;
 import org.apache.logging.log4j.LogManager;
@@ -65,7 +64,7 @@ public class LoginController {
                 student = studentList.get(0);
                 session.setAttribute("currentUser", student);
                 //String token = TokenUtils.createToken(student.getId()); // old version
-                Token token = TokenUtil.generateToken(student.getName(), student.getId());
+                TokenModel token = TokenUtils.generateToken(student.getName(), student.getId());
                 //CookieUtils.flushCookie(token, response);
 
                 logger.info(name + " has login the website. The {userId} is " + student.getId()
@@ -91,7 +90,7 @@ public class LoginController {
             //String id = RequestContextHolder.currentRequestAttributes().getSessionId();
             Student student = (Student) session.getAttribute("currentUser");
             //TokenUtils.deleteToken(student.getId());
-            TokenUtil.removeToken(student.getId());
+            TokenUtils.removeToken(student.getId());
             session.removeAttribute("currentUser");
             logger.info(student.getName() + " has log off the website.");
         } catch (Exception e) {

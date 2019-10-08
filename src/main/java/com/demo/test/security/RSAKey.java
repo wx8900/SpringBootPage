@@ -1,5 +1,6 @@
 package com.demo.test.security;
 
+import com.demo.test.constant.Constant;
 import lombok.Builder;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.LogManager;
@@ -27,9 +28,6 @@ import java.security.interfaces.RSAPublicKey;
 @Builder
 public class RSAKey {
 
-    public static final String CHARSET = "UTF-8";
-    public static final String RSA_ALGORITHM = "RSA";
-    public static final String RSA_ALGORITHM_SIGN = "SHA256WithRSA";
     private static Logger logger = LogManager.getLogger(RSAKey.class);
     private static RSAPublicKey rsaPublicKey;
     private static RSAPrivateKey rsaPrivateKey;
@@ -83,9 +81,9 @@ public class RSAKey {
             /*X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(rsaPublicKey.getEncoded());
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);*/
-            Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);
+            Cipher cipher = Cipher.getInstance(Constant.RSA_ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, rsaPublicKey);
-            byte[] result = cipher.doFinal(src.getBytes(CHARSET));
+            byte[] result = cipher.doFinal(src.getBytes(Constant.CHARSET));
             res = Base64.encodeBase64String(result);
             System.out.println("公钥加密、私钥解密——加密 : " + Base64.encodeBase64String(result));
         } catch (Exception e) {
@@ -104,7 +102,7 @@ public class RSAKey {
     public String priDecode(String src) {
         String res = "";
         try {
-            Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);
+            Cipher cipher = Cipher.getInstance(Constant.RSA_ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, rsaPrivateKey);
             BASE64Decoder decoder = new BASE64Decoder();
             byte[] b1 = decoder.decodeBuffer(src);

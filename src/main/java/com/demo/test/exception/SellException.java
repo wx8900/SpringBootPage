@@ -1,4 +1,4 @@
-package com.demo.test.utils;
+package com.demo.test.exception;
 
 import com.demo.test.enums.ResultEnum;
 

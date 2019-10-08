@@ -4,11 +4,11 @@ import com.demo.test.domain.OrderForm;
 import com.demo.test.dto.OrderDTO;
 import com.demo.test.dto.OrderForm2OrderDTO;
 import com.demo.test.enums.ResultEnum;
+import com.demo.test.exception.SellException;
 import com.demo.test.security.CookieUtils;
-import com.demo.test.security.SignMD5;
+import com.demo.test.security.MDUtils;
 import com.demo.test.service.BuyerService;
 import com.demo.test.service.OrderService;
-import com.demo.test.utils.SellException;
 import com.demo.test.utils.TokenUtils;
 import com.demo.test.vo.ResultVO;
 import com.demo.test.vo.ResultVOUtils;
@@ -66,7 +66,7 @@ public class BuyerOrderController {
             logger.error("Please login the system!");
         }
         String sb = "name=" + orderForm.getName() + "&phone=" + orderForm.getPhone();
-        String mde5Str = SignMD5.getMD5(sb);
+        String mde5Str = MDUtils.getMD5(sb);
         if (!sign.equals(mde5Str)) {
             logger.error("警告：接口被篡改！");
             return ResultVOUtils.error(400, "警告：接口被篡改！");
@@ -87,13 +87,20 @@ public class BuyerOrderController {
 
         //创建订单
         OrderDTO result = orderService.create(orderDTO);
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(8);
         map.put("orderId", result.getOrderId());
         return ResultVOUtils.success(map);
     }
 
-    //订单列表
-    @GetMapping("/list")
+    /**
+     * 订单列表
+     *
+     * @param opendid
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/list/{openid}")
     @ApiOperation("查询订单列表")
     public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String opendid,
                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -107,20 +114,40 @@ public class BuyerOrderController {
         return ResultVOUtils.success(list.getContent());
     }
 
-    //订单详情
-    @GetMapping("/detail")
+    /**
+     * 订单详情
+     *
+     * @param openid
+     * @param orderId
+     * @return
+     */
+    @GetMapping("/detail/{openid}")
     @ApiOperation("查看订单详情")
     public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
                                      @RequestParam("orderId") String orderId) {
+        if (StringUtils.isEmpty(openid)) {
+            logger.error("【订单列表】openid不能为空");
+            throw new SellException(ResultEnum.PARAMS_ERROR);
+        }
         OrderDTO orderDTO = buyerService.findOrderOne(openid, orderId);
         return ResultVOUtils.success(orderDTO);
     }
 
-    //取消订单
-    @PostMapping("/cancel")
+    /**
+     * 取消订单
+     *
+     * @param openid
+     * @param orderId
+     * @return
+     */
+    @PostMapping("/cancel/{openid}")
     @ApiOperation("取消订单")
     public ResultVO cancel(@RequestParam("openid") String openid,
                            @RequestParam("orderId") String orderId) {
+        if (StringUtils.isEmpty(openid)) {
+            logger.error("【订单列表】openid不能为空");
+            throw new SellException(ResultEnum.PARAMS_ERROR);
+        }
         buyerService.cancelOrder(openid, orderId);
         return ResultVOUtils.success();
     }

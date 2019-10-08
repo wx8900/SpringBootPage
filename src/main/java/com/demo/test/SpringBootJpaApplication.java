@@ -1,5 +1,6 @@
 package com.demo.test;
 
+import com.demo.test.constant.Constant;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,13 +61,18 @@ public class SpringBootJpaApplication {
 
     /**
      * 设置Redis缓存过期时间--最新版
+     *
+     * @param redisConnectionFactory
+     * @return
      */
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         return new RedisCacheManager(
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
-                this.getRedisCacheConfigurationWithTtl(30 * 60), // 默认策略，未配置的 key 会使用这个
-                this.getRedisCacheConfigurationMap() // 指定 key 策略
+                //  默认策略，未配置的 key 会使用这个
+                this.getRedisCacheConfigurationWithTtl(Constant.SECONDS_30 * Constant.MINITES_IN_ONE_HOUR),
+                // 指定 key 策略
+                this.getRedisCacheConfigurationMap()
         );
     }
 

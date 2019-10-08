@@ -1,5 +1,8 @@
 package com.demo.test.utils;
 
+/**
+ * 线程不安全例子
+ */
 public class MyDemo {
     int i = 0;
 

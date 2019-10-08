@@ -2,6 +2,9 @@ package com.demo.test.utils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 线程安全例子
+ */
 public class MyDemoNew {
     //int i = 0;
     AtomicInteger i = new AtomicInteger(0);

@@ -2,20 +2,23 @@ package com.demo.test.domain;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Token的Model类，可以增加字段提高安全性，例如时间戳、url签名
  * “请求的API参数”+“时间戳”+“盐”进行MD5算法加密
  *
  * @author Jack
- * @version old version, no use now
+ * @version 2.0   use now
  * @date 2019/05/30 23:40 PM
+ * @date 2019/10/08 18:55 PM  update
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString(exclude = {"id", "token", "timeStamp", "jwt", "signature"})
-public class TokenModel {
+public class TokenModel implements Serializable {
 
     /**
      * 用户id
@@ -23,7 +26,12 @@ public class TokenModel {
     private long id;
 
     /**
-     * 随机生成的uuid, 登录后由服务端生成并返回
+     * 安全校验字段（接口参数+时间戳+加盐：取MD5生成） 必填
+     */
+    private String signature;
+
+    /**
+     * 随机生成的uuid, 登录后由服务端生成并返回 选填
      */
     private String token;
 
@@ -47,14 +55,53 @@ public class TokenModel {
      */
     private Long tokenPeriodTime;
 
-    /**
-     * 安全校验字段（接口参数+时间戳+加盐：取MD5生成）
-     */
-    private String signature;
+    public TokenModel(String signature) {
+        if (signature == null) {
+            throw new IllegalArgumentException("signature can not be null");
+        }
+        this.signature = signature;
+    }
 
-    public TokenModel(long id, String token) {
+    public TokenModel(long id, String signature) {
+        if (signature == null) {
+            throw new IllegalArgumentException("signature can not be null");
+        }
+        this.id = id;
+        this.signature = signature;
+    }
+
+    public TokenModel(long id, String signature, Long timeStamp) {
+        if (signature == null) {
+            throw new IllegalArgumentException("signature can not be null");
+        }
+        this.id = id;
+        this.signature = signature;
+        this.timeStamp = timeStamp;
+    }
+
+    public TokenModel(long id, String token, String signature) {
+        if (token == null) {
+            throw new IllegalArgumentException("token can not be null");
+        }
         this.id = id;
         this.token = token;
+        this.signature = signature;
+    }
+
+    /**
+     * 重写哈希code timestamp 不予考虑, 因为就算timestamp不同也认为是相同的token
+     */
+    @Override
+    public int hashCode() {
+        return signature.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof TokenModel) {
+            return ((TokenModel) object).signature.equals(this.signature);
+        }
+        return false;
     }
 
 }

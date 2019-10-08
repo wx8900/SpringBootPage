@@ -3,6 +3,9 @@ package com.demo.test.utils;
 import java.util.concurrent.locks.Lock;
 //import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 线程安全的例子
+ */
 public class MyDemoUpdate {
     int i = 0;
     //Lock lock = new ReentrantLock();

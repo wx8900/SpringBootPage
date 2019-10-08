@@ -10,7 +10,6 @@ import org.springframework.cache.annotation.CachingConfigurerSupport;
  * @date 2019/07/19 03:12 AM
  */
 
-
 //@Configuration
 //@EnableCaching
 public class RedisConfiguration extends CachingConfigurerSupport {
