@@ -7,6 +7,7 @@ import com.demo.test.security.CookieUtils;
 import com.demo.test.service.PersonService;
 import com.demo.test.utils.TokenUtil;
 import com.demo.test.utils.TokenUtils;
+import io.swagger.annotations.Api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,11 @@ import java.util.Optional;
  * <p>
  * http://localhost:8080/v1/api/students/logOff
  */
+
+@Api("登录接口操作")
 @RestController
 @Validated
-@RequestMapping("/v1/api/students")
+@RequestMapping("/v1/api/login")
 public class LoginController {
 
     static Logger logger = LogManager.getLogger(LoginController.class);

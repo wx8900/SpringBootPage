@@ -28,8 +28,9 @@ import java.util.Map;
  * @author Jack
  * @date 2019/07/15
  */
-@RestController
+
 @Api(tags = "swaggercontroller", value = "test")
+@RestController
 public class SwaggerController {
     private static Logger logger = LogManager.getLogger(SwaggerController.class);
 

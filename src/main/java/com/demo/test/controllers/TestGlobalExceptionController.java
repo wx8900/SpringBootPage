@@ -1,6 +1,7 @@
 package com.demo.test.controllers;
 
 import com.demo.test.exception.ApiErrorResponse;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jack
  * @date 2019/07/16
  */
+
+@Api("全局异常测试接口操作")
 @RestController
 public class TestGlobalExceptionController {
 

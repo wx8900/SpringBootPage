@@ -7,14 +7,13 @@ import javax.persistence.Id;
 
 /**
  * @author Jack
- * @date 2019/08/16
+ * @date 2019/10/08 update
  */
-@Entity
+//@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class EC2Instance {
 
     @Id
@@ -46,4 +45,20 @@ public class EC2Instance {
      * can be empty, Mbps
      */
     private String EBSBandwidth;
+
+    @Override
+    public String toString() {
+        return "EC2Instance{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", model='" + model + '\'' +
+                ", vCPU=" + vCPU +
+                ", CPUCredits=" + CPUCredits +
+                ", memory=" + memory +
+                ", instanceStorage='" + instanceStorage + '\'' +
+                ", networkBandwidth='" + networkBandwidth + '\'' +
+                ", networkPerformance='" + networkPerformance + '\'' +
+                ", EBSBandwidth='" + EBSBandwidth + '\'' +
+                '}';
+    }
 }

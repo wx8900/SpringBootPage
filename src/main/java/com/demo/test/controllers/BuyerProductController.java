@@ -25,9 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Jack
+ * @date 2019/06/24 16:02 PM
+ */
+@Api("买家获取商品接口")
 @RestController
-@RequestMapping("/buyer/product")
-@Api("买家端获取商品")
+@RequestMapping("/v1/api/buyer/product")
 public class BuyerProductController {
 
     static Logger logger = LogManager.getLogger(BuyerProductController.class);

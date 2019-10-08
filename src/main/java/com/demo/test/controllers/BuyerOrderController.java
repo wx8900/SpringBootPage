@@ -14,7 +14,6 @@ import com.demo.test.vo.ResultVO;
 import com.demo.test.vo.ResultVOUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +30,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Jack
+ * @date 2019/06/24 15:12 PM
+ */
+@Api("买家订单服务接口")
 @RestController
-@Slf4j
-@RequestMapping("/buyer/order")
-@Api("买家订单服务")
+@RequestMapping("/v1/api/buyer/order")
 public class BuyerOrderController {
 
     static Logger logger = LogManager.getLogger(BuyerOrderController.class);
@@ -66,12 +68,12 @@ public class BuyerOrderController {
         String sb = "name=" + orderForm.getName() + "&phone=" + orderForm.getPhone();
         String mde5Str = SignMD5.getMD5(sb);
         if (!sign.equals(mde5Str)) {
-            log.error("警告：接口被篡改！");
+            logger.error("警告：接口被篡改！");
             return ResultVOUtils.error(400, "警告：接口被篡改！");
         }
 
         if (bindingResult.hasErrors()) {
-            log.error("【创建订单】参数错误，orderForm={}", orderForm);
+            logger.error("【创建订单】参数错误，orderForm={}", orderForm);
             throw new SellException(ResultEnum.PARAMS_ERROR.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
@@ -79,7 +81,7 @@ public class BuyerOrderController {
         //将 OrderForm 转化为 OrderDTO
         OrderDTO orderDTO = OrderForm2OrderDTO.convert(orderForm);
         if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {
-            log.error("【创建订单】购物车为空，orderDTO={}", orderDTO);
+            logger.error("【创建订单】购物车为空，orderDTO={}", orderDTO);
             throw new SellException(ResultEnum.CART_EMPTY);
         }
 
@@ -97,7 +99,7 @@ public class BuyerOrderController {
                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
                                          @RequestParam(value = "size", defaultValue = "10") Integer size) {
         if (StringUtils.isEmpty(opendid)) {
-            log.error("【订单列表】openid不能为空");
+            logger.error("【订单列表】openid不能为空");
             throw new SellException(ResultEnum.PARAMS_ERROR);
         }
         PageRequest pageRequest = PageRequest.of(page, size);

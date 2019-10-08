@@ -4,6 +4,7 @@ import com.demo.test.domain.Book;
 import com.demo.test.security.CookieUtils;
 import com.demo.test.service.BookService;
 import com.demo.test.utils.TokenUtils;
+import io.swagger.annotations.Api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ import java.util.*;
  * @author Jack
  * @date 2019/06/24 14:12 PM
  */
+
+@Api("书籍接口操作")
 @RestController
 @CacheConfig(cacheNames = "bookConCache")
 @RequestMapping(value = "/v1/api/book")

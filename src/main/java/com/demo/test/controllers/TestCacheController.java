@@ -2,6 +2,7 @@ package com.demo.test.controllers;
 
 import com.demo.test.dao.StudentRepository;
 import com.demo.test.domain.Student;
+import io.swagger.annotations.Api;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @author Jack
  * @date 2019/07/19  9:53 AM
  */
+@Api("测试接口操作")
 @RestController
 public class TestCacheController implements Serializable {
 

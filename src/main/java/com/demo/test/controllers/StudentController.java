@@ -7,6 +7,7 @@ import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.security.CookieUtils;
 import com.demo.test.service.PersonService;
 import com.demo.test.utils.TokenUtils;
+import io.swagger.annotations.Api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,8 @@ import java.util.List;
  * "email": "goodjob@gmail.com"
  * }
  */
+
+@Api("用户接口操作")
 @RestController
 @Validated
 @RequestMapping("/v1/api/students")

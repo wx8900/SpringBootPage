@@ -3,6 +3,7 @@ package com.demo.test.controllers;
 import com.demo.test.constant.Constant;
 import com.demo.test.domain.Student;
 import com.demo.test.exception.ApiErrorResponse;
+import io.swagger.annotations.Api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,11 @@ import javax.validation.Valid;
  * <p>
  * Redis 4.0.11
  */
+
+@Api("Redis接口操作")
 @RestController
 @Validated
-@RequestMapping("/v1/api/students")
+@RequestMapping("/v1/api/redis")
 public class RedisController {
 
     static Logger logger = LogManager.getLogger(RedisController.class);
