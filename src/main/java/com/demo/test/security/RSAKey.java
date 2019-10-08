@@ -17,7 +17,7 @@ import java.security.interfaces.RSAPublicKey;
 
 /**
  * RSA Key class with the key is object type
- *
+ * <p>
  * 1. encrypt the public key , decrypt private key for information encryption
  * 2. encrypt the private key, decrypt public key for digital signature
  *
@@ -58,6 +58,17 @@ public class RSAKey {
         fos.write(key);
         fos.flush();
         fos.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        //writeToFile("RSA/publicKey", getRsaPublicKey().getBytes());
+        //writeToFile("RSA/privateKey", getRsaPrivateKey().getBytes());
+
+        RSAKey rsaKey = new RSAKey();
+        String password = "12345678";
+        String passwordStr = rsaKey.pubEncode(password);
+        System.out.println("password 加密之后：" + passwordStr);
+        System.out.println("password 解密之后：" + rsaKey.priDecode(passwordStr));
     }
 
     /**
@@ -103,16 +114,5 @@ public class RSAKey {
             logger.error(e.getMessage());
         }
         return res;
-    }
-
-    public static void main(String[] args) throws IOException {
-        //writeToFile("RSA/publicKey", getRsaPublicKey().getBytes());
-        //writeToFile("RSA/privateKey", getRsaPrivateKey().getBytes());
-
-        RSAKey rsaKey = new RSAKey();
-        String password = "12345678";
-        String passwordStr = rsaKey.pubEncode(password);
-        System.out.println("password 加密之后：" + passwordStr);
-        System.out.println("password 解密之后：" + rsaKey.priDecode(passwordStr));
     }
 }

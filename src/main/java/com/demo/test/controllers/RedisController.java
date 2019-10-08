@@ -1,6 +1,6 @@
 package com.demo.test.controllers;
 
-import com.demo.test.domain.Constant;
+import com.demo.test.constant.Constant;
 import com.demo.test.domain.Student;
 import com.demo.test.exception.ApiErrorResponse;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 /**
  * Redis Controller
- *
+ * <p>
  * Redis 4.0.11
  */
 @RestController
@@ -37,7 +37,6 @@ public class RedisController {
     /*@Autowired
     private RedisService redisService;
     */
-
     @PostMapping(value = "/redisAdd")
     public void saveRedis() {
         stringRedisTemplate.opsForValue().set("admin2019062211", "test062211");

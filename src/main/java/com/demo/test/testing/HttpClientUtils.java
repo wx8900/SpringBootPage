@@ -1,12 +1,5 @@
 package com.demo.test.testing;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import org.apache.http.HttpEntity;
@@ -22,6 +15,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 通用HttpClientUtil工具类
@@ -88,7 +88,7 @@ public class HttpClientUtils {
                     paramList.add(new BasicNameValuePair(key, param.get(key)));
                 }
                 // 模拟表单
-                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList,"utf-8");
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList, "utf-8");
                 httpPost.setEntity(entity);
             }
             // 执行http请求
@@ -139,14 +139,14 @@ public class HttpClientUtils {
         return resultString;
     }
 
-    public static Object doPost2(String url, Map<String,Object> headers, String body){
+    public static Object doPost2(String url, Map<String, Object> headers, String body) {
         Map<String, Object> result = new HashMap<>();
         //创建httpclient实例
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //创建httpGet
         HttpPost httpPost = new HttpPost(url);
         //设置请求头
-        for(String key:headers.keySet()){
+        for (String key : headers.keySet()) {
             httpPost.setHeader(key, headers.get(key).toString());
         }
         //设置请求体
@@ -164,16 +164,16 @@ public class HttpClientUtils {
             HttpEntity httpEntity = response.getEntity();
             String responesBody = EntityUtils.toString(httpEntity, "UTF-8");
             JSONObject jsonObject = null;
-            try{
+            try {
                 jsonObject = JSONObject.parseObject(responesBody, Feature.OrderedField);
                 return jsonObject;
-            }catch(Exception e){
+            } catch (Exception e) {
                 return responesBody;
             }
         } catch (Exception e) {
             return e.toString();
         } finally {
-            closeResource(httpclient,response);
+            closeResource(httpclient, response);
         }
     }
 
@@ -183,10 +183,10 @@ public class HttpClientUtils {
      * @param httpClient
      * @param response
      */
-    public static void closeResource(CloseableHttpClient httpClient,CloseableHttpResponse response){
+    public static void closeResource(CloseableHttpClient httpClient, CloseableHttpResponse response) {
         try {
             httpClient.close();
-            if (response != null){
+            if (response != null) {
                 response.close();
             }
         } catch (Exception e) {

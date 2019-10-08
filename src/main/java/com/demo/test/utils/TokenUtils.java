@@ -73,9 +73,6 @@ public class TokenUtils {
     }
 
     public static boolean hasToken(String token) {
-        if (token == null || token.trim().length() <= 0) {
-            return false;
-        }
-        return true;
+        return token != null && token.trim().length() > 0;
     }
 }

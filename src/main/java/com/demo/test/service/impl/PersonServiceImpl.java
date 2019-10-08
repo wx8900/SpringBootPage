@@ -74,7 +74,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Cacheable(key="#student.id")
+    @Cacheable(key = "#student.id")
     public List<Student> findAll() {
         List<Student> list = null;
         Iterable<Student> iterable = studentRepository.findAll();

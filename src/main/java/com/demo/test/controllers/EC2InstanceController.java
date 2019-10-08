@@ -1,25 +1,20 @@
 package com.demo.test.controllers;
 
 import com.demo.test.domain.EC2Instance;
-import com.demo.test.domain.Student;
 import com.demo.test.security.CookieUtils;
 import com.demo.test.utils.TokenUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @author Jack
- * @date   2019/08/16 01:02 AM
+ * @date 2019/08/16 01:02 AM
  */
 @RestController
 public class EC2InstanceController {
@@ -30,7 +25,7 @@ public class EC2InstanceController {
 
     static {
         EC2Instance ec2Instance1 = new EC2Instance(1, "M5A 16xlarge", "m5a.16xlarge",
-                64, 0,256, "EBS Only", "12",
+                64, 0, 256, "EBS Only", "12",
                 "", "7000");
         EC2Instance ec2Instance2 = new EC2Instance(2, "A1 4xlarge", "a1.4xlarge",
                 16, 0, 32, "EBS Only", "",
@@ -49,6 +44,12 @@ public class EC2InstanceController {
         ec2InstanceList.add(ec2Instance3);
         ec2InstanceList.add(ec2Instance4);
         ec2InstanceList.add(ec2Instance5);
+    }
+
+    public static void main(String[] args) {
+        //EC2InstanceController ec2Controller = new EC2InstanceController();
+        System.out.println("Hello World!");
+        //ec2Controller.queryInfoByInstanceId(1);
     }
 
     @PostMapping("/ec2/{instanceId}")
@@ -74,12 +75,6 @@ public class EC2InstanceController {
                         ));
         logger.info("The query result is " + ec2Instance.toString());
         return ec2Instance;
-    }
-
-    public static void main(String[] args) {
-        //EC2InstanceController ec2Controller = new EC2InstanceController();
-        System.out.println("Hello World!");
-        //ec2Controller.queryInfoByInstanceId(1);
     }
 
 }

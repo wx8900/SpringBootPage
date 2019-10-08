@@ -1,9 +1,7 @@
 package com.demo.test.properties;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class PropertiesWrite {
@@ -33,7 +31,7 @@ public class PropertiesWrite {
             grades.setProperty("Biology", "19");
 
             // Save the grades properties using store() and an output stream
-            String desktop = System.getProperty ("user.home") + "/Desktop/";
+            String desktop = System.getProperty("user.home") + "/Desktop/";
             FileOutputStream out = new FileOutputStream(
                     //desktop +
                     "/src/main/resources/example.properties");

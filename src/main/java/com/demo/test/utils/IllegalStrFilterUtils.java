@@ -49,7 +49,6 @@ public class IllegalStrFilterUtils {
      *
      * @param sInput
      * @return true only if the input String doesn't contains illegal characters
-     *
      */
     public static Boolean isIllegalStr(String sInput) {
 

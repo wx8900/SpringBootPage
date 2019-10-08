@@ -19,7 +19,7 @@ public class ConnectionUtil {
         //final String urlStr = "https://market.aliyun.com/products/57126001/cmapi019423.html#sku=yuncode1342300000";
         //final String urlStr = "https://www.apiopen.top/journalismApi";
         //final String urlStr="https://blog.52itstyle.com/";
-        final String urlStr="https://www.baidu.com/";
+        final String urlStr = "https://www.baidu.com/";
         URL url = new URL(urlStr);
         URLConnection urlConnection = url.openConnection();
         urlConnection.setDoInput(true);

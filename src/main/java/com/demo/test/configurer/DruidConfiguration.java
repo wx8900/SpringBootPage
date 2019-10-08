@@ -1,27 +1,24 @@
 package com.demo.test.configurer;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.support.http.StatViewServlet;
+import com.alibaba.druid.support.http.WebStatFilter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.alibaba.druid.pool.DruidDataSource; //这个包容易导入错误
-import com.alibaba.druid.support.http.StatViewServlet; //这个包容易导入错误
-import com.alibaba.druid.support.http.WebStatFilter; //这个包容易导入错误
+import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Jack
  * @date 2019/07/21  04:42 AM
- *
+ * <p>
  * 查看druid监控，http://localhost:8099/druid/login.html ，用户名是在config配置的admin和123456
- *
  */
 
 @Configuration

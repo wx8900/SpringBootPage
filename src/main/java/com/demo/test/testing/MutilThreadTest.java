@@ -11,8 +11,8 @@ import java.util.concurrent.CountDownLatch;
 public class MutilThreadTest {
 
     public static void main(String[] args) {
-        int count=100;
-        final CountDownLatch cdl=new CountDownLatch(count);
+        int count = 100;
+        final CountDownLatch cdl = new CountDownLatch(count);
         for (int i = 0; i < count; i++) {
             new Thread(new Runnable() {
                 @Override

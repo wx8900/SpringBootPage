@@ -4,7 +4,6 @@ import com.demo.test.domain.Student;
 import com.demo.test.domain.Token;
 import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.security.CookieUtils;
-import com.demo.test.security.RSA;
 import com.demo.test.service.PersonService;
 import com.demo.test.utils.TokenUtil;
 import com.demo.test.utils.TokenUtils;
@@ -68,7 +67,7 @@ public class LoginController {
 
                 logger.info(name + " has login the website. The {userId} is " + student.getId()
                         + " and {token} is " + token.getSignature());
-                result = "Login success! "+ token.getSignature();
+                result = "Login success! " + token.getSignature();
             } else {
                 result = "Username or password error!";
             }

@@ -3,3 +3,124 @@ VOLUME /tmp
 ADD target/springbootpage-1.0-SNAPSHOT.jar app.jar
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-jar","/app.jar"]
+
+
+###################################
+###Docker command:
+
+## 构建镜像 (只执行 build 操作)
+mvn clean package docker:build
+
+##  构建镜像并且推送到镜像表Registry
+mvn clean package docker:build -DpushImage
+
+## 执行build并push指定tag的镜像到Registry
+mvn clean package docker:build -DpushImageTag
+
+docker run 的时候使用  --network=host，此时，Docker 容器的网络会附属在主机上，两者是互通的。
+例如，在容器中运行一个Web服务，监听8080端口，则主机的8080端口就会自动映射到容器中。
+
+当我们执行mvn package时，执行 build、tag 操作，当执行mvn deploy时，执行build、tag、push 操作。
+如果我们想跳过 docker 某个过程时，只需要：
+
+-DskipDockerBuild 跳过 build 镜像
+-DskipDockerTag 跳过 tag 镜像
+-DskipDockerPush 跳过 push 镜像
+-DskipDocker 跳过整个阶段
+例如：我们想执行 package 时，跳过 tag 过程，那么就需要mvn package -DskipDockerTag。
+
+0. 从Docker Hub查找镜像
+docker search -s 10 java
+
+1. 下载镜像
+docker pull centos
+
+2. 查看本地的镜像
+docker images
+
+启动已被停止的容器myrunoob
+docker start myrunoob
+
+停止运行中的容器myrunoob
+docker stop myrunoob
+
+杀掉一个运行中的容器
+docker kill -s KILL mynginx
+
+删除一个或多少容器
+强制删除容器db01、db02
+docker rm -f db01 db02
+
+移除容器nginx01对容器db01的连接，连接名db
+docker rm -l db
+
+删除容器nginx01,并删除容器挂载的数据卷
+docker rm -v nginx01
+
+获取容器/镜像的元数据。
+docker inspect -s mysql:5.6
+
+获取正在运行的容器mymysql的 IP
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mymysql
+
+3、运行一个镜像并生成容器
+docker run centos /bin/bash
+
+4. 输入命令docker ps或者docker container ls查看运行中的容器
+docker ps
+   查看所用容器,并显示了容器的状态
+docker ps -a
+
+5、启动一个容器并后台运行
+docker run命令 通过增加-i -t参数可以让容器并进入容器
+docker run -i -t centos /bin/bash
+
+使用docker镜像nginx:latest以后台模式启动一个容器,并将容器命名为mynginx。
+docker run --name mynginx -d nginx:latest
+
+使用镜像nginx:latest以后台模式启动一个容器,并将容器的80端口映射到主机随机端口。
+
+docker run -P -d nginx:latest
+使用镜像 nginx:latest，以后台模式启动一个容器,将容器的 80 端口映射到主机的 80 端口,主机的目录 /data 映射到容器的 /data。
+
+docker run -p 80:80 -v /data:/data -d nginx:latest
+绑定容器的 8080 端口，并将其映射到本地主机 127.0.0.1 的 80 端口上。
+
+$ docker run -p 127.0.0.1:80:8080/tcp ubuntu bash
+使用镜像nginx:latest以交互模式启动一个容器,在容器内执行/bin/bash命令。
+
+runoob@runoob:~$ docker run -it nginx:latest /bin/bash
+root@b8573233d675:/#
+
+6、选择需要上传的镜像，重命名为指定的格式
+docker  tag redis username/myredis:v1
+    username：为自己注册的用户名
+    myredis:为自己为镜像取的名字
+v1：为任意设置的版本号
+
+7. 完成上述操作后，即可提交镜像到自己的仓库
+docker push username/myredis:v1
+
+8. docker 映射文件从宿主机到容器,端口号映射
+   将宿主机的81端口映射到容器的80端口
+   将宿主机的/develop/data卷，映射到容器的/data卷
+docker run -i -t -p 81:80 -v /develop/data:/data  centos /bin/bash
+
+9、iptable转发端口
+//查看容器ip
+$ docker inspect 36afde543eb5 | grep IPAddress
+"IPAddress": "172.17.0.2"
+
+10. 将主机的8081端口映射到宿主机的8080端口
+$ iptables -t nat -A  DOCKER -p tcp --dport 8081 -j DNAT --to-destination 172.17.0.2:8080
+
+11. 先提交容器为镜像，再运行这个容器，同时指定新的端口映射
+    提交容器为镜像
+docker commit 9995ffa15f46  mycentos:0.1
+    停止旧的容器
+docker stop 9995ffa15f46
+    重新从旧的镜像启动容器
+$ docker run -i -t  -p 8081:8080  mycentos:0.
+
+查看容器中运行的进程信息
+docker top mymysql

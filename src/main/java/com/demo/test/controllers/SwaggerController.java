@@ -1,6 +1,6 @@
 package com.demo.test.controllers;
 
-import com.demo.test.domain.Constant;
+import com.demo.test.constant.Constant;
 import com.demo.test.domain.Student;
 import com.demo.test.exception.ApiErrorResponse;
 import com.demo.test.service.PersonService;

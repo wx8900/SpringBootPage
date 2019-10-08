@@ -1,7 +1,7 @@
 package com.demo.test.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.demo.test.domain.Constant;
+import com.demo.test.constant.Constant;
 import com.demo.test.domain.Student;
 import com.demo.test.exception.ApiErrorResponse;
 import com.demo.test.exception.GlobalExceptionHandler;
