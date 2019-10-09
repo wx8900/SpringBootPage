@@ -25,7 +25,8 @@ import java.util.stream.Collectors;
 
 /**
  * @author Jack
- * @date 2019/04/15
+ * @date 2019/04/15 start
+ * @date 2019/10/09 continue
  * @EnableCaching: start cache base on annotations
  * <p>
  * ServletComponentScan: enable filter
@@ -33,11 +34,24 @@ import java.util.stream.Collectors;
  * <p>
  * 1. 要先启动数据库
  * 2. cd /Users/Jack_Cai/redis-4.0.11
- * * src/redis-server
- * * redis-cli
- * * redis-cli shutdown
+ * src/redis-server
+ * redis-cli
+ * redis-cli shutdown
  * 3. http://localhost:8080/swagger-ui.html
  * 4. 用swagger与用token有冲突,已解决
+ * 5. 用Docker打包启动，没有完成
+ * 6. Spring Cloud分布式架构，没完成
+ * 7， Redis多级缓存，没完成
+ * 8， 写一个高并发场景，没完成
+ * 9， 集成Mybatis，没完成
+ * 10，集成Kafka，没完成
+ * 11，集成Nginx，没完成
+ * 12, 集成MongoDB，没完成
+ * 13，JVM调优，没完成
+ * 14，安全性调优，没完成
+ * 15，数据库MySQL主从集群，没完成
+ * 16，秒杀场景，没完成
+ * 17，限时订单功能，没完成
  */
 @SpringBootApplication
 @EnableCaching
