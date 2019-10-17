@@ -1,9 +1,5 @@
 package com.demo.test.testingcpu;
 
-/**
- *
- */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -35,7 +31,6 @@ public class RegexLoad {
         patternList.add("Total retailer shipment Count");
 
         for (String s : patternList) {
-
             for (int i = 0; i < patternMatch.length; i++) {
                 Pattern pattern = Pattern.compile(patternMatch[i]);
 
