@@ -13,6 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version 2.0
  * @date 2019/06/22 01:24 AM
  * @date 2019/06/26 13:42 PM
+ * @date 2019/10/17 17:32 PM
  */
 public class TinyURLUtils {
 
@@ -33,14 +34,16 @@ public class TinyURLUtils {
         String encodeString0 = "https://www.youtube.com/watch?v=8aG3Z62rfghk";
         String encodeString1 = "https://www.youtube.com/watch?v=8aG3Z62rfdsa";
         String encodeString2 = "https://www.youtube.com/watch?v=8aG3Z611111";
+        String[] buffer = new String[]{encodeString0, encodeString1, encodeString2};
 
         // 3个线程同时跑
         for (int i = 0; i < 3; i++) {
+            int finalI = i;
             new Thread(() -> {
-                for (int j = 0; j < 5; j++) {
-                    String shURL = tinyURLUtils.encode(encodeString0);
+                //for (int j = 0; j < 5; j++) {
+                    String shURL = tinyURLUtils.encode(buffer[finalI]);
                     tinyURLUtils.decode(shURL);
-                }
+                //}
             }
             ).start();
         }
@@ -75,7 +78,8 @@ public class TinyURLUtils {
             lock.unlock();
         }
         System.out.println(Thread.currentThread().getName()
-                + " : encode() -> shortUrl : " + shortUrl + ", longUrl : " + longUrl);
+                + " : encode() longUrl : "
+                + longUrl + " :  ----> shortUrl : " + shortUrl);
         return shortUrl;
     }
 
@@ -86,10 +90,14 @@ public class TinyURLUtils {
      * @return
      */
     public String decode(String shortUrl) {
-        if (shortUrl == null || shortUrl.length() <= 0 || !shortUrl.startsWith(BASE_HOST)) {
+        if (shortUrl == null
+                || shortUrl.length() <= 0
+                //|| !shortUrl.startsWith(BASE_HOST)
+        ) {
             return shortUrl;
         }
-        System.out.println("decode() ->  shortUrl : " + shortUrl + " ,longUrl : "
+        System.out.println(Thread.currentThread().getName()
+                + " : decode() shortUrl : " + shortUrl + " %%%%%%%%%%->  longUrl : "
                 + shortUrlMapping.get(shortUrl));
         return shortUrlMapping.get(shortUrl);
     }
