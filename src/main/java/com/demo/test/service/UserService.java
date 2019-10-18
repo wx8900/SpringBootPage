@@ -11,13 +11,15 @@ import java.util.Optional;
  * @author Jack
  * @date 2019/05/30 14:36 PM
  */
-public interface PersonService {
+public interface UserService {
 
     Optional<Student> findById(Long id);
 
     List<Student> findAll();
 
     Page<Student> findByName(String name, Pageable pageable);
+
+    String getMailByName(String names);
 
     List<Student> findByNameAndPassword(String name, String password);
 

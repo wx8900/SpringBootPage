@@ -3,7 +3,7 @@ package com.demo.test.controllers;
 import com.demo.test.constant.Constant;
 import com.demo.test.domain.Student;
 import com.demo.test.exception.ApiErrorResponse;
-import com.demo.test.service.PersonService;
+import com.demo.test.service.UserService;
 import io.swagger.annotations.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +28,6 @@ import java.util.Map;
  * @author Jack
  * @date 2019/07/15
  */
-
 @Api(tags = "swaggercontroller", value = "test")
 @RestController
 public class SwaggerController {
@@ -36,7 +35,7 @@ public class SwaggerController {
     private static Logger logger = LogManager.getLogger(SwaggerController.class);
 
     @Autowired
-    private PersonService studentService;
+    private UserService studentService;
 
     @ApiOperation(value = "Hello Spring Boot", notes = "Hello Spring Boot")
     @RequestMapping(value = "/", method = RequestMethod.GET)

@@ -1,0 +1,21 @@
+//收件人邮箱
+var toEmailAddress="xxxxxxxxx@xx.com";
+
+$.ajax({
+    type:"post",
+    url:"/sendEmailSystem/",
+    data:{
+        toEmailAddress: toEmailAddress
+    },
+    dataType:"json",
+    success:function(data){
+        if(0 == data.code){
+            alert("邮件发送成功，验证码为：" + data.msg);
+        } else {
+            alert(data.msg);
+        }
+    },
+    error:function(){
+        alert("数据传送失败！");
+    }
+});

@@ -6,7 +6,7 @@ import org.junit.After;
 import org.apache.log4j.Logger;
 
 /** 
-* StudentController Tester.
+* UserController Tester.
 * 
 * @author Jack
 * @since <pre>四月 13, 2019 $time</pre> 

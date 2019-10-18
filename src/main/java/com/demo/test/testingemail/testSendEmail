@@ -1,0 +1,29 @@
+//收件人邮箱
+var toEmailAddress="xxxxxxxxx@xx.com";
+
+//邮件主题
+var emailTitle="我是邮件主题";
+
+//邮件内容
+var emailContent="我是邮件的内容，我要说一大串话，巴拉巴拉……";
+
+$.ajax({
+    type:"post",
+    url:"/sendEmailOwn/",
+    data:{
+        emailTitle: emailTitle,
+        emailContent: emailContent,
+        toEmailAddress: toEmailAddress
+    },
+    dataType:"json",
+    success:function(data){
+        if(0 == data.code){
+            alert("邮件发送成功！");
+        } else {
+            alert(data.msg);
+        }
+    },
+    error:function(){
+        alert("数据传送失败！");
+    }
+});

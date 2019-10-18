@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.After; 
 
 /** 
-* StudentController Tester.
+* UserController Tester
 * 
 * @author Jack
 * @since <pre>四月 13, 2019 $time</pre> 

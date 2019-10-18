@@ -23,4 +23,6 @@ public interface StudentRepository extends PagingAndSortingRepository<Student, L
     // @Query("SELECT u.id FROM tbl_student u WHERE u.name = ?1 and u.password = ?2")
     List<Student> findByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
+    // TODO
+    String findByName(String names);
 }

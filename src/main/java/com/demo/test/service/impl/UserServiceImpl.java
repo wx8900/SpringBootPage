@@ -2,7 +2,7 @@ package com.demo.test.service.impl;
 
 import com.demo.test.dao.StudentRepository;
 import com.demo.test.domain.Student;
-import com.demo.test.service.PersonService;
+import com.demo.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @Service("studentService")
 @CacheConfig(cacheNames = {"userCache"})
 @Transactional(rollbackOn = Exception.class)
-public class PersonServiceImpl implements PersonService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     StudentRepository studentRepository;
@@ -40,6 +40,11 @@ public class PersonServiceImpl implements PersonService {
     @Cacheable(key = "#student.name")
     public Page<Student> findByName(String name, Pageable pageable) {
         return studentRepository.findByName(name, pageable);
+    }
+
+    @Override
+    public String getMailByName(String names) {
+        return studentRepository.findByName(names);
     }
 
     /**

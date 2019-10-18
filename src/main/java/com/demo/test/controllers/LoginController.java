@@ -4,7 +4,7 @@ import com.demo.test.domain.Student;
 import com.demo.test.domain.TokenModel;
 import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.security.CookieUtils;
-import com.demo.test.service.PersonService;
+import com.demo.test.service.UserService;
 import com.demo.test.utils.TokenUtils;
 import io.swagger.annotations.Api;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +36,7 @@ public class LoginController {
     static Logger logger = LogManager.getLogger(LoginController.class);
 
     @Autowired
-    private PersonService studentService;
+    private UserService studentService;
 
     @PostMapping(value = "/login")
     public String login(@RequestParam("name") String name,

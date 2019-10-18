@@ -4,14 +4,19 @@ import com.demo.test.constant.Constant;
 import com.demo.test.domain.Student;
 import com.demo.test.exception.ApiErrorResponse;
 import com.demo.test.exception.GlobalExceptionHandler;
+import com.demo.test.helper.CalculatorUtil;
+import com.demo.test.helper.RandomUtil;
+import com.demo.test.helper.SendmailUtil;
+import com.demo.test.helper.VerifyCodeUtil;
 import com.demo.test.security.CookieUtils;
-import com.demo.test.service.PersonService;
+import com.demo.test.service.UserService;
 import com.demo.test.utils.TokenUtils;
 import io.swagger.annotations.Api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jack
@@ -61,16 +69,16 @@ import java.util.List;
  * "email": "goodjob@gmail.com"
  * }
  */
-
 @Api("用户接口操作")
 @RestController
 @Validated
 @RequestMapping("/v1/api/students")
-public class StudentController {
+public class UserController {
 
-    static Logger logger = LogManager.getLogger(StudentController.class);
+    static Logger logger = LogManager.getLogger(UserController.class);
+
     @Autowired
-    private PersonService studentService;
+    private UserService userService;
 
     /**
      * start Redis server before call this method
@@ -84,7 +92,7 @@ public class StudentController {
     public ApiErrorResponse addStudent(@Valid @RequestBody Student student) {
         ApiErrorResponse apiError;
         try {
-            studentService.save(student);
+            userService.save(student);
             apiError = ApiErrorResponse.builder().status(HttpStatus.OK).code("200")
                     .message("Add user success!").detail("Add user " + Constant.SUCCESS).build();
             logger.info(" Calling the API Success ======> addStudent : student " + student.toString());
@@ -102,7 +110,7 @@ public class StudentController {
     @GetMapping(value = "/findAll")
     public List<Student> findAll() {
         logger.info(" Calling the API Success ======> findAll ");
-        return studentService.findAll();
+        return userService.findAll();
     }
 
     @ResponseBody
@@ -110,7 +118,7 @@ public class StudentController {
     public Student findById(@Valid Long id) {
         Student student = Student.builder().id(0).build();
         try {
-            student = studentService.findById(id).orElse(null);
+            student = userService.findById(id).orElse(null);
             logger.info(" Calling the API Success ======> findById + {id} : " + id);
         } catch (Exception e) {
             logger.error("[MyException] happen in findById!" + GlobalExceptionHandler.buildErrorMessage(e));
@@ -139,7 +147,7 @@ public class StudentController {
         }
 
         try {
-            studentList = studentService.listByPage(PageRequest.of(pageIndex, pageSize)).getContent();
+            studentList = userService.listByPage(PageRequest.of(pageIndex, pageSize)).getContent();
             logger.info(" Calling the API Success ======> queryByPage");
         } catch (Exception e) {
             logger.error("[MyException] happen in queryByPage!" + GlobalExceptionHandler.buildErrorMessage(e));
@@ -168,7 +176,7 @@ public class StudentController {
         }
 
         try {
-            studentList = (List<Student>) studentService.findByName(name, PageRequest.of(pageIndex, pageSize));
+            studentList = (List<Student>) userService.findByName(name, PageRequest.of(pageIndex, pageSize));
             logger.info(" Calling the API Success ======> queryByName : name is " + name);
         } catch (Exception e) {
             logger.error("[MyException] happen in queryByName!" + GlobalExceptionHandler.buildErrorMessage(e));
@@ -182,7 +190,7 @@ public class StudentController {
         if (!TokenUtils.hasToken(token)) {
             logger.error("Please login the system!");
         }
-        studentService.deleteById(id);
+        userService.deleteById(id);
     }
 
     @PutMapping("/updateStudent")
@@ -191,7 +199,102 @@ public class StudentController {
         if (!TokenUtils.hasToken(token)) {
             logger.error("Please login the system!");
         }
-        studentService.save(user);
+        userService.save(user);
     }
+
+    /**
+     * 发送自由编辑的邮件
+     *
+     * @param toEmailAddress 收件人邮箱
+     * @param emailTitle     邮件主题
+     * @param emailContent   邮件内容
+     * @return
+     */
+    @RequestMapping(value = {"/sendEmailOwn/"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String sendEmailOwn(@RequestParam("toEmailAddress") String toEmailAddress,
+                               @RequestParam("emailTitle") String emailTitle,
+                               @RequestParam("emailContent") String emailContent) {
+        try {
+            //发送邮件
+            SendmailUtil.sendEmail(toEmailAddress, emailTitle, emailContent);
+            return CalculatorUtil.getJSONString(0);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return CalculatorUtil.getJSONString(1, "邮件发送失败！");
+        }
+    }
+
+    /**
+     * 发送系统验证
+     *
+     * @param toEmailAddress 收件人邮箱
+     * @return
+     */
+    @RequestMapping(value = {"/sendEmailSystem/"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String sendEmailSystem(@RequestParam("toEmailAddress") String toEmailAddress) {
+        try {
+            //生成验证码
+            String verifyCode = VerifyCodeUtil.generateVerifyCode(6);
+            //邮件主题
+            String emailTitle = "【好学堂】邮箱验证";
+            //邮件内容
+            String emailContent = "您正在【好学堂】进行邮箱验证，您的验证码为：" + verifyCode + "，请于10分钟内完成验证！";
+            //发送邮件
+            SendmailUtil.sendEmail(toEmailAddress, emailTitle, emailContent);
+            return CalculatorUtil.getJSONString(0, verifyCode);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return CalculatorUtil.getJSONString(1, "邮件发送失败！");
+        }
+    }
+
+    /**
+     * 向邮箱发送验证码
+     *
+     * @param customNames
+     * @return
+     */
+    public Map<String, Object> sendCodeToMail(String customNames) {
+        Map<String, Object> responseData = new HashMap<>(16);
+        ApiErrorResponse apiError = ApiErrorResponse.builder().build();
+        //判断用户是否存在
+        if (userService.getMailByName(customNames) != null) {
+            //根据name获取保存的邮箱
+            String mailAddress = userService.getMailByName(customNames);
+            RedisTemplate redisTemplate = new RedisTemplate();
+            //用户输入邮箱与绑定邮箱一致→发送验证码
+            if (mailAddress.equals(customNames)) {
+                try {
+                    //生成验证码
+                    String verifyCode = RandomUtil.getCode();
+                    //邮件主题
+                    String emailTitle = "邮箱验证";
+                    //邮件内容
+                    String emailContent = "您正在进行邮箱验证，您的验证码为：" + verifyCode + "，请于5分钟内完成验证！";
+                    //发送邮件
+                    SendmailUtil.sendEmail(mailAddress, emailTitle, emailContent);
+                    //缓存5分钟
+                    redisTemplate.opsForValue().set(mailAddress, verifyCode, 5, TimeUnit.MINUTES);
+                    apiError.setMessage("邮箱验证码发送成功");
+                } catch (Exception e) {
+                    apiError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                    apiError.setMessage("邮箱地址错误");
+                    logger.error(e.getMessage());
+                }
+            } else {
+                //邮箱地址错误
+                apiError.setStatus(HttpStatus.BAD_REQUEST);
+                apiError.setMessage("邮箱地址错误");
+            }
+        } else {
+            //用户不存在
+            apiError.setStatus(HttpStatus.NOT_FOUND);
+            apiError.setMessage("用户不存在");
+        }
+        return responseData;
+    }
+
 
 }
