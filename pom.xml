@@ -179,7 +179,12 @@
             <artifactId>mail</artifactId>
             <version>1.4.5</version>
         </dependency>
-
+        <!--工具类总结,邮件发送,http请求,序列化,BigDecimal计算类,时间转换,IP和主机名-->
+        <dependency>
+            <groupId>io.github.ljwlgl</groupId>
+            <artifactId>common-util</artifactId>
+            <version>2.0.1</version>
+        </dependency>
     </dependencies>
 
     <!-- 使用自定义BOM来维护第三方依赖  -->
