@@ -40,10 +40,35 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * 	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
  */
 
+/**
+ *
+ * 调用旧的接口 UserServiceOld 花费的时间：
+ * getUserInfo总执行时间是 ： 2875
+ * getUserInfo总执行时间是 ： 2903
+ * getUserInfo总执行时间是 ： 3148
+ * getUserInfo总执行时间是 ： 3127
+ * getUserInfo总执行时间是 ： 2866
+ *
+ * 调用新的接口 UserService，用 JDK 原生的 FutureTask 花费的时间：
+ * getUserInfo总执行时间是 ： 2622  2个线程去跑
+ * getUserInfo总执行时间是 ： 2632  2个线程去跑
+ * getUserInfo总执行时间是 ： 2613  2个线程去跑
+ * getUserInfo总执行时间是 ： 2673  2个线程去跑
+ * getUserInfo总执行时间是 ： 2601  2个线程去跑
+ * getUserInfo总执行时间是 ： 2595  2个线程去跑
+ *
+ * 调用新的接口 UserService，用 MyFutureTask 花费的时间：
+ * getUserInfo总执行时间是 ： 2651
+ * getUserInfo总执行时间是 ： 2572
+ */
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @WebAppConfiguration
 public class ServiceTest {
+
+    /*@Autowired
+    private UserServiceOld userService;*/
 
     @Autowired
     private UserService userService;
@@ -62,7 +87,8 @@ public class ServiceTest {
     public void testUserService() throws Exception {
         long currentTimeMillis = System.currentTimeMillis();
         Object userInfo = userService.getUserInfo("jack");
-        System.out.println("getUserInfo总执行时间是 ： " + (System.currentTimeMillis() - currentTimeMillis));
+        System.out.println("调用getUserInfo总执行时间是 ： " + (System.currentTimeMillis() - currentTimeMillis));
         System.out.println(userInfo.toString());
     }
 }
+

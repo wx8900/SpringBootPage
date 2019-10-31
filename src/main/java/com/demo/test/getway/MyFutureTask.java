@@ -5,7 +5,11 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.LockSupport;
 
-public class JackFutureTask<T> implements Runnable {
+/**
+ * @author Jack
+ * @param <T>
+ */
+public class MyFutureTask<T> implements Runnable {
     Callable<T> callable;
 
     T result;
@@ -14,7 +18,7 @@ public class JackFutureTask<T> implements Runnable {
 
     volatile String state = "NEW";
 
-    public JackFutureTask(Callable<T> callable) {
+    public MyFutureTask(Callable<T> callable) {
         this.callable = callable;
     }
 
