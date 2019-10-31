@@ -20,7 +20,8 @@ public class ConnectionUtil {
         //final String urlStr = "https://www.apiopen.top/journalismApi";
         //final String urlStr="https://blog.52itstyle.com/";
         //final String urlStr = "https://www.baidu.com/";
-        final String urlStr="https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=15921375000";
+        //final String urlStr="https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=15921375000";
+        final String urlStr= "https://suggest.taobao.com/sug?code=utf-8&q=%E5%8D%AB%E8%A1%A3&callback=cb";
         URL url = new URL(urlStr);
         URLConnection urlConnection = url.openConnection();
         urlConnection.setDoInput(true);

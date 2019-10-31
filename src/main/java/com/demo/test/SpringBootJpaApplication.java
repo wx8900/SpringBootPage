@@ -4,8 +4,10 @@ import com.demo.test.constant.Constant;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,9 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
@@ -58,6 +63,17 @@ import java.util.stream.Collectors;
 // filter现在已经废弃
 //@ServletComponentScan(basePackages = {"com.demo.test.filter"})
 public class SpringBootJpaApplication {
+
+    // 启动的时候要注意，由于我们在controller中注入了RestTemplate，所以启动的时候需要实例化该类的一个实例
+    @Autowired
+    private RestTemplateBuilder builder;
+
+    // 使用RestTemplateBuilder来实例化RestTemplate对象，spring默认已经注入了RestTemplateBuilder实例
+    @Bean
+    public RestTemplate restTemplate() {
+        return builder.build();
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(SpringBootJpaApplication.class, args);
     }

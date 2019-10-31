@@ -11,6 +11,10 @@ import java.net.URLEncoder;
  */
 public class GetDataFromAPI {
 
+    public static void main(String[] args) throws Exception {
+        json();
+    }
+
     public static void json() throws Exception {
         //参数url化
         String city = URLEncoder.encode("上海", "utf-8");
