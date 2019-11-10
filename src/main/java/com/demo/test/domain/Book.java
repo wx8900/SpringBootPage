@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
 @ToString

@@ -15,6 +15,8 @@ import io.swagger.annotations.Api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -114,12 +116,12 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/findById/{id}")
-    public Student findById(@Valid Long id) {
+    @RequestMapping(value = "/findById/{id}", method= RequestMethod.GET)
+    public Student findById(@PathVariable("id") Integer id) {
         Student student = Student.builder().id(0).build();
         try {
-            student = userService.findById(id).orElse(null);
             logger.info(" Calling the API Success ======> findById + {id} : " + id);
+            student = userService.findById(Long.valueOf(id)).orElse(null);
         } catch (Exception e) {
             logger.error("[MyException] happen in findById!" + GlobalExceptionHandler.buildErrorMessage(e));
         }
@@ -134,18 +136,17 @@ public class UserController {
      * @param pageSize
      * @return
      */
-    @ResponseBody
     @GetMapping(value = "/queryByPage")
     public List<Student> queryByPage(@RequestParam("page") int pageIndex,
                                      @RequestParam("size") int pageSize,
                                      HttpServletRequest request) {
-        List<Student> studentList = new ArrayList<>(0);
-        String token = CookieUtils.getRequestedToken(request);
+        /*String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
             logger.error("Please login the system!");
             return studentList;
-        }
+        }*/
 
+        List<Student> studentList = new ArrayList<>(10);
         try {
             studentList = userService.listByPage(PageRequest.of(pageIndex, pageSize)).getContent();
             logger.info(" Calling the API Success ======> queryByPage");
@@ -156,32 +157,57 @@ public class UserController {
     }
 
     /**
-     * No primary or default constructor found for interface org.spring framework.data.domain.Pageable
-     * Separate Pageable pageable to two parameters: pageIndex, pageSize
+     * org.springframework.data.redis.serializer.SerializationException:
+     * Could not read JSON: Cannot construct instance of `org.springframework.data.domain.PageImpl`
+     * (no Creators, like default construct, exist): cannot deserialize from Object value (no delegate-
+     *
+     * 解决方案：删除@ResponseBody标签，因为转JSON格式时，对PageImpl这个类序列化的时候，报不能序列化的错
      *
      * @param name
      * @return
      */
-    @ResponseBody
     @GetMapping(value = "/queryByName")
-    public List<Student> queryByName(@Size(min = 1, max = 20) String name,
+    public List<Student> queryByName(@RequestParam("name") @Size(min = 1, max = 20) String name,
                                      @RequestParam("page") int pageIndex,
                                      @RequestParam("size") int pageSize,
                                      HttpServletRequest request) {
-        List<Student> studentList = new ArrayList<>(0);
-        String token = CookieUtils.getRequestedToken(request);
+        /*String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
             logger.error("Please login the system!");
             return studentList;
-        }
+        }*/
 
+        Page<Student> studentPage = new PageImpl<>(new ArrayList<>(10));
         try {
-            studentList = (List<Student>) userService.findByName(name, PageRequest.of(pageIndex, pageSize));
+            studentPage = userService.findByName(name, PageRequest.of(pageIndex, pageSize));
             logger.info(" Calling the API Success ======> queryByName : name is " + name);
         } catch (Exception e) {
             logger.error("[MyException] happen in queryByName!" + GlobalExceptionHandler.buildErrorMessage(e));
         }
-        return studentList;
+        return (studentPage != null) ? studentPage.getContent() : new ArrayList<>(0);
+    }
+
+    /**
+     * 发送自由编辑的邮件
+     *
+     * @param toEmailAddress 收件人邮箱
+     * @param emailTitle     邮件主题
+     * @param emailContent   邮件内容
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = {"/sendEmailOwn/"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String sendEmailOwn(@RequestParam("toEmailAddress") String toEmailAddress,
+                               @RequestParam("emailTitle") String emailTitle,
+                               @RequestParam("emailContent") String emailContent) {
+        try {
+            //发送邮件
+            SendmailUtil.sendEmail(toEmailAddress, emailTitle, emailContent);
+            return CalculatorUtil.getJSONString(0);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return CalculatorUtil.getJSONString(1, "邮件发送失败！");
+        }
     }
 
     @DeleteMapping("/deleteById/{id}")
@@ -200,29 +226,6 @@ public class UserController {
             logger.error("Please login the system!");
         }
         userService.save(user);
-    }
-
-    /**
-     * 发送自由编辑的邮件
-     *
-     * @param toEmailAddress 收件人邮箱
-     * @param emailTitle     邮件主题
-     * @param emailContent   邮件内容
-     * @return
-     */
-    @RequestMapping(value = {"/sendEmailOwn/"}, method = {RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
-    public String sendEmailOwn(@RequestParam("toEmailAddress") String toEmailAddress,
-                               @RequestParam("emailTitle") String emailTitle,
-                               @RequestParam("emailContent") String emailContent) {
-        try {
-            //发送邮件
-            SendmailUtil.sendEmail(toEmailAddress, emailTitle, emailContent);
-            return CalculatorUtil.getJSONString(0);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return CalculatorUtil.getJSONString(1, "邮件发送失败！");
-        }
     }
 
     /**

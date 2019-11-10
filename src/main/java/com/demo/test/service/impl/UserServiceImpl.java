@@ -37,12 +37,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(key = "#student.name")
+    @Cacheable
     public Page<Student> findByName(String name, Pageable pageable) {
         return studentRepository.findByName(name, pageable);
     }
 
     @Override
+    @Cacheable
     public String getMailByName(String names) {
         return studentRepository.findByName(names);
     }
@@ -67,19 +68,19 @@ public class UserServiceImpl implements UserService {
      * @param student
      */
     @Override
-    @Cacheable(key = "#student.id")
+    @Cacheable
     public void save(Student student) {
         studentRepository.save(student);
     }
 
     @Override
-    @Cacheable(key = "#student.id")
+    @Cacheable
     public Optional<Student> findById(Long id) {
         return studentRepository.findById(id);
     }
 
     @Override
-    @Cacheable(key = "#student.id")
+    @Cacheable
     public List<Student> findAll() {
         List<Student> list = null;
         Iterable<Student> iterable = studentRepository.findAll();
@@ -93,7 +94,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(key = "#student.id")
+    @CacheEvict(key = "#id")
     public void deleteById(Long id) {
         studentRepository.deleteById(id);
     }

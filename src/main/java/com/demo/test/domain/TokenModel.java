@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @date 2019/10/08 18:55 PM  update
  */
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
 @ToString(exclude = {"id", "token", "timeStamp", "jwt", "signature"})

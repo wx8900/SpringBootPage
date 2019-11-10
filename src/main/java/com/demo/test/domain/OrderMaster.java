@@ -15,12 +15,12 @@ import java.util.Date;
  */
 @Entity
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
 @DynamicUpdate
 @ToString
-public class OrderMaster {
+public class OrderMaster implements java.io.Serializable {
 
     /**
      * 订单id

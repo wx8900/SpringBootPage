@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 
 @Entity
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
 @ToString
-public class ProductInfo {
+public class ProductInfo implements java.io.Serializable {
 
     @Id
     private String productId;

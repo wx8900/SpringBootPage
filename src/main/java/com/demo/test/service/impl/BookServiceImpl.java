@@ -75,7 +75,8 @@ public class BookServiceImpl implements BookService {
      * @return
      */
     @Override
-    @Cacheable(key = "targetClass + methodName +#p0")
+    //@Cacheable(key = "targetClass + methodName +#p0")
+    @Cacheable
     public List<Book> queryAllBookByUserId(Long uid) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
         return bookRepository.queryAllBookByUserId(uid).orElse(new ArrayList<>());
@@ -90,7 +91,8 @@ public class BookServiceImpl implements BookService {
      * @return Book
      */
     @Override
-    @Cacheable(key = "#id", condition = "#id lt 20", unless = "#result eq null")
+    //@Cacheable(key = "#id", condition = "#id lt 20", unless = "#result eq null")
+    @Cacheable
     public Book findById(Long id) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
         return bookRepository.findById(id).orElse(null);
@@ -105,7 +107,8 @@ public class BookServiceImpl implements BookService {
      * @return
      */
     @Override
-    @Cacheable(key = "#id", condition = "#id lt 20")
+    //@Cacheable(key = "#id", condition = "#id lt 20")
+    @Cacheable
     public Book findByISBN(String isbn) {
         logger.info("执行这里，说明缓存中读取不到数据，直接读取数据库....");
         return bookRepository.findBookByISBN(isbn).orElse(Book.builder().build());
@@ -117,7 +120,8 @@ public class BookServiceImpl implements BookService {
      * 与@Cacheable区别在于, CachePut每次都调用真实的方法，常用于更新
      */
     @Override
-    @CachePut(key = "#book.id")
+    //@CachePut(key = "#book.id")
+    @Cacheable
     public void save(Book book) {
         bookRepository.save(book);
     }

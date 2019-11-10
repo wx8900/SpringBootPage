@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EC2Instance {
+public class EC2Instance implements java.io.Serializable {
 
     @Id
     private Integer id;

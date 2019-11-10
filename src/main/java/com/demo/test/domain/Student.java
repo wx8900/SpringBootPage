@@ -14,12 +14,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @ToString
 @Table(name = "tbl_student")
 public class Student implements java.io.Serializable {
+
+    public Student(){}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private long id;

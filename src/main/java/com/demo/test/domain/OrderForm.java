@@ -5,11 +5,11 @@ import lombok.*;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
 @ToString
-public class OrderForm {
+public class OrderForm implements java.io.Serializable {
 
     @NotEmpty(message = "姓名必填")
     private String name;

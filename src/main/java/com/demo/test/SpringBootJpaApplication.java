@@ -57,8 +57,11 @@ import java.util.stream.Collectors;
  * 15，数据库MySQL主从集群，没完成
  * 16，秒杀场景，没完成
  * 17，限时订单功能，没完成
+ *
+ * @EnableCircuitBreaker 打开应用熔断服务降级
  */
 @SpringBootApplication
+//@EnableCircuitBreaker
 @EnableCaching
 // filter现在已经废弃
 //@ServletComponentScan(basePackages = {"com.demo.test.filter"})

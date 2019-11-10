@@ -13,12 +13,12 @@ import java.math.BigDecimal;
 
 @Entity
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
 @DynamicUpdate
 @ToString
-public class OrderDetail {
+public class OrderDetail implements java.io.Serializable {
 
     /**
      * 详情id

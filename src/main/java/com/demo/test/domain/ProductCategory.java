@@ -15,11 +15,11 @@ import javax.persistence.Id;
 @Entity
 @DynamicUpdate
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
 @ToString
-public class ProductCategory {
+public class ProductCategory implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
