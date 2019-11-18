@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Builder
 @ToString
 @Table(name = "tbl_student_book")
@@ -25,4 +24,6 @@ public class StudentBook implements java.io.Serializable {
     private String extendTimes;
     private String returnDate;
     private int isReturned;
+
+    public StudentBook() {}
 }

@@ -18,7 +18,7 @@ public interface ProductInfoService {
      * @param id
      * @return
      */
-    ProductInfo findById(String id);
+    ProductInfo findById(Long id);
 
     /**
      * 查询上架的产品
@@ -56,6 +56,13 @@ public interface ProductInfoService {
      * @param cartDTOList
      */
     void decreaseStock(List<CartDTO> cartDTOList);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    //List<ProductInfo> findAllProductByCategoryId(Integer id);
 
 
 }

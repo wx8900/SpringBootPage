@@ -30,7 +30,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Override
     @Cacheable
-    public ProductInfo findById(String id) {
+    public ProductInfo findById(Long id) {
         return repository.findById(id).get();
     }
 
@@ -56,7 +56,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     @Cacheable
     public void increaseStock(List<CartDTO> cartDTOList) {
         for (CartDTO cartDto : cartDTOList) {
-            ProductInfo info = findById(cartDto.getProductId());
+            ProductInfo info = findById(Long.valueOf(cartDto.getProductId()));
             //商品为空抛出异常
             if (info == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
@@ -72,7 +72,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     @Transactional
     public void decreaseStock(List<CartDTO> cartDTOList) {
         for (CartDTO cartDTO : cartDTOList) {
-            ProductInfo info = findById(cartDTO.getProductId());
+            ProductInfo info = findById(Long.valueOf(cartDTO.getProductId()));
             //商品为空抛出异常
             if (info == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
@@ -86,5 +86,10 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             save(info);
         }
     }
+
+    /*@Override
+    public List<ProductInfo> findAllProductByCategoryId(Integer id) {
+        return repository.findAllProductByCategoryId(id);
+    }*/
 }
 

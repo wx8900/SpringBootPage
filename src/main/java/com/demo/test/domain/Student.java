@@ -20,8 +20,6 @@ import javax.validation.constraints.Size;
 @Table(name = "tbl_student")
 public class Student implements java.io.Serializable {
 
-    public Student(){}
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private long id;
@@ -48,5 +46,7 @@ public class Student implements java.io.Serializable {
 
     @Email(message = "电子邮箱格式不正确")
     private String email;
+
+    public Student(){}
 
 }

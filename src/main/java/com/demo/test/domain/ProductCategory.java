@@ -9,14 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * 商品分类
+ * 商品类别
+ *
+ * @author Jack
  */
-
 @Entity
 @DynamicUpdate
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Builder
 @ToString
 public class ProductCategory implements java.io.Serializable {
@@ -26,14 +26,16 @@ public class ProductCategory implements java.io.Serializable {
     private Integer categoryId;
 
     /**
-     * 种类名称
+     * 商品种类名称
      */
     private String categoryName;
 
     /**
-     * 种类类型
+     * 商品类目编号
      */
     private Integer categoryType;
+
+    public ProductCategory() {}
 
     public ProductCategory(String categoryName, Integer categoryType) {
         this.categoryName = categoryName;

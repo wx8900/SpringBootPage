@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Builder
 @ToString
 @Table(name = "tbl_book")
@@ -24,4 +23,6 @@ public class Book implements java.io.Serializable {
     private String name;
     private String price;
     private String desc;
+
+    public Book() {}
 }

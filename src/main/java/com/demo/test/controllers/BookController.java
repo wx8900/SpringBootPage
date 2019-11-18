@@ -51,6 +51,9 @@ public class BookController {
      * eException: Could not write JSON: java.lang.String cannot be cast to java.lang.Number; nested exception is
      * com.fasterxml.jackson.databind.JsonMappingException:
      * java.lang.String cannot be cast to java.lang.Number (through reference chain: java.util.LinkedHashMap["1"])]
+     * <p>
+     * java.lang.IllegalStateException: No primary or default constructor
+     * found for interface org.springframework.data.jpa.domain.Specification
      *
      * @return
      */

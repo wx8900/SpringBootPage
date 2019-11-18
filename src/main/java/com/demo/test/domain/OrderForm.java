@@ -6,7 +6,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Builder
 @ToString
 public class OrderForm implements java.io.Serializable {
@@ -25,5 +24,7 @@ public class OrderForm implements java.io.Serializable {
 
     @NotEmpty(message = "购物车不能为空")
     private String items;
+
+    public OrderForm() {}
 }
 

@@ -16,7 +16,6 @@ import java.util.Date;
 @Entity
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Builder
 @DynamicUpdate
 @ToString
@@ -72,6 +71,8 @@ public class OrderMaster implements java.io.Serializable {
      * 更新时间
      */
     private Date updateTime;
+
+    public OrderMaster() {}
 
 }
 

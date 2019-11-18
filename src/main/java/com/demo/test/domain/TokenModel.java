@@ -15,7 +15,6 @@ import java.io.Serializable;
  */
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Builder
 @ToString(exclude = {"id", "token", "timeStamp", "jwt", "signature"})
 public class TokenModel implements Serializable {
@@ -54,6 +53,8 @@ public class TokenModel implements Serializable {
      * token过期时间戳
      */
     private Long tokenPeriodTime;
+
+    public TokenModel() {}
 
     public TokenModel(String signature) {
         if (signature == null) {

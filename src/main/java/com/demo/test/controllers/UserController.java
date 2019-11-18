@@ -70,6 +70,7 @@ import java.util.concurrent.TimeUnit;
  * "phone": "1505552388",
  * "email": "goodjob@gmail.com"
  * }
+ *
  */
 @Api("用户接口操作")
 @RestController
@@ -115,8 +116,14 @@ public class UserController {
         return userService.findAll();
     }
 
+    /**
+     * http://localhost:8080/v1/api/students/findById/30
+     *
+     * @param id
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "/findById/{id}", method= RequestMethod.GET)
+    @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
     public Student findById(@PathVariable("id") Integer id) {
         Student student = Student.builder().id(0).build();
         try {
@@ -157,10 +164,12 @@ public class UserController {
     }
 
     /**
+     * http://localhost:8080/v1/api/students/queryByName?page=0&size=10&name=jack
+     * <p>
      * org.springframework.data.redis.serializer.SerializationException:
      * Could not read JSON: Cannot construct instance of `org.springframework.data.domain.PageImpl`
      * (no Creators, like default construct, exist): cannot deserialize from Object value (no delegate-
-     *
+     * <p>
      * 解决方案：删除@ResponseBody标签，因为转JSON格式时，对PageImpl这个类序列化的时候，报不能序列化的错
      *
      * @param name

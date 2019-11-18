@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 @Entity
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Builder
 @ToString
 public class ProductInfo implements java.io.Serializable {
@@ -17,25 +16,27 @@ public class ProductInfo implements java.io.Serializable {
     @Id
     private String productId;
 
-    //商品名字
+    /** 商品名字 */
     private String productName;
 
-    //商品价格
+    /** 商品价格 */
     private BigDecimal productPrice;
 
-    //商品库存
+    /** 商品库存 */
     private Integer productStock;
 
-    //商品描述
+    /** 商品描述 */
     private String productDescription;
 
-    //商品状态
+    /** 商品状态 */
     private Integer productStatus;
 
-    //商品图标
+    /** 商品图标 */
     private String productIcon;
 
-    //商品类目编号
-    private Integer categoryType;
+    /** 商品类型 */
+    private ProductCategory productCategory;
+
+    public ProductInfo() {}
 
 }

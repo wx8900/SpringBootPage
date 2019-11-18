@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         //1. 查询（库存，价格）
         for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
             //获取商品信息
-            ProductInfo productInfo = productInfoService.findById(orderDetail.getProductId());
+            ProductInfo productInfo = productInfoService.findById(Long.valueOf(orderDetail.getProductId()));
             //商品不存在则抛出异常
             if (productInfo == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);

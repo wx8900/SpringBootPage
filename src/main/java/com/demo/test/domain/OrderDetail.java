@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 @Entity
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Builder
 @DynamicUpdate
 @ToString
@@ -55,6 +54,8 @@ public class OrderDetail implements java.io.Serializable {
      * 商品小图
      */
     private String productIcon;
+
+    public OrderDetail() {}
 
     public OrderDetail(String productId, Integer productQuantity) {
         this.productId = productId;
