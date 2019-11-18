@@ -1,4 +1,4 @@
-package com.demo.test.testing;
+package com.demo.test.testingconcurrent;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

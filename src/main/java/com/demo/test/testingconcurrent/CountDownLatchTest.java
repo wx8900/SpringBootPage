@@ -1,9 +1,6 @@
-package com.demo.test.testing;
+package com.demo.test.testingconcurrent;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * ExecutorService 的实现类不适合CountDownLatch的使用，只能使用new Thread()

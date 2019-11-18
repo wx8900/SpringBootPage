@@ -1,6 +1,4 @@
-package com.demo.test.testing;
-
-import org.aspectj.weaver.ast.Test;
+package com.demo.test.testingconcurrent;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -1,4 +1,4 @@
-package com.demo.test.testing;
+package com.demo.test.testingconcurrent;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

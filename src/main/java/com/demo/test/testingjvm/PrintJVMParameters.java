@@ -1,4 +1,4 @@
-package com.demo.test.monitor;
+package com.demo.test.testingjvm;
 
 /**
  *
