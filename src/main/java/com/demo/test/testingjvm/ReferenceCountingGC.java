@@ -3,6 +3,8 @@ package com.demo.test.testingjvm;
 /**
  * @author Jack
  *
+ * 在IDEA Run ... VM options里添加 -XX:+PrintGCDetails
+ *
  * [GC (System.gc()) [PSYoungGen: 10649K->5297K(76288K)] 10649K->5305K(251392K), 0.0026081 secs] [Times: user=0.01 sys=0.00, real=0.00 secs]
  * [Full GC (System.gc()) [PSYoungGen: 5297K->0K(76288K)] [ParOldGen: 8K->5100K(175104K)] 5305K->5100K(251392K), [Metaspace: 3284K->3284K(1056768K)], 0.0054546 secs] [Times: user=0.02 sys=0.01, real=0.01 secs]
  * Heap
