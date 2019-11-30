@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Spring Boot REST 全局异常捕捉,统一处理类
+ * 全局异常捕捉统一处理类
  *
  * @author Jack
  * @date 2019/07/17
@@ -38,13 +38,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @param ex
      * @return
      */
-    public static String buildErrorMessage(Exception ex) {
-        String result;
+    public static String buildErrorMessage(Throwable ex) {
         String stackTrace = getStackTraceString(ex);
         String exceptionType = ex.toString();
         String exceptionMessage = ex.getMessage();
-        result = String.format("%s : %s \r%n %s", exceptionType, exceptionMessage, stackTrace);
-        return result;
+        return String.format("%s : %s \r%n %s", exceptionType, exceptionMessage, stackTrace);
     }
 
     /**
@@ -53,12 +51,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @param ex
      * @return
      */
-    public static String getStackTraceString(Throwable ex) {//(Exception ex) {
-        int minSize = 5000;
-        String result;
-        StringBuilder traceBuilder = new StringBuilder(1);
-
+    public static String getStackTraceString(Throwable ex) {
+        final int minSize = 2048 * 2048;
+        String result = "";
+        StringBuilder traceBuilder = null;
         StackTraceElement[] traceElements = ex.getStackTrace();
+
         if (traceElements != null && traceElements.length > 0) {
             traceBuilder = new StringBuilder(traceElements.length);
             for (StackTraceElement traceElement : traceElements) {
@@ -66,12 +64,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             }
         }
         result = traceBuilder.toString();
-        if (traceElements.length < minSize) {
-            result = result.substring(0, traceElements.length);
-        } else {
-            result = result.substring(0, 20000);
-        }
-        return result;
+
+        return (result.length() < minSize) ? result : result.substring(0, minSize * 2048);
     }
 
     /**
@@ -86,7 +80,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ApiErrorResponse allExceptionHandler(
             HttpServletRequest request, Exception exception) throws Exception {
-        StringBuffer sb = new StringBuffer();
+        StringBuffer sb = new StringBuffer(1024);
         sb.append(buildErrorMessage(exception));
         String detail = sb.toString();
         logger.error("GlobalExceptionHandler：" + exception.getLocalizedMessage());

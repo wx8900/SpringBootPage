@@ -18,19 +18,19 @@ import org.springframework.http.HttpStatus;
 @Builder
 public class ApiErrorResponse extends RuntimeException {
     /**
-     * HTTP状态码
+     * Http返回状态
      */
     private HttpStatus status;
     /**
-     * 异常状态码
+     * Http返回状态码
      */
     private String code;
     /**
-     * 异常信息
+     * 返回信息
      */
     private String message;
     /**
-     * 异常描述
+     * 返回描述
      */
     private String detail;
 

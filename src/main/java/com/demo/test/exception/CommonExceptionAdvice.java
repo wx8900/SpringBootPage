@@ -151,8 +151,8 @@ public class CommonExceptionAdvice {
      * 操作数据或库出现异常
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(DataDoException.class)
-    public String handleException(DataDoException e) {
+    @ExceptionHandler(DataOperateException.class)
+    public String handleException(DataOperateException e) {
         logger.error("操作数据库出现异常:", e);
         return "操作数据库出现异常：字段重复、有外键关联等";
     }

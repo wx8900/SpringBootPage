@@ -5,9 +5,9 @@ package com.demo.test.exception;
  *
  * @author Jack
  */
-public class DataDoException extends RuntimeException {
+public class DataOperateException extends RuntimeException {
 
-    public DataDoException(String msg) {
+    public DataOperateException(String msg) {
         super(msg);
     }
 

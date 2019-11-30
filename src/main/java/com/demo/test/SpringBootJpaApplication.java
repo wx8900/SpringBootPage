@@ -43,6 +43,9 @@ import java.util.stream.Collectors;
  * redis-cli
  * redis-cli shutdown
  * 3. http://localhost:8080/swagger-ui.html
+ *    cd /usr/local/etc/apache-jmeter-5.2.1/bin
+ *    sh jmeter
+ *
  * 4. 用swagger与用token有冲突,已解决
  * 5. 用Docker打包启动，没有完成
  * 6. Spring Cloud分布式架构，没完成

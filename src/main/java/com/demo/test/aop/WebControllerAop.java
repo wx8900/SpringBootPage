@@ -19,8 +19,8 @@ import java.util.Arrays;
  * @Auther Jack
  * @Date 2019/06/02 12:20 PM
  */
-@Aspect
-@Component
+/*@Aspect
+@Component*/
 public class WebControllerAop {
 
     static Logger logger = LogManager.getLogger(WebControllerAop.class);
