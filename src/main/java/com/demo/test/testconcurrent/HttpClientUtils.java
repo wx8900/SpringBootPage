@@ -1,4 +1,4 @@
-package com.demo.test.testingconcurrent;
+package com.demo.test.testconcurrent;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;

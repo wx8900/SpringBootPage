@@ -1,4 +1,4 @@
-package com.demo.test.testingconcurrent;
+package com.demo.test.testconcurrent;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;

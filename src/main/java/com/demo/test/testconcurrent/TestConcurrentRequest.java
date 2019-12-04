@@ -1,4 +1,4 @@
-package com.demo.test.testingconcurrent;
+package com.demo.test.testconcurrent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,12 +14,12 @@ import java.util.concurrent.Semaphore;
 public class TestConcurrentRequest {
 
     // 总的请求个数
-    public static final int requestTotal = 1000;
+    public static final int requestTotal = 100;
 
     // 同一时刻最大的并发线程的个数
-    public static final int concurrentThreadNum = 20;
+    public static final int concurrentThreadNum = 10;
 
-    private HttpClientUtil httpClientUtil;
+    private static HttpClientUtil httpClientUtil = new HttpClientUtil();
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -29,8 +29,8 @@ public class TestConcurrentRequest {
             executorService.execute(() -> {
                 try {
                     semaphore.acquire();
-                    /*String result = testRequestUri();
-                    log.info("result:{}.", result);*/
+                    testRequestUri();
+                    log.info("result:{}.");
                     semaphore.release();
                 } catch (InterruptedException e) {
                     log.error("exception", e);
@@ -43,7 +43,7 @@ public class TestConcurrentRequest {
         log.info("请求完成");
     }
 
-    private String testRequestUri() {
-        return httpClientUtil.get("http://localhost:8080/test", null);
+    private static void testRequestUri() {
+        httpClientUtil.post("http://127.0.0.1:8080/v1/api/students/findById/12", null);
     }
 }
