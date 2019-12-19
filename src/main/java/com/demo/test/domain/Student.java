@@ -20,6 +20,8 @@ import javax.validation.constraints.Size;
 @Table(name = "tbl_student")
 public class Student implements java.io.Serializable {
 
+    private static final long serialVersionUID = 1888980636456161926L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private long id;

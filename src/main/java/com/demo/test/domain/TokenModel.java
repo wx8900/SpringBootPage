@@ -19,6 +19,7 @@ import java.io.Serializable;
 @ToString(exclude = {"id", "token", "timeStamp", "jwt", "signature"})
 public class TokenModel implements Serializable {
 
+    private static final long serialVersionUID = -8055688942849382072L;
     /**
      * 用户id
      */

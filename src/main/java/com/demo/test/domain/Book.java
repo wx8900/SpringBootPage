@@ -16,6 +16,9 @@ import javax.persistence.*;
 @ToString
 @Table(name = "tbl_book")
 public class Book implements java.io.Serializable {
+
+    private static final long serialVersionUID = -7234223743479253383L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

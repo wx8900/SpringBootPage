@@ -10,6 +10,8 @@ import javax.validation.constraints.NotEmpty;
 @ToString
 public class OrderForm implements java.io.Serializable {
 
+    private static final long serialVersionUID = -5629630890901438213L;
+
     @NotEmpty(message = "姓名必填")
     private String name;
 

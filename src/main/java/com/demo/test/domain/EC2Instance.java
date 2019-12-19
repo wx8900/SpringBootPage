@@ -16,6 +16,7 @@ import javax.persistence.Id;
 @Builder
 public class EC2Instance implements java.io.Serializable {
 
+    private static final long serialVersionUID = 1322771269773588107L;
     @Id
     private Integer id;
     private String name;

@@ -1,4 +1,4 @@
-package com.demo.test.testingcpu;
+package com.demo.test.testcpu;
 
 import java.util.ArrayList;
 import java.util.List;

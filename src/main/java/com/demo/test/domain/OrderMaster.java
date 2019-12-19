@@ -21,6 +21,7 @@ import java.util.Date;
 @ToString
 public class OrderMaster implements java.io.Serializable {
 
+    private static final long serialVersionUID = -6359343865497067355L;
     /**
      * 订单id
      */

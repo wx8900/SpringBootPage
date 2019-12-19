@@ -25,6 +25,10 @@ public class Constant {
     public static final int SECONDS_IN_ONE_MINITES = 60;
 
     public static final String KEY = "cacheKey";
+    public static final String EMPTY = " ";
+    public static final String AND = "#";
+    public static final String AT = "@";
+    public static final String KEY_LOGIN = "^88888888^";
 
 
     /** 安全 */

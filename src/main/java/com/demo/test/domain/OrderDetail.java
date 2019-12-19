@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 @ToString
 public class OrderDetail implements java.io.Serializable {
 
+    private static final long serialVersionUID = 7271528349302520147L;
     /**
      * 详情id
      */

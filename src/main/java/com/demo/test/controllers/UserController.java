@@ -8,6 +8,7 @@ import com.demo.test.helper.CalculatorUtil;
 import com.demo.test.helper.RandomUtil;
 import com.demo.test.helper.SendmailUtil;
 import com.demo.test.helper.VerifyCodeUtil;
+import com.demo.test.mq.MessageProducer;
 import com.demo.test.security.CookieUtils;
 import com.demo.test.service.UserService;
 import com.demo.test.utils.TokenUtils;
@@ -70,7 +71,6 @@ import java.util.concurrent.TimeUnit;
  * "phone": "1505552388",
  * "email": "goodjob@gmail.com"
  * }
- *
  */
 @Api("用户接口操作")
 @RestController
@@ -79,6 +79,9 @@ import java.util.concurrent.TimeUnit;
 public class UserController {
 
     static Logger logger = LogManager.getLogger(UserController.class);
+
+    @Autowired
+    private MessageProducer messageProducer;
 
     @Autowired
     private UserService userService;
@@ -134,6 +137,31 @@ public class UserController {
         }
         return student;
     }
+
+    /**
+     * 用MQ的方式把信息给Service
+     * http://localhost:8080/v1/api/students/get/1
+     * 这里必须等1秒，让数据从网络返回，否则页面空白
+     *
+     * @param id
+     * @return Student
+     * @date 2019/12/19 23:42:30
+     */
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Student getUser(@PathVariable("id") Long id) {
+        Student student = new Student();
+        try {
+            logger.info("Send message to RabbitMQ successful! ####################> get User by [id] : " + id);
+            messageProducer.sendMessage(String.valueOf(id));
+            Thread.sleep(100);
+            student = messageProducer.getStudent();
+        } catch (Exception e) {
+            logger.error("[MyException] happen in getUser method !!!" + GlobalExceptionHandler.buildErrorMessage(e));
+        }
+        return student;
+    }
+
 
     /**
      * No primary or default constructor found for interface org.spring framework.data.domain.Pageable
@@ -210,7 +238,6 @@ public class UserController {
                                @RequestParam("emailTitle") String emailTitle,
                                @RequestParam("emailContent") String emailContent) {
         try {
-            //发送邮件
             SendmailUtil.sendEmail(toEmailAddress, emailTitle, emailContent);
             return CalculatorUtil.getJSONString(0);
         } catch (Exception e) {
@@ -229,12 +256,12 @@ public class UserController {
     }
 
     @PutMapping("/updateStudent")
-    public void updateStudent(Student user, HttpServletRequest request) {
+    public void updateStudent(Student student, HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
             logger.error("Please login the system!");
         }
-        userService.save(user);
+        userService.save(student);
     }
 
     /**
@@ -307,6 +334,5 @@ public class UserController {
         }
         return responseData;
     }
-
 
 }

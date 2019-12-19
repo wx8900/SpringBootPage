@@ -2,6 +2,7 @@ package com.demo.test.service.impl;
 
 import com.demo.test.dao.StudentRepository;
 import com.demo.test.domain.Student;
+import com.demo.test.mq.MessageConsumer;
 import com.demo.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    private MessageConsumer messageConsumer;
 
     @Override
     @Cacheable
@@ -76,6 +80,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Cacheable
     public Optional<Student> findById(Long id) {
+        return studentRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Student> getUser(Long id) {
         return studentRepository.findById(id);
     }
 

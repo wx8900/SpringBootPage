@@ -1,7 +1,6 @@
 package com.demo.test.controllers;
 
 import com.demo.test.domain.Student;
-import com.demo.test.domain.TokenModel;
 import com.demo.test.exception.GlobalExceptionHandler;
 import com.demo.test.security.CookieUtils;
 import com.demo.test.service.UserService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Jack
@@ -43,33 +41,37 @@ public class LoginController {
                         @RequestParam("password") String password,
                         HttpSession session) {
         String result = "";
-        Student student;
+        String student;
         // Login successful!
         //password = RSA.priDecode(password);
         /** // RSAKey - Data must not be longer than 64 bytes
          RSAKey rsaKey = new RSAKey();
          password = rsaKey.priDecode(password);*/
 
-        /*String time = password.substring(password.length() - 13);
-        if (System.currentTimeMillis() - Long.parseLong(time) > 2 * 60 * 1000) {
-            return "登录异常，时间超时";
-        }
-
-        password = password.substring(0, password.length() - 13);
-         */
+//        String time = password.substring(password.length() - 13);
+//        if (System.currentTimeMillis() - Long.parseLong(time) > 2 * 60 * 1000) {
+//            return "登录异常，时间超时";
+//        }
+//        password = password.substring(0, password.length() - 13);
 
         try {
             List<Student> studentList = studentService.findByNameAndPassword(name, password);
-            if (studentList != null && studentList.size() > 0) {
-                student = studentList.get(0);
-                session.setAttribute("currentUser", student);
+            // use rabbitMQ to saparate controller and service
+            /*String methodAndParameters = "studentService.findByNameAndPassword"+ "@" + name + "^############^" + password;
+            sender.send(RabbitConfiguration.DIRECT_ROUTING_KEY_SENDQUEUE, methodAndParameters);
+
+            student = receiver.receive(RabbitConfiguration.DIRECT_ROUTING_KEY_RECVQUEUE);
+            System.out.println("================>Get info from queue : " + student);*/
+
+            if (studentList != null) {
+                /*session.setAttribute("currentUser", student);
                 //String token = TokenUtils.createToken(student.getId()); // old version
                 TokenModel token = TokenUtils.generateToken(student.getName(), student.getId());
                 //CookieUtils.flushCookie(token, response);
 
                 logger.info(name + " has login the website. The {userId} is " + student.getId()
-                        + " and {token} is " + token.getSignature());
-                result = "Login success! " + token.getSignature();
+                        + " and {token} is " + token.getSignature());*/
+                result = "Login success! "; //+ token.getSignature();
             } else {
                 result = "Username or password error!";
             }
@@ -98,7 +100,7 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/user/{id}")
+    /*@GetMapping("/user/{id}")
     public Student getUserById(@PathVariable Long id, HttpServletRequest request) {
         String token = CookieUtils.getRequestedToken(request);
         if (!TokenUtils.hasToken(token)) {
@@ -106,6 +108,6 @@ public class LoginController {
         }
         Optional<Student> student = studentService.findById(id);
         return student.orElse(Student.builder().build());
-    }
+    }*/
 
 }

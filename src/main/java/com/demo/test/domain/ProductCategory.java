@@ -21,6 +21,7 @@ import javax.persistence.Id;
 @ToString
 public class ProductCategory implements java.io.Serializable {
 
+    private static final long serialVersionUID = 7536476379782930011L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer categoryId;

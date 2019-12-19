@@ -15,6 +15,8 @@ public interface UserService {
 
     Optional<Student> findById(Long id);
 
+    Optional<Student> getUser(Long id);
+
     List<Student> findAll();
 
     Page<Student> findByName(String name, Pageable pageable);

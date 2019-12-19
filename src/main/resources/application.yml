@@ -2,6 +2,21 @@ server:
   tomcat:
     port: 8080
 
+
+application:
+  name: rabbitmq
+rabbitmq:
+  host: 127.0.0.1
+  port: 5672
+  username: guest
+  password: guest
+  virtual-host: /
+  publisher-confirms: true
+  publisher-returns: true
+  template:
+    mandatory: true
+
+
 spring:
   mvc:
     throw-exception-if-no-handler-found: true

@@ -39,21 +39,65 @@ import java.util.stream.Collectors;
  * <p>
  * 1. 要先启动数据库
  * 2. cd /Users/Jack_Cai/redis-4.0.11
- * src/redis-server
- * redis-cli
- * redis-cli shutdown
+ *    src/redis-server
+ *    redis-cli
+ *    redis-cli shutdown
  * 3. http://localhost:8080/swagger-ui.html
+ *
+ *    启动rabbitMQ
+ *    sudo su     转换成超级用户
+ *    cd /usr/local/etc/rabbitmq_server-3.5.3
+ *    # 启动服务
+ *    ./sbin/rabbitmq-server start
+ *    # 停止服务
+ *    ./sbin/rabbitmq-server stop
+ *
+ *    http://localhost:15672/
+ *    guest
+ *    guest
+ *
  *    cd /usr/local/etc/apache-jmeter-5.2.1/bin
  *    sh jmeter
  *
  * 4. 用swagger与用token有冲突,已解决
- * 5. 用Docker打包启动，没有完成
- * 6. Spring Cloud分布式架构，没完成
- * 7， Redis多级缓存，没完成
- * 8， 写一个高并发场景，没完成
- * 9， 集成Mybatis，没完成
- * 10，集成Kafka，没完成
- * 11，集成Nginx，没完成
+ * 5. 用MQ分离控制类和Service,已解决  12/19
+ *    测试多线程到4000个，报错
+ * java.net.SocketException: Connection reset
+ * 	at java.net.SocketInputStream.read(SocketInputStream.java:210)
+ * 	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+ * 	at org.apache.http.impl.io.SessionInputBufferImpl.streamRead(SessionInputBufferImpl.java:137)
+ * 	at org.apache.http.impl.io.SessionInputBufferImpl.fillBuffer(SessionInputBufferImpl.java:153)
+ * 	at org.apache.http.impl.io.SessionInputBufferImpl.readLine(SessionInputBufferImpl.java:280)
+ * 	at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:138)
+ * 	at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:56)
+ * 	at org.apache.http.impl.io.AbstractMessageParser.parse(AbstractMessageParser.java:259)
+ * 	at org.apache.http.impl.DefaultBHttpClientConnection.receiveResponseHeader(DefaultBHttpClientConnection.java:163)
+ * 	at org.apache.http.impl.conn.CPoolProxy.receiveResponseHeader(CPoolProxy.java:157)
+ * 	at org.apache.http.protocol.HttpRequestExecutor.doReceiveResponse(HttpRequestExecutor.java:273)
+ * 	at org.apache.http.protocol.HttpRequestExecutor.execute(HttpRequestExecutor.java:125)
+ * 	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:272)
+ * 	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:186)
+ * 	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
+ * 	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:110)
+ * 	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+ * 	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
+ * 	at org.apache.jmeter.protocol.http.sampler.HTTPHC4Impl.executeRequest(HTTPHC4Impl.java:850)
+ * 	at org.apache.jmeter.protocol.http.sampler.HTTPHC4Impl.sample(HTTPHC4Impl.java:561)
+ * 	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy.sample(HTTPSamplerProxy.java:67)
+ * 	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1282)
+ * 	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1271)
+ * 	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:627)
+ * 	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:551)
+ * 	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:490)
+ * 	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:257)
+ * 	at java.lang.Thread.run(Thread.java:748)
+ *
+ * 6. 用Docker打包启动，没有完成
+ * 7， Spring Cloud分布式架构，没完成
+ * 8， Redis多级缓存，没完成
+ * 9， 集成Nginx，没完成
+ * 10，写一个高并发场景，没完成
+ * 11，集成Kafka，没完成
  * 12, 集成MongoDB，没完成
  * 13，JVM调优，没完成
  * 14，安全性调优，没完成

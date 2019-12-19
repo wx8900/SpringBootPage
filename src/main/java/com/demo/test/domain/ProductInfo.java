@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @ToString
 public class ProductInfo implements java.io.Serializable {
 
+    private static final long serialVersionUID = 8982619411406193222L;
     @Id
     private String productId;
 

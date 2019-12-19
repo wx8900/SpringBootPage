@@ -78,13 +78,13 @@ public class TestCacheController implements Serializable {
     /**
      * Add one saved data to the cache, the cached key is current user ID
      *
-     * @param user
+     * @param student
      * @return
      */
     @RequestMapping("/saveUser")
     @CachePut(value = "userCache", key = "#result.userId +''")
-    public Student saveUser(Student user) {
-        return user;
+    public Student saveUser(Student student) {
+        return student;
     }
 
 }

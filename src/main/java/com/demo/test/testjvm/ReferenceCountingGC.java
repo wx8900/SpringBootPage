@@ -1,4 +1,4 @@
-package com.demo.test.testingjvm;
+package com.demo.test.testjvm;
 
 /**
  * @author Jack

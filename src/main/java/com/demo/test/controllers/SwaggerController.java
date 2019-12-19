@@ -1,23 +1,11 @@
 package com.demo.test.controllers;
 
-import com.demo.test.constant.Constant;
-import com.demo.test.domain.Student;
-import com.demo.test.exception.ApiErrorResponse;
-import com.demo.test.service.UserService;
 import io.swagger.annotations.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Swagger Controller Test class
@@ -34,14 +22,14 @@ public class SwaggerController {
 
     private static Logger logger = LogManager.getLogger(SwaggerController.class);
 
-    @Autowired
+    /*@Autowired
     private UserService studentService;
 
     @ApiOperation(value = "Hello Spring Boot", notes = "Hello Spring Boot")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "Swagger Test of Spring Boot!";
-    }
+    }*/
 
     /**
      * Error: Unable to infer base url. This is common when using dynamic servlet registration
@@ -53,7 +41,7 @@ public class SwaggerController {
      * @param response
      * @throws IOException
      */
-    @ApiOperation(value = "display information of the main page", notes = "display information of the main page")
+    /*@ApiOperation(value = "display information of the main page", notes = "display information of the main page")
     @RequestMapping(value = "/api", produces = "text/html")
     public void api(HttpServletResponse response) throws IOException {
         response.sendRedirect("/swagger-ui.html");
@@ -138,6 +126,6 @@ public class SwaggerController {
             }
         }
         return "success";
-    }
+    }*/
 
 }

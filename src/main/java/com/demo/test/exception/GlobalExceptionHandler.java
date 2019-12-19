@@ -52,7 +52,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return
      */
     public static String getStackTraceString(Throwable ex) {
-        final int minSize = 2048 * 2048;
+        final int minSize = 2048 * 2048 * 96;
         String result = "";
         StringBuilder traceBuilder = null;
         StackTraceElement[] traceElements = ex.getStackTrace();
