@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageConsumer {
 
+    static Logger logger = LogManager.getLogger(MessageConsumer.class);
+
     @Autowired
     UserService userService;
     @Autowired
@@ -24,15 +26,20 @@ public class MessageConsumer {
     @RabbitListener(queues = RabbitConfiguration.DIRECT_ROUTING_KEY_SENDQUEUE)
     @RabbitHandler
     public void onMessage(String message) {
-        System.out.println("单对单发送参数。Consumer收到了消息:=================>" + message);
         Student student;
         try {
-            student = userService.getUser(Long.valueOf(message)).orElse(new Student());
-            System.out.println("单对单返回参数。student.toString():=================>" + student.toString());
-            amqpTemplate.convertAndSend(RabbitConfiguration.EXCHANGE_DIRECT, RabbitConfiguration.DIRECT_ROUTING_KEY_RECVQUEUE, student);
+            student = getStudentFromDB(message);
+            logger.info("单对单传递消息。Consumer收到消息 : " + message
+                    + "========数据库返回数据===========>" + student.toString());
+            amqpTemplate.convertAndSend(RabbitConfiguration.EXCHANGE_DIRECT,
+                    RabbitConfiguration.DIRECT_ROUTING_KEY_RECVQUEUE, student);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
+    }
+
+    private Student getStudentFromDB(String message) {
+        return userService.getUser(Long.valueOf(message)).orElse(new Student());
     }
 
 }

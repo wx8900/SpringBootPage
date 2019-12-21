@@ -27,7 +27,8 @@ public class MessageProducer {
 
     public void sendMessage(String message) throws Exception {
         logger.info("单对单发送。Producer发出了消息:" + message);
-        amqpTemplate.convertAndSend(RabbitConfiguration.EXCHANGE_DIRECT, RabbitConfiguration.DIRECT_ROUTING_KEY_SENDQUEUE, message);
+        amqpTemplate.convertAndSend(RabbitConfiguration.EXCHANGE_DIRECT,
+                RabbitConfiguration.DIRECT_ROUTING_KEY_SENDQUEUE, message);
     }
 
     @RabbitListener(queues = RabbitConfiguration.QUEUE_RECEIVE)

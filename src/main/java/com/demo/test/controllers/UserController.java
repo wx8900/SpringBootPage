@@ -31,7 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Jack
@@ -85,6 +86,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**  创建个线程池   */
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     /**
      * start Redis server before call this method
@@ -150,18 +154,39 @@ public class UserController {
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Student getUser(@PathVariable("id") Long id) {
-        Student student = new Student();
+        AtomicReference<Student> student = new AtomicReference<>(new Student());
+        logger.info("Send message to RabbitMQ successful! ####################> get User by [id] : " + id);
+
         try {
-            logger.info("Send message to RabbitMQ successful! ####################> get User by [id] : " + id);
-            messageProducer.sendMessage(String.valueOf(id));
-            Thread.sleep(100);
-            student = messageProducer.getStudent();
+            Future senderFuture = executorService.submit(() -> {
+                try {
+                    sendMessageObject(id);
+                } catch (Exception e) {
+                    logger.error(e.getMessage());
+                }
+            });
+            if (senderFuture.isDone()) {
+                Future receiverFuture = executorService.submit(() -> {
+                    try {
+                        student.set(getMessageObject());
+                    } catch (Exception e) {
+                        logger.error(e.getMessage());
+                    }
+                });
+            }
         } catch (Exception e) {
             logger.error("[MyException] happen in getUser method !!!" + GlobalExceptionHandler.buildErrorMessage(e));
         }
-        return student;
+        return student.get();
     }
 
+    private void sendMessageObject(Long id) throws Exception {
+        messageProducer.sendMessage(String.valueOf(id));
+    }
+
+    private Student getMessageObject() {
+        return messageProducer.getStudent();
+    }
 
     /**
      * No primary or default constructor found for interface org.spring framework.data.domain.Pageable

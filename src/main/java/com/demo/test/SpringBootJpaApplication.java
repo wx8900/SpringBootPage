@@ -52,6 +52,12 @@ import java.util.stream.Collectors;
  *    # 停止服务
  *    ./sbin/rabbitmq-server stop
  *
+ *    如果不能启动，报错：
+ *    BOOT FAILED
+ *    ===========Error description:
+ *    find / -name  recovery.dets
+ *    用 rm 命令删除掉 recoer.dets 文件
+ *
  *    http://localhost:15672/
  *    guest
  *    guest
