@@ -4,6 +4,7 @@ import com.demo.test.constant.Constant;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -123,6 +124,7 @@ public class SpringBootJpaApplication {
     // 启动的时候要注意，由于我们在controller中注入了RestTemplate，所以启动的时候需要实例化该类的一个实例
     @Autowired
     private RestTemplateBuilder builder;
+    BeanFactory beanFactory;
 
     // 使用RestTemplateBuilder来实例化RestTemplate对象，spring默认已经注入了RestTemplateBuilder实例
     @Bean
@@ -134,8 +136,10 @@ public class SpringBootJpaApplication {
         SpringApplication.run(SpringBootJpaApplication.class, args);
     }
 
-    /* // 这个用ConcurrentMapCache来实现缓存的
-    @Bean
+    /**
+     * 这个用ConcurrentMapCache来实现缓存的
+     */
+    /*@Bean
     public CacheManagerCustomizer<ConcurrentMapCacheManager> cacheManagerCustomizer() {
         return new CacheManagerCustomizer<ConcurrentMapCacheManager>() {
             @Override
@@ -147,7 +151,6 @@ public class SpringBootJpaApplication {
 
     /**
      * 设置Redis缓存过期时间--最新版
-     *
      * @param redisConnectionFactory
      * @return
      */
@@ -162,6 +165,10 @@ public class SpringBootJpaApplication {
         );
     }
 
+    /**
+     *
+     * @return
+     */
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
         // 自定义设置缓存时间SsoCache和userCache进行过期时间配置
@@ -170,6 +177,11 @@ public class SpringBootJpaApplication {
         return redisCacheConfigurationMap;
     }
 
+    /**
+     *
+     * @param seconds
+     * @return
+     */
     private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(Integer seconds) {
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper om = new ObjectMapper();
@@ -187,6 +199,10 @@ public class SpringBootJpaApplication {
         return redisCacheConfiguration;
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     public KeyGenerator wiselyKeyGenerator() {
         return new KeyGenerator() {

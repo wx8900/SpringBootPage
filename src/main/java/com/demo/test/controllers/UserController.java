@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Jack
@@ -151,7 +153,7 @@ public class UserController {
      * @return Student
      * @date 2019/12/19 23:42:30
      */
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Student getUser(@PathVariable("id") Long id) {
         AtomicReference<Student> student = new AtomicReference<>(new Student());
@@ -186,7 +188,52 @@ public class UserController {
 
     private Student getMessageObject() {
         return messageProducer.getStudent();
+    }*/
+
+    /**
+     * 用Lock锁实现
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Student getUser(@PathVariable("id") Long id) {
+        Lock studentLock = new ReentrantLock();
+        logger.info("Send message to RabbitMQ successful! ####################> get User by [id] : " + id);
+        AtomicReference<Student> student = new AtomicReference<>(new Student());
+        try {
+            studentLock.lock();
+            Future senderFuture = executorService.submit(() -> {
+                try {
+                    sendMessageObject(id);
+                } catch (Exception e) {
+                    logger.error(e.getMessage());
+                }
+            });
+            if (senderFuture.isDone()) {
+                Future receiverFuture = executorService.submit(() -> {
+                    try {
+                        student.set(getMessageObject());
+                    } catch (Exception e) {
+                        logger.error(e.getMessage());
+                    }
+                });
+            }
+        } catch (Exception e) {
+            studentLock.unlock();
+            logger.error("[MyException] happen in getUser method !!!" + GlobalExceptionHandler.buildErrorMessage(e));
+        }
+        return student.get();
     }
+
+    private void sendMessageObject(Long id) throws Exception {
+        messageProducer.sendMessage(String.valueOf(id));
+    }
+
+    private Student getMessageObject() {
+        return messageProducer.getStudent();
+    }
+
 
     /**
      * No primary or default constructor found for interface org.spring framework.data.domain.Pageable
