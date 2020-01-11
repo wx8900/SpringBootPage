@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  *    redis-cli shutdown
  * 3. http://localhost:8080/swagger-ui.html
  *
- *    启动rabbitMQ
+ *  启动rabbitMQ
  *    sudo su     转换成超级用户
  *    cd /usr/local/etc/rabbitmq_server-3.5.3
  *    # 启动服务
@@ -59,6 +59,7 @@ import java.util.stream.Collectors;
  *    find / -name  recovery.dets
  *    用 rm 命令删除掉 recoer.dets 文件
  *
+ *    Rabbit Admin Page:
  *    http://localhost:15672/
  *    guest
  *    guest
