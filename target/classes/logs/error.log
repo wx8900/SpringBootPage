@@ -1,0 +1,55 @@
+2019-06-02 03:55:13  [ http-nio-8080-exec-2:10651 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 04:01:51  [ http-nio-8080-exec-2:13576 ] - [ ERROR ]  Validation Error : javax.validation.ConstraintViolationException: Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='用户名长度必须在 3 - 20 之间', propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='用户名长度必须在 {min} - {max} 之间'}
+	ConstraintViolationImpl{interpolatedMessage='密码长度必须在 8 - 20 之间', propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='密码长度必须在 {min} - {max} 之间'}
+]
+2019-06-02 04:08:22  [ http-nio-8080-exec-2:9782 ] - [ ERROR ]  Validation Error : javax.validation.ConstraintViolationException: Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='用户名长度必须在 3 - 20 之间', propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='用户名长度必须在 {min} - {max} 之间'}
+	ConstraintViolationImpl{interpolatedMessage='密码长度必须在 8 - 20 之间', propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='密码长度必须在 {min} - {max} 之间'}
+]
+2019-06-02 04:13:23  [ http-nio-8080-exec-2:42210 ] - [ ERROR ]  Validation Error : javax.validation.ConstraintViolationException: Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='密码长度必须在 8 - 20 之间', propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='密码长度必须在 {min} - {max} 之间'}
+	ConstraintViolationImpl{interpolatedMessage='用户名长度必须在 3 - 20 之间', propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='用户名长度必须在 {min} - {max} 之间'}
+]
+2019-06-02 04:17:33  [ http-nio-8080-exec-2:8613 ] - [ ERROR ]  Validation Error : Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='密码长度必须在 8 - 20 之间', propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='密码长度必须在 {min} - {max} 之间'}
+	ConstraintViolationImpl{interpolatedMessage='用户名长度必须在 3 - 20 之间', propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='用户名长度必须在 {min} - {max} 之间'}
+]
+2019-06-02 04:21:06  [ http-nio-8080-exec-2:16374 ] - [ ERROR ]  Validation Error : Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage=用户名长度必须在 3 - 20 之间, propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate=用户名长度必须在 {min} - {max} 之间}
+]
+2019-06-02 04:46:32  [ http-nio-8080-exec-1:0 ] - [ ERROR ]  【Exception happen in login!!!】could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 04:49:06  [ http-nio-8080-exec-1:5 ] - [ ERROR ]  【Exception happen in login!!!】could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 04:49:18  [ http-nio-8080-exec-2:11203 ] - [ ERROR ]  【Exception happen in login!!!】could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 04:56:25  [ http-nio-8080-exec-1:3 ] - [ ERROR ]  【Exception happen in login!!!】could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 04:57:09  [ http-nio-8080-exec-1:4 ] - [ ERROR ]  【Exception happen in login!!!】could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 05:01:01  [ http-nio-8080-exec-2:20074 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 05:02:59  [ http-nio-8080-exec-4:138882 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 05:04:06  [ http-nio-8080-exec-6:205656 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 05:05:48  [ http-nio-8080-exec-8:307428 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 05:08:58  [ http-nio-8080-exec-2:497271 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 05:11:17  [ http-nio-8080-exec-2:11739 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 05:11:44  [ http-nio-8080-exec-3:39086 ] - [ ERROR ]  Validation Error : Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage=密码长度必须在 8 - 20 之间, propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate=密码长度必须在 {min} - {max} 之间}
+	ConstraintViolationImpl{interpolatedMessage=用户名长度必须在 3 - 20 之间, propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate=用户名长度必须在 {min} - {max} 之间}
+]
+2019-06-02 05:12:34  [ http-nio-8080-exec-4:88816 ] - [ ERROR ]  Validation Error : Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage=密码长度必须在 8 - 20 之间, propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate=密码长度必须在 {min} - {max} 之间}
+]
+2019-06-02 16:32:32  [ http-nio-8080-exec-4:0 ] - [ ERROR ]  [MyException] happen in login!!!java.util.Optional cannot be cast to com.demo.test.domain.Student
+2019-06-02 16:43:01  [ http-nio-8080-exec-3:38613 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 18:11:39  [ http-nio-8080-exec-2:8964 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 18:38:24  [ http-nio-8080-exec-8:231175 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 18:41:18  [ http-nio-8080-exec-3:38875 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 18:48:30  [ http-nio-8080-exec-2:44211 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 18:52:02  [ http-nio-8080-exec-2:9841 ] - [ ERROR ]  [MyException] : The API token of calling queryByPage is invalid!!!
+2019-06-02 19:00:01  [ http-nio-8080-exec-5:68171 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 19:07:57  [ http-nio-8080-exec-3:48706 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!
+2019-06-02 19:08:33  [ http-nio-8080-exec-4:84484 ] - [ ERROR ]  The API token of calling addStudent is invalid!!!

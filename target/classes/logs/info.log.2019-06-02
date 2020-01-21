@@ -1,0 +1,95 @@
+2019-06-02 04:08:13  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. UserId : 1 Token : 76efa3409ab746a8a54da3b0dd7a8050
+2019-06-02 04:08:22  [ http-nio-8080-exec-2:9696 ] - [ INFO ]   ======> student properties Student(password=, branch=MBA, percentage=12)
+2019-06-02 04:12:41  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is bb046cca94314164a1513e9daa4a94ca
+2019-06-02 04:13:23  [ http-nio-8080-exec-2:42131 ] - [ INFO ]   ======> student properties Student(password=, branch=MBA, percentage=12)
+2019-06-02 04:13:23  [ http-nio-8080-exec-2:42202 ] - [ INFO ]   --------------------------->javax.validation.ConstraintViolationException: Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='密码长度必须在 8 - 20 之间', propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='密码长度必须在 {min} - {max} 之间'}
+	ConstraintViolationImpl{interpolatedMessage='用户名长度必须在 3 - 20 之间', propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='用户名长度必须在 {min} - {max} 之间'}
+]
+2019-06-02 04:17:24  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 41b668e89b9f48c0939048bf4fd53352
+2019-06-02 04:17:33  [ http-nio-8080-exec-2:8535 ] - [ INFO ]   ======> student properties Student(password=, branch=MBA, percentage=12)
+2019-06-02 04:17:33  [ http-nio-8080-exec-2:8612 ] - [ INFO ]   ------------getMessage--------------->Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='密码长度必须在 8 - 20 之间', propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='密码长度必须在 {min} - {max} 之间'}
+	ConstraintViolationImpl{interpolatedMessage='用户名长度必须在 3 - 20 之间', propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='用户名长度必须在 {min} - {max} 之间'}
+]
+2019-06-02 04:17:33  [ http-nio-8080-exec-2:8612 ] - [ INFO ]   -------------getCause-------------->null
+2019-06-02 04:17:33  [ http-nio-8080-exec-2:8613 ] - [ INFO ]   -------------toString-------------->javax.validation.ConstraintViolationException: Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='密码长度必须在 8 - 20 之间', propertyPath=password, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='密码长度必须在 {min} - {max} 之间'}
+	ConstraintViolationImpl{interpolatedMessage='用户名长度必须在 3 - 20 之间', propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate='用户名长度必须在 {min} - {max} 之间'}
+]
+2019-06-02 04:20:50  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is b25d0abaf76149888faf61d57c5c9352
+2019-06-02 04:21:06  [ http-nio-8080-exec-2:16301 ] - [ INFO ]   ======> student properties Student(password=1234567890, branch=MBA, percentage=12)
+2019-06-02 04:21:06  [ http-nio-8080-exec-2:16369 ] - [ INFO ]   ------------getMessage--------------->Validation failed for classes [com.demo.test.domain.Student] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage=用户名长度必须在 3 - 20 之间, propertyPath=name, rootBeanClass=class com.demo.test.domain.Student, messageTemplate=用户名长度必须在 {min} - {max} 之间}
+]
+2019-06-02 04:49:06  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack Login Exception : org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 04:49:18  [ http-nio-8080-exec-2:11201 ] - [ INFO ]  jack Login Exception : org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 04:56:25  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack Login Exception : org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 04:57:09  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack Login Exception : org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-06-02 05:00:40  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 713f2cf12222494188b82f00e7d382ea
+2019-06-02 05:01:01  [ http-nio-8080-exec-2:20071 ] - [ INFO ]   ======> student properties Student(password=1234567890, branch=MBA, percentage=12)
+2019-06-02 05:02:59  [ http-nio-8080-exec-4:138881 ] - [ INFO ]   ======> student properties Student(password=1234567890, branch=MBA, percentage=12)
+2019-06-02 05:04:06  [ http-nio-8080-exec-6:205655 ] - [ INFO ]   ======> student properties Student(password=1234567890, branch=MBA, percentage=12)
+2019-06-02 05:05:48  [ http-nio-8080-exec-8:307427 ] - [ INFO ]   ======> student properties Student(password=1234567890, branch=MBA, percentage=12)
+2019-06-02 05:08:45  [ http-nio-8080-exec-1:484276 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 62029367f0194547a7cb84914526c070
+2019-06-02 05:08:58  [ http-nio-8080-exec-2:497270 ] - [ INFO ]   ======> student properties Student(password=, branch=MBA, percentage=12)
+2019-06-02 05:11:05  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 81b7a8147f074b258638eab617973c04
+2019-06-02 05:11:17  [ http-nio-8080-exec-2:11736 ] - [ INFO ]   ======> student properties Student(password=, branch=MBA, percentage=12)
+2019-06-02 05:11:44  [ http-nio-8080-exec-3:39012 ] - [ INFO ]   ======> student properties Student(password=, branch=MBA, percentage=12)
+2019-06-02 05:12:34  [ http-nio-8080-exec-4:88812 ] - [ INFO ]   ======> student properties Student(password=123, branch=MBA, percentage=12)
+2019-06-02 05:13:20  [ http-nio-8080-exec-5:135195 ] - [ INFO ]   ======> student properties Student(password=12345678, branch=MBA, percentage=12)
+2019-06-02 05:13:20  [ http-nio-8080-exec-5:135214 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 05:14:18  [ http-nio-8080-exec-6:192530 ] - [ INFO ]   Calling the API ======> queryByName : name is jack
+2019-06-02 05:14:37  [ http-nio-8080-exec-7:211433 ] - [ INFO ]   Calling the API ======> queryByPage
+2019-06-02 16:42:22  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 467aecc2ef4d485daf4628a9c1078b14
+2019-06-02 16:42:47  [ http-nio-8080-exec-2:25193 ] - [ INFO ]   Calling the API ======> queryByPage
+2019-06-02 16:43:01  [ http-nio-8080-exec-3:38612 ] - [ INFO ]   ======> student properties Student(id=12, name=测试成功1, password=12345678, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-02 16:43:59  [ http-nio-8080-exec-5:97154 ] - [ INFO ]   ======> student properties Student(id=12, name=测试成功1, password=12345678, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-02 16:43:59  [ http-nio-8080-exec-5:97193 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 16:44:58  [ http-nio-8080-exec-6:155709 ] - [ INFO ]   ======> student properties Student(id=12, name=测试成功2, password=88888888, branch=IT, percentage=39, phone=15055666666, email=testgood@gmail.com)
+2019-06-02 16:45:25  [ http-nio-8080-exec-7:182381 ] - [ INFO ]   ======> student properties Student(id=12, name=测试成功2, password=88888888, branch=IT, percentage=39, phone=15012345678, email=testgood@gmail.com)
+2019-06-02 16:45:44  [ http-nio-8080-exec-8:202069 ] - [ INFO ]   ======> student properties Student(id=12, name=测试成功2, password=88888888, branch=IT, percentage=39, phone=1501234567, email=testgood@gmail.com)
+2019-06-02 16:45:44  [ http-nio-8080-exec-8:202077 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 16:48:27  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is db6d53182aa94ab59bcccaf3eb992bf7
+2019-06-02 16:49:12  [ http-nio-8080-exec-2:45613 ] - [ INFO ]   ======> student properties Student(id=13, name=测试成功3, password=11112222, branch=MSIT, percentage=23, phone=6505211234, email=testgood3@gmail.com)
+2019-06-02 16:49:12  [ http-nio-8080-exec-2:45651 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 17:00:46  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 5b6aa02dabb54a6d8e23a11a99462842
+2019-06-02 17:01:02  [ http-nio-8080-exec-2:15852 ] - [ INFO ]   Calling the API ======> queryByPage
+2019-06-02 17:01:51  [ http-nio-8080-exec-4:64745 ] - [ INFO ]   ======> student properties Student(id=15, name=Test Good1, password=11112222, branch=MSIT, percentage=23, phone=6505211234, email=testgood3@gmail.com)
+2019-06-02 17:01:51  [ http-nio-8080-exec-4:64770 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 17:17:21  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 83070529eb01478c9735a94e8d194e41
+2019-06-02 17:18:36  [ http-nio-8080-exec-3:75235 ] - [ INFO ]   ======> student properties Student(id=15, name=Test Good1, password=12341234, branch=MSIT, percentage=23, phone=6505211234, email=testgood3@gmail.com)
+2019-06-02 17:18:36  [ http-nio-8080-exec-3:75266 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 17:41:07  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 9f76bb2016ee46f3a3b3a7f184f5af50
+2019-06-02 17:42:25  [ http-nio-8080-exec-3:77536 ] - [ INFO ]   ======> student properties Student(id=16, name=Test Good16, password=12341234, branch=MBA, percentage=16, phone=6505211111, email=testgood16@gmail.com)
+2019-06-02 17:42:25  [ http-nio-8080-exec-3:77572 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 18:04:15  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 3c7e0f4c124f4361bd83abd6f54ba1aa
+2019-06-02 18:06:36  [ http-nio-8080-exec-6:141210 ] - [ INFO ]   ======> student properties Student(id=18, name=qqq, password=12341234, branch=MBA, percentage=16, phone=6505211111, email=testgood16@gmail.com)
+2019-06-02 18:06:36  [ http-nio-8080-exec-6:141240 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 18:11:30  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is e9a194f386834869a47287aac445b212
+2019-06-02 18:11:39  [ http-nio-8080-exec-2:8946 ] - [ INFO ]   ======> student properties Student(id=18, name=qqq, password=12341234, branch=MBA, percentage=16, phone=6505211111, email=testgood16@gmail.com)
+2019-06-02 18:26:06  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 52a805cd167c44c1a64f2985c660a53d
+2019-06-02 18:27:09  [ http-nio-8080-exec-4:63301 ] - [ INFO ]   ======> student properties Student(id=18, name=333, password=12341234, branch=MBA, percentage=16, phone=6505211111, email=testgood16@gmail.com)
+2019-06-02 18:27:09  [ http-nio-8080-exec-4:63331 ] - [ INFO ]   Calling the API ======> addStudent
+2019-06-02 18:34:32  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is bed594ebaaec48abb7fe576e70ae7b1a
+2019-06-02 18:38:24  [ http-nio-8080-exec-8:231171 ] - [ INFO ]   ======> student properties Student(id=16, name=666, password=12341234, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-02 18:40:39  [ http-nio-8080-exec-2:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 1283059d2b5845b2936b2f18d8e48363
+2019-06-02 18:41:18  [ http-nio-8080-exec-3:38873 ] - [ INFO ]   ======> student properties Student(id=19, name=777, password=77777777, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-02 18:47:46  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is fcfab1eb849a479a9031eede7e411d91
+2019-06-02 18:48:30  [ http-nio-8080-exec-2:44204 ] - [ INFO ]   ======> student properties Student(id=19, name=777, password=77777777, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-02 18:51:52  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 9b9a2f1e7ed4417492fadd7c34ea337c
+2019-06-02 18:52:16  [ http-nio-8080-exec-3:24410 ] - [ INFO ]   Calling the API ======> queryByPage
+2019-06-02 18:58:52  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is eb77cb13084b4ccba54c1044dd503291
+2019-06-02 19:00:01  [ http-nio-8080-exec-5:68167 ] - [ INFO ]   ======> student properties Student(id=20, name=666, password=77778888, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-02 19:07:09  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is 5d420b63f438444881e1131eac3ac301
+2019-06-02 19:07:57  [ http-nio-8080-exec-3:48704 ] - [ INFO ]   ======> student properties Student(id=19, name=666, password=77778888, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-02 19:08:33  [ http-nio-8080-exec-4:84483 ] - [ INFO ]   ======> student properties Student(id=19, name=666, password=77778888, branch=MBA, percentage=12, phone=1505552388, email=goodjob@gmail.com)
+2019-06-02 20:59:32  [ main:0 ] - [ INFO ]  
+=========已注销========
+2019-06-02 23:31:33  [ http-nio-8080-exec-1:0 ] - [ INFO ]  jack has login the website. The userId is 1 and token is c54bfb7aac06437e8beb1bcde0b72e37
+2019-06-02 23:33:41  [ http-nio-8080-exec-4:128238 ] - [ INFO ]  =======已在线=======
+2019-06-02 23:34:26  [ http-nio-8080-exec-5:172879 ] - [ INFO ]  =======已在线=======

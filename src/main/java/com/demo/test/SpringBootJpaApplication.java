@@ -101,6 +101,7 @@ import java.util.stream.Collectors;
  * 	at java.lang.Thread.run(Thread.java:748)
  *
  * 6.  项目集成Nginx，2 Tomcat, 2020/01/21完成
+ *     ID生成器
  *
  *
  * 7， Spring Cloud分布式架构，没完成
