@@ -45,8 +45,8 @@ import java.util.stream.Collectors;
  *    redis-cli shutdown
  * 3. http://localhost:8080/swagger-ui.html
  *
- *  启动rabbitMQ
- *    sudo su     转换成超级用户
+ *    要用超级用户启动rabbitMQ
+ *    sudo su
  *    cd /usr/local/etc/rabbitmq_server-3.5.3
  *    # 启动服务
  *    ./sbin/rabbitmq-server start
@@ -100,10 +100,12 @@ import java.util.stream.Collectors;
  * 	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:257)
  * 	at java.lang.Thread.run(Thread.java:748)
  *
- * 6. 用Docker打包启动，没有完成
+ * 6.  项目集成Nginx，2 Tomcat, 2020/01/21完成
+ *
+ *
  * 7， Spring Cloud分布式架构，没完成
  * 8， Redis多级缓存，没完成
- * 9， 集成Nginx，没完成
+ * 9， 用Docker打包启动，没有完成
  * 10，写一个高并发场景，没完成
  * 11，集成Kafka，没完成
  * 12, 集成MongoDB，没完成

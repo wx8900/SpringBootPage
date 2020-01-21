@@ -9,6 +9,7 @@ import com.demo.test.security.CookieUtils;
 import com.demo.test.security.MDUtils;
 import com.demo.test.service.BuyerService;
 import com.demo.test.service.OrderService;
+import com.demo.test.utils.OrderNumberGeneratorLock;
 import com.demo.test.utils.TokenUtils;
 import com.demo.test.vo.ResultVO;
 import com.demo.test.vo.ResultVOUtils;
@@ -41,11 +42,19 @@ public class BuyerOrderController {
 
     static Logger logger = LogManager.getLogger(BuyerOrderController.class);
 
+    private OrderNumberGeneratorLock orderNumGenerator = new OrderNumberGeneratorLock();
+
     @Autowired
     OrderService orderService;
 
     @Autowired
     BuyerService buyerService;
+
+    @GetMapping(value = "/addOrder")
+    public void addOrder() throws InterruptedException {
+        String num = orderNumGenerator.getNumber();
+        System.out.println(num);
+    }
 
     /**
      * 创建订单

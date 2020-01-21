@@ -1,6 +1,6 @@
-server:
-  tomcat:
-    port: 8080
+#server:
+#  tomcat:
+#    port: 8081
 
 
 application:
