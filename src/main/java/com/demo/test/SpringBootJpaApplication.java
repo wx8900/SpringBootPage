@@ -70,6 +70,7 @@ import java.util.stream.Collectors;
  * 4. 用swagger与用token有冲突,已解决
  * 5. 用MQ分离控制类和Service,已解决  12/19
  *    测试多线程到4000个，报错
+ *
  * java.net.SocketException: Connection reset
  * 	at java.net.SocketInputStream.read(SocketInputStream.java:210)
  * 	at java.net.SocketInputStream.read(SocketInputStream.java:141)
@@ -101,8 +102,11 @@ import java.util.stream.Collectors;
  * 	at java.lang.Thread.run(Thread.java:748)
  *
  * 6.  项目集成Nginx，2 Tomcat, 2020/01/21完成
- *     ID生成器
+ *     Jmeter 测试返回：  404 Not Found
+ *     ID生成器, Spring Boot
  *
+ *     2020/01/27
+ *     注意：点Run按钮启动项目，检查是否有JVM配置启动参数捣乱：VM options: -Dserver.port=9002 这里不要分布式配置
  *
  * 7， Spring Cloud分布式架构，没完成
  * 8， Redis多级缓存，没完成

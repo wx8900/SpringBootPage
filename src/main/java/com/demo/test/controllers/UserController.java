@@ -82,6 +82,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class UserController {
 
     static Logger logger = LogManager.getLogger(UserController.class);
+    static final String LOG_INFO = "Send message to RabbitMQ successful! ####################> get User by [id] : ";
 
     @Autowired
     private MessageProducer messageProducer;
@@ -153,11 +154,12 @@ public class UserController {
      * @return Student
      * @date 2019/12/19 23:42:30
      */
-    /*@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Student getUser(@PathVariable("id") Long id) {
+        //System.out.println("==========================>>>Go into getUser method, [id] is :"+id);
         AtomicReference<Student> student = new AtomicReference<>(new Student());
-        logger.info("Send message to RabbitMQ successful! ####################> get User by [id] : " + id);
+        logger.info(LOG_INFO+ id);
 
         try {
             Future senderFuture = executorService.submit(() -> {
@@ -167,6 +169,7 @@ public class UserController {
                     logger.error(e.getMessage());
                 }
             });
+            Thread.sleep(1);
             if (senderFuture.isDone()) {
                 Future receiverFuture = executorService.submit(() -> {
                     try {
@@ -188,14 +191,14 @@ public class UserController {
 
     private Student getMessageObject() {
         return messageProducer.getStudent();
-    }*/
+    }
 
     /**
      * 用Lock锁实现
      * @param id
      * @return
      */
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Student getUser(@PathVariable("id") Long id) {
         Lock studentLock = new ReentrantLock();
@@ -220,8 +223,9 @@ public class UserController {
                 });
             }
         } catch (Exception e) {
-            studentLock.unlock();
             logger.error("[MyException] happen in getUser method !!!" + GlobalExceptionHandler.buildErrorMessage(e));
+        } finally {
+            studentLock.unlock();
         }
         return student.get();
     }
@@ -233,6 +237,7 @@ public class UserController {
     private Student getMessageObject() {
         return messageProducer.getStudent();
     }
+    */
 
 
     /**

@@ -1,12 +1,15 @@
+/*
 package com.demo.test.abstractfactory;
 
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
+*/
 /**
  * @author Jack
- */
+ *//*
+
 public class MySQLDBComponent implements IDBComponent {
     private static final String SQL_QUERY = "SELECT * FROM tbl_student";
     private static final int jdbcPoolInitSize;
@@ -97,7 +100,7 @@ public class MySQLDBComponent implements IDBComponent {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            releaseResource(resultSet, statement, connection);
+            //releaseResource(resultSet, statement, connection);
         }
     }
 
@@ -181,3 +184,4 @@ public class MySQLDBComponent implements IDBComponent {
 }
 
 
+*/

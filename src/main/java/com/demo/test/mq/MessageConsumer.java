@@ -29,8 +29,7 @@ public class MessageConsumer {
         Student student;
         try {
             student = getStudentFromDB(message);
-            logger.info("单对单传递消息。Consumer收到消息 : " + message
-                    + "========数据库返回数据===========>" + student.toString());
+            //logger.info("单对单传递消息。Consumer收到消息 : " + message + "===================>" + student.toString());
             amqpTemplate.convertAndSend(RabbitConfiguration.EXCHANGE_DIRECT,
                     RabbitConfiguration.DIRECT_ROUTING_KEY_RECVQUEUE, student);
         } catch (Exception e) {

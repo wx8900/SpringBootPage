@@ -27,7 +27,7 @@ public class JDBCPool implements DataSource {
      * 在静态代码块中加载src/jdbc.properties数据库配置文件
      */
     static {
-        InputStream in = JDBCPool.class.getResourceAsStream("/application-dev.properties");
+        /*InputStream in = JDBCPool.class.getResourceAsStream("/application-dev.properties");
         Properties prop = new Properties();
         try {
             prop.load(in);
@@ -50,7 +50,7 @@ public class JDBCPool implements DataSource {
             }
         } catch (Exception e) {
             throw new ExceptionInInitializerError(e);
-        }
+        }*/
     }
 
     private JDBCPool() {

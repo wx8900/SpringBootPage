@@ -26,7 +26,7 @@ public class MessageProducer {
     private Student student;
 
     public void sendMessage(String message) throws Exception {
-        logger.info("单对单发送。Producer发出了消息:" + message);
+        //logger.info("单对单发送。Producer发出了消息:" + message);
         amqpTemplate.convertAndSend(RabbitConfiguration.EXCHANGE_DIRECT,
                 RabbitConfiguration.DIRECT_ROUTING_KEY_SENDQUEUE, message);
     }
@@ -35,7 +35,7 @@ public class MessageProducer {
     @RabbitHandler
     public void onMessage(Student student) {
         this.student = student;
-        logger.info("单对单返回参数。从数据库得到信息并返回:$$$$$$$$$$$$$$========>" + student.toString());
+        //logger.info("单对单返回参数。从数据库得到信息并返回:$$$$$$$$$$$$$$========>" + student.toString());
     }
 
     public Student getStudent() {

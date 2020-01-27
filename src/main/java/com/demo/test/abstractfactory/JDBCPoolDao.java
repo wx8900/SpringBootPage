@@ -1,3 +1,4 @@
+/*
 package com.demo.test.abstractfactory;
 
 import java.sql.*;
@@ -8,9 +9,11 @@ import java.util.Map;
 
 public class JDBCPoolDao {
 
-    /**
+    */
+/**
      * 增加，删除，修改  
-     */
+     *//*
+
     public static void insertOrDeleteOrUpdate(String sql) {
         try {
             Connection connection = JDBCPoolUtil.getConnection();
@@ -23,9 +26,11 @@ public class JDBCPoolDao {
         }
     }
 
-    /**
+    */
+/**
      * 查询，返回结果集  
-     */
+     *//*
+
     public static List<Map<String, Object>> select(String sql) {
         List<Map<String, Object>> returnResultToList = null;
         try {
@@ -40,9 +45,11 @@ public class JDBCPoolDao {
         return returnResultToList;
     }
 
-    /**
+    */
+/**
      *  数据返回集合  * @param resultSet  * @return  * @throws SQLException  
-     */
+     *//*
+
     public static List<Map<String, Object>> returnResultToList(ResultSet resultSet) {
         List<Map<String, Object>> values = null;
         try {
@@ -76,4 +83,4 @@ public class JDBCPoolDao {
         return values;
     }
 
-}
+}*/

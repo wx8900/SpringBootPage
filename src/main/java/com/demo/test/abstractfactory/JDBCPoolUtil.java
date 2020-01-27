@@ -1,3 +1,4 @@
+/*
 package com.demo.test.abstractfactory;
 
 import java.sql.Connection;
@@ -15,19 +16,23 @@ public class JDBCPoolUtil {
         System.out.println("JDBCPoolUtil Testing End ===============>");
     }
 
-    /**
+    */
+/**
      *  获取资源
-     */
+     *//*
+
     public static Connection getConnection() throws SQLException {
         return pool.getConnection();
     }
 
-    /**
+    */
+/**
      *  关闭资源
      *  @param resultSet 查询返回的结果集，没有为空
      *  @param statement   
      *  @param connection
-     */
+     *//*
+
     public static void close(ResultSet resultSet, Statement statement,
                              Connection connection) {
         if (resultSet != null) {
@@ -57,3 +62,4 @@ public class JDBCPoolUtil {
     }
 
 }
+*/

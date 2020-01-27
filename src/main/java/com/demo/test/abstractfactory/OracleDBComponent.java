@@ -1,3 +1,4 @@
+/*
 package com.demo.test.abstractfactory;
 
 import java.io.InputStream;
@@ -6,9 +7,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+*/
 /**
  * @author Jack
- */
+ *//*
+
 public class OracleDBComponent implements IDBComponent {
 
     private static final int jdbcPoolInitSize;
@@ -343,3 +346,4 @@ public class OracleDBComponent implements IDBComponent {
     }
 
 }
+*/
