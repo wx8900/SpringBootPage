@@ -29,7 +29,6 @@ VALUES
     (11, 'Cow', '7777', 'it', '3', '23', 'cow@test.com');
     (12, 'Jeff', '888', 'it', '4', '25', '888@qq.com');
     (13, 'Tommy', '999', 'it', '6', '32', 'test126@126.com');
-    (14, 'Allen', '1010', 'it', '9', '48', '1010@yahoo.com');
 
 
 DROP TABLE IF EXISTS `LOG_ERROR`;
