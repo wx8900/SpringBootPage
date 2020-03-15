@@ -16,17 +16,20 @@ CREATE TABLE `tbl_student` (
 
 INSERT INTO `tbl_student` (`ID`, `NAME`,  `PASSWORD`, `BRANCH`, `PERCENTAGE`, `PHONE`, `EMAIL`)
 VALUES
-    (1, 'jack', '123', 'it', '20', '1211232', 'adaf@test.com'),
-    (2, 'mark', '345', 'dev', '30', '333', 'ddd@test.com'),
-    (3, 'tony',  '123', 'dev', '2', '444', 'tony@test.com'),
-    (4, 'nancy', '123', 'dev', '23', '788', 'nancy@test.com'),
-    (5, 'tommy', '001', 'it', '32', '2423', 'tommy@test.com'),
-    (6, 'tom', '111', 'it', '23', '11', 'tom@test.com'),
+    (1, 'Jack', '123', 'it', '20', '1211232', 'adaf@test.com'),
+    (2, 'Mark', '345', 'dev', '30', '333', 'ddd@test.com'),
+    (3, 'Tony',  '123', 'dev', '2', '444', 'tony@test.com'),
+    (4, 'Nancy', '123', 'dev', '23', '788', 'nancy@test.com'),
+    (5, 'Louis', '001', 'it', '32', '2423', 'tommy@test.com'),
+    (6, 'Tom', '111', 'it', '23', '11', 'tom@test.com'),
     (7, 'Aka', '222', 'dev', '1', '2', 'aka@test.com'),
-    (8, 'al', '333', 'dev', '2', '3', 'al@test.com'),
-    (9, 'ben', '123456789', 'dev', '3', '4', 'ben@test.com'),
+    (8, 'Jason', '333', 'dev', '2', '3', 'al@test.com'),
+    (9, 'Ben', '123456789', 'dev', '3', '4', 'ben@test.com'),
     (10, 'Mike', '001test', 'it', '5', '6', 'mike@test.com'),
-    (11, 'Cow', '777', 'it', '3', '23', 'cow@test.com');
+    (11, 'Cow', '7777', 'it', '3', '23', 'cow@test.com');
+    (12, 'Jeff', '888', 'it', '4', '25', '888@qq.com');
+    (13, 'Tommy', '999', 'it', '6', '32', 'test126@126.com');
+    (14, 'Allen', '1010', 'it', '9', '48', '1010@yahoo.com');
 
 
 DROP TABLE IF EXISTS `LOG_ERROR`;
