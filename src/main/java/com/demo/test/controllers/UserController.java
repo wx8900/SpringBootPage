@@ -31,10 +31,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Jack
@@ -81,17 +82,16 @@ import java.util.concurrent.locks.ReentrantLock;
 @RequestMapping("/v1/api/students")
 public class UserController {
 
-    static Logger logger = LogManager.getLogger(UserController.class);
     static final String LOG_INFO = "Send message to RabbitMQ successful! ####################> get User by [id] : ";
-
+    static Logger logger = LogManager.getLogger(UserController.class);
+    /**
+     * 创建个线程池
+     */
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
     @Autowired
     private MessageProducer messageProducer;
-
     @Autowired
     private UserService userService;
-
-    /**  创建个线程池   */
-    ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     /**
      * start Redis server before call this method
@@ -159,7 +159,7 @@ public class UserController {
     public Student getUser(@PathVariable("id") Long id) {
         //System.out.println("==========================>>>Go into getUser method, [id] is :"+id);
         AtomicReference<Student> student = new AtomicReference<>(new Student());
-        logger.info(LOG_INFO+ id);
+        logger.info(LOG_INFO + id);
 
         try {
             Future senderFuture = executorService.submit(() -> {
@@ -354,9 +354,9 @@ public class UserController {
             //生成验证码
             String verifyCode = VerifyCodeUtil.generateVerifyCode(6);
             //邮件主题
-            String emailTitle = "【好学堂】邮箱验证";
+            String emailTitle = "【好学X】邮箱验证";
             //邮件内容
-            String emailContent = "您正在【好学堂】进行邮箱验证，您的验证码为：" + verifyCode + "，请于10分钟内完成验证！";
+            String emailContent = "您正在【好学X】进行邮箱验证，您的验证码为：" + verifyCode + "，请于10分钟内完成验证！";
             //发送邮件
             SendmailUtil.sendEmail(toEmailAddress, emailTitle, emailContent);
             return CalculatorUtil.getJSONString(0, verifyCode);
@@ -382,11 +382,11 @@ public class UserController {
             RedisTemplate redisTemplate = new RedisTemplate();
             //用户输入邮箱与绑定邮箱一致→发送验证码
             if (mailAddress.equals(customNames)) {
+                //邮件主题
+                String emailTitle = "邮箱验证";
                 try {
                     //生成验证码
                     String verifyCode = RandomUtil.getCode();
-                    //邮件主题
-                    String emailTitle = "邮箱验证";
                     //邮件内容
                     String emailContent = "您正在进行邮箱验证，您的验证码为：" + verifyCode + "，请于5分钟内完成验证！";
                     //发送邮件

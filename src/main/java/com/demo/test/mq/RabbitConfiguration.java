@@ -1,6 +1,5 @@
 package com.demo.test.mq;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -25,6 +24,7 @@ public class RabbitConfiguration {
     /**
      * 创建队列 - 发送队列
      * 第二个参数： true 是否持久
+     *
      * @return
      */
     @Bean
@@ -34,6 +34,7 @@ public class RabbitConfiguration {
 
     /**
      * 创建队列 - 读取队列
+     *
      * @return
      */
     @Bean

@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * http 工具类
+ * 使用 HttpURLConnection
  */
 public class HttpUtil {
 
