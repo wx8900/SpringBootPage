@@ -1,6 +1,7 @@
 package com.demo.test.testconcurrent;
 
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.io.File;
@@ -12,7 +13,8 @@ import java.util.concurrent.TimeUnit;
 /**
  *
  */
-public class HttpClientUtil {
+@Slf4j
+public class OkHttpClientUtils {
     /**
      * 设置连接超时时间为30000秒
      */
@@ -54,25 +56,19 @@ public class HttpClientUtil {
      * @return 返回结果。如果为“”表示失败
      */
     public String get(String url, Map<Object, Object> map) {
-        String result = "";
-
         url = wrapUrl(url, map);
-
         // 创建请求参数
         Request request = new Request.Builder().url(url).build();
 
-        //创建请求对象
-        Call call = okHttpClient.newCall(request);
-
-        try {
-            Response response = call.execute();
+        try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
-                result = callBack(response.body().string());
+                return callBack(response.body().string());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("get method has exception : {} " + e.getMessage());
         }
-        return result;
+
+        return "";
     }
 
     /**
@@ -89,14 +85,12 @@ public class HttpClientUtil {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder().url(url).post(body).build();
 
-        Response response = null;
-        try {
-            response = okHttpClient.newCall(request).execute();
+        try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 callBack(response.body().string());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("post method has exception : {} " + e.getMessage());
         }
     }
 
@@ -112,14 +106,12 @@ public class HttpClientUtil {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder().url(url).post(body).build();
 
-        Response response = null;
-        try {
-            response = okHttpClient.newCall(request).execute();
+        try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 callBack(response.body().string());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("post method has exception : {} " + e.getMessage());
         }
     }
 
@@ -153,7 +145,6 @@ public class HttpClientUtil {
      */
     private void uploadFiles(String url, Map<Object, Object> map, List<String> filePaths) {
         url = wrapUrl(url, map);
-
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
         for (String str : filePaths) {
@@ -173,14 +164,12 @@ public class HttpClientUtil {
      * @param request
      */
     private void execute(Request request) {
-
-        try {
-            Response response = okHttpClient.newCall(request).execute();
+        try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 callBack(response.body().string());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("execute method has exception : {} " + e.getMessage());
         }
     }
 
@@ -192,7 +181,6 @@ public class HttpClientUtil {
      * @return 返回拼接完的url地址
      */
     private String wrapUrl(String url, Map<Object, Object> map) {
-
         if (null == map) {
             return url;
         }
@@ -202,7 +190,6 @@ public class HttpClientUtil {
         for (Map.Entry entry : map.entrySet()) {
             url += entry.getKey() + "=" + entry.getValue() + "&";
         }
-
 
         if (url.endsWith("&")) {
             url = url.substring(0, url.length() - 1);

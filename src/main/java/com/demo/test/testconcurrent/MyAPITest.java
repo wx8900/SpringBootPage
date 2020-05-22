@@ -4,13 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * Test Post API, Test OK
  * return Json Data
  *
  * @author Jack
  * @date 2019/10/08 19:46 PM
- *
  */
 public class MyAPITest {
 

@@ -19,7 +19,7 @@ public class TestConcurrentRequest {
     // 同一时刻最大的并发线程的个数
     public static final int concurrentThreadNum = 10;
 
-    private static HttpClientUtil httpClientUtil = new HttpClientUtil();
+    private static OkHttpClientUtils okHttpClientUtils = new OkHttpClientUtils();
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -44,6 +44,6 @@ public class TestConcurrentRequest {
     }
 
     private static void testRequestUri() {
-        httpClientUtil.post("http://127.0.0.1:8080/v1/api/students/findById/12", null);
+        okHttpClientUtils.post("http://127.0.0.1:8080/v1/api/students/findById/12", null);
     }
 }

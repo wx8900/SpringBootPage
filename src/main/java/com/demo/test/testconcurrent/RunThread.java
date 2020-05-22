@@ -29,7 +29,7 @@ public class RunThread {
             new ThreadPoolExecutor(10, 100,
                     1000000L, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
     private final String URL;
-    private HttpClientUtil httpClientUtil;
+    private OkHttpClientUtils okHttpClientUtils;
     private int num;
     private CountDownLatch countDownLatch;
 
@@ -42,7 +42,7 @@ public class RunThread {
         this.num = num;
         this.countDownLatch = new CountDownLatch(num);
 
-        httpClientUtil = new HttpClientUtil() {
+        okHttpClientUtils = new OkHttpClientUtils() {
             @Override
             public String callBack(String responseString) {
                 System.out.println(responseString);
@@ -59,7 +59,7 @@ public class RunThread {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    httpClientUtil.get(URL, map);
+                    okHttpClientUtils.get(URL, map);
                     countDownLatch.countDown();
                 }
             });
@@ -82,7 +82,7 @@ public class RunThread {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    httpClientUtil.post(URL, map, t);
+                    okHttpClientUtils.post(URL, map, t);
                     countDownLatch.countDown();
                 }
             });

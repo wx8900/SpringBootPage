@@ -10,7 +10,7 @@ import java.util.concurrent.CountDownLatch;
 //import org.im4java.process.ProcessStarter;
 
 /**
- *  Test is Good!
+ * Test is Good!
  */
 //@Service
 public class ApiTest {
@@ -68,14 +68,14 @@ public class ApiTest {
                 /** 执行操作
                  *  这里调用你要测试的接口
                  */
-                HttpClientUtil httpClientUtil = new HttpClientUtil();
+                OkHttpClientUtils okHttpClientUtils = new OkHttpClientUtils();
                 List<NameValuePair> formParams = new ArrayList<>();
                 formParams.add(new BasicNameValuePair("edit", "thumbnailImg"));
                 formParams.add(new BasicNameValuePair("editType", "center"));
                 formParams.add(new BasicNameValuePair("width", "400"));
                 formParams.add(new BasicNameValuePair("height", "400"));
                 //httpClientUtil.post("http://localhost:8080/test.action", formParams);
-                httpClientUtil.post("https://www.baidu.com", formParams);
+                okHttpClientUtils.post("https://www.baidu.com", formParams);
                 long endTime = System.currentTimeMillis();
                 System.out.println(Thread.currentThread().getName() + " ended at: " + endTime + ", cost: " + (endTime - startTime) + " ms.");
             } catch (Exception e) {
