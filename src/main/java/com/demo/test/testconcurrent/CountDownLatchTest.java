@@ -1,10 +1,13 @@
 package com.demo.test.testconcurrent;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.CountDownLatch;
 
 /**
  * ExecutorService 的实现类不适合CountDownLatch的使用，只能使用new Thread()
  */
+@Slf4j
 public class CountDownLatchTest {
 
     /**
@@ -17,7 +20,7 @@ public class CountDownLatchTest {
         try {
             ct.waitToComplete();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error("ct.waitToComplete() method has exception : {} "+e.getMessage());
         } finally {
             System.exit(0);
         }
@@ -27,7 +30,7 @@ public class CountDownLatchTest {
     public void waitToComplete() throws InterruptedException {
         try {
             startTime = System.currentTimeMillis();
-            System.out.println("CountDownLatch started at: " + startTime);
+            log.info("CountDownLatch started at: " + startTime);
             // 初始化计数器为1
             CountDownLatch countDownLatch = new CountDownLatch(1);
             for (int i = 0; i < 100; i++) {
@@ -36,9 +39,8 @@ public class CountDownLatchTest {
 
             // 启动多个线程
             countDownLatch.countDown();
-
         } catch (Exception e) {
-            System.out.println("Exception: " + e);
+            log.error("waitToComplete method has exception : {} "+e.getMessage());
         }
 
         /*ExecutorService executor = Executors.newFixedThreadPool(100);
@@ -62,10 +64,10 @@ public class CountDownLatchTest {
             try {
                 latch.await();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("latch.await() has exception : {} " + e.getMessage());
             }
             for (int i = 0; i < 25; i++) {
-                System.out.println("Run from Thread : "
+                log.error("Run from Thread : "
                         + Thread.currentThread().getName() + " =====" + Thread.currentThread().getId());
             }
         }

@@ -1,10 +1,12 @@
 package com.demo.test.testconcurrent;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class HttpClientTest {
 
     public static void main(String[] args) {
@@ -20,7 +22,7 @@ public class HttpClientTest {
         String body = JSON.toJSONString(bodyMap);
 
         Object response = HttpClientUtils.doPost2(url, headers, body);
-        System.out.println(response.toString());
+        log.info("response.toString() : "+response.toString());
 
     }
 

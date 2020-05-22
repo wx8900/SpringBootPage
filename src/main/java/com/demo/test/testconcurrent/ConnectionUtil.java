@@ -1,5 +1,8 @@
 package com.demo.test.testconcurrent;
 
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
+
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -7,6 +10,7 @@ import java.net.URLConnection;
  * @author Jack
  * @date 2019/10/08
  */
+@Slf4j
 public class ConnectionUtil {
 
     public static void connect() throws Exception {
@@ -28,6 +32,6 @@ public class ConnectionUtil {
         urlConnection.setDoOutput(true);
         urlConnection.connect();
         //System.out.println(urlConnection.getInputStream().read());
-        System.out.println(urlConnection.getInputStream().read());
+        log.info("test result : {} ", urlConnection.getInputStream().read());
     }
 }

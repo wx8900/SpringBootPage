@@ -1,5 +1,7 @@
 package com.demo.test.testconcurrent;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -10,6 +12,7 @@ import java.nio.charset.StandardCharsets;
  * @author Jack
  * @date 2019/10/08
  */
+@Slf4j
 public class GetDataFromAPI {
 
     public static void main(String[] args) throws Exception {
@@ -29,6 +32,6 @@ public class GetDataFromAPI {
         //这里转换为String，带上包名，怕你们引错包
         String result = org.apache.commons.io.IOUtils.toString(input, StandardCharsets.UTF_8);
         //输出
-        System.out.println(result);
+        log.info("result : {} " + result);
     }
 }
