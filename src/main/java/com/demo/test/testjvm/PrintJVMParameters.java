@@ -1,5 +1,7 @@
 package com.demo.test.testjvm;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  *
  * oracle官方给出的调优文档
@@ -29,6 +31,7 @@ package com.demo.test.testjvm;
  * 不过，让Metaspace变得无限大显然是不现实的，因此我们也要限制Metaspace的大小：使用-XX:MaxMetaspaceSize
  * 参数来指定Metaspace区域的大小。JVM默认在运行时根据需要动态地设置MaxMetaspaceSize的大小。
  */
+@Slf4j
 public class PrintJVMParameters {
 
     public static void main(String[] args) {
@@ -39,47 +42,47 @@ public class PrintJVMParameters {
     }
 
     public static void printXmxXms1(){
-        System.out.print("指定最大堆大小 最大可使用空间 Xmx=");
-        System.out.println(Runtime.getRuntime().maxMemory()/1024/1024 + "M");
-        System.out.print("当前未使用的空间 free mem=");
-        System.out.println(Runtime.getRuntime().freeMemory()/1024/1024 + "M");
-        System.out.print("当前可用总mem空间 total mem=");
-        System.out.println(Runtime.getRuntime().totalMemory()/1024/1024 + "M");
+        log.info("指定最大堆大小 最大可使用空间 Xmx=");
+        log.info(Runtime.getRuntime().maxMemory()/1024/1024 + "M");
+        log.info("当前未使用的空间 free mem=");
+        log.info(Runtime.getRuntime().freeMemory()/1024/1024 + "M");
+        log.info("当前可用总mem空间 total mem=");
+        log.info(Runtime.getRuntime().totalMemory()/1024/1024 + "M");
     }
 
     public static void printXmxXms2(){
         byte[] b = new byte[1024*1024];
-        System.out.println("分配了1M空间给数组");
-        System.out.print("Xmx=");
-        System.out.println(Runtime.getRuntime().maxMemory()/1024/1024 + "M");
-        System.out.print("free mem=");
-        System.out.println(Runtime.getRuntime().freeMemory()/1024/1024 + "M");
-        System.out.print("total mem=");
-        System.out.println(Runtime.getRuntime().totalMemory()/1024/1024 + "M");
+        log.info("分配了1M空间给数组");
+        log.info("Xmx=");
+        log.info(Runtime.getRuntime().maxMemory()/1024/1024 + "M");
+        log.info("free mem=");
+        log.info(Runtime.getRuntime().freeMemory()/1024/1024 + "M");
+        log.info("total mem=");
+        log.info(Runtime.getRuntime().totalMemory()/1024/1024 + "M");
     }
 
     public static void printXmxXms3(){
         byte[] b = new byte[4*1024*1024];
-        System.out.println("分配了4M空间给数组");
-        System.out.print("Xmx=");
-        System.out.println(Runtime.getRuntime().maxMemory()/1024/1024 + "M");
-        System.out.print("free mem=");
-        System.out.println(Runtime.getRuntime().freeMemory()/1024/1024 + "M");
-        System.out.print("total mem=");
-        System.out.println(Runtime.getRuntime().totalMemory()/1024/1024 + "M");
+        log.info("分配了4M空间给数组");
+        log.info("Xmx=");
+        log.info(Runtime.getRuntime().maxMemory()/1024/1024 + "M");
+        log.info("free mem=");
+        log.info(Runtime.getRuntime().freeMemory()/1024/1024 + "M");
+        log.info("total mem=");
+        log.info(Runtime.getRuntime().totalMemory()/1024/1024 + "M");
     }
 
     public static void printXmxXms4(){
         byte[] b = new byte[4*1024*1024];
-        System.out.println("分配了4M空间给数组");
+        log.info("分配了4M空间给数组");
         System.gc();
-        System.out.println("回收内存");
-        System.out.print("Xmx=");
-        System.out.println(Runtime.getRuntime().maxMemory()/1024/1024 + "M");
-        System.out.print("free mem=");
-        System.out.println(Runtime.getRuntime().freeMemory()/1024/1024 + "M");
-        System.out.print("total mem=");
-        System.out.println(Runtime.getRuntime().totalMemory()/1024/1024 + "M");
+        log.info("回收内存");
+        log.info("Xmx=");
+        log.info(Runtime.getRuntime().maxMemory()/1024/1024 + "M");
+        log.info("free mem=");
+        log.info(Runtime.getRuntime().freeMemory()/1024/1024 + "M");
+        log.info("total mem=");
+        log.info(Runtime.getRuntime().totalMemory()/1024/1024 + "M");
     }
 
 }

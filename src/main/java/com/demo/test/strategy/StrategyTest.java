@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.BinaryOperator;
 
 public class StrategyTest {
+
     private Operate operate;
 
     @org.junit.Test

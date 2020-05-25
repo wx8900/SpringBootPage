@@ -67,8 +67,7 @@ public class DruidConfiguration {
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
 
-        Map<String, String> initParams = new HashMap<>();
-
+        Map<String, String> initParams = new HashMap<>(1);
         // 不拦截的静态资源
         initParams.put("exclusions", "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*");
         bean.setInitParameters(initParams);

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 操作Cookie，从HttpServletRequest取到Cookie
  * http://localhost:8080/v1/api/cookie/getCookies
  */
 
@@ -48,7 +49,7 @@ public class MyGetCookieController {
     }
 
     public static void main(String[] args) {
-
+        
     }
 
 }

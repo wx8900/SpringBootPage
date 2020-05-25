@@ -1,11 +1,14 @@
 package com.demo.test.databasebackup;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 备份操作、恢复、删除工具类
+ * 备份数据库的操作、恢复、删除工具类
  */
+@Slf4j
 public class DBBackupImpl extends DBBackupUtils {
 
     /**
@@ -21,7 +24,7 @@ public class DBBackupImpl extends DBBackupUtils {
             try {
                 fileSql.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         StringBuffer sb = new StringBuffer();
@@ -37,7 +40,7 @@ public class DBBackupImpl extends DBBackupUtils {
         try {
             Process process = runtime.exec("cmd /c " + sb.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return false;
         }
         return true;
@@ -67,7 +70,7 @@ public class DBBackupImpl extends DBBackupUtils {
                 System.out.println(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return false;
         }
         return true;
