@@ -33,7 +33,7 @@ public class HttpClientPoolTest {
                     }
                 }
                 HttpHost target = (HttpHost) context.getAttribute(HttpClientContext.HTTP_TARGET_HOST);
-                if ("bizapi.jd.com ".equalsIgnoreCase(target.getHostName())) {
+                if ("www.baidu.com".equalsIgnoreCase(target.getHostName())) {
                     return 60 * 1000;
                 } else {
                     return 300 * 1000;
