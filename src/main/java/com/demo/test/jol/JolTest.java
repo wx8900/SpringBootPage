@@ -6,5 +6,9 @@ public class JolTest {
     public static void main(String[] args) {
         JolTest jolTest = new JolTest();
         System.out.println(ClassLayout.parseInstance(jolTest).toPrintable());
+
+        synchronized (jolTest) {
+            System.out.println(ClassLayout.parseInstance(jolTest).toPrintable());
+        }
     }
 }
