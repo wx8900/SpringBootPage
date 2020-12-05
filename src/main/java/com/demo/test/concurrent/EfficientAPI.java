@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-public class Demo1 {
+public class EfficientAPI {
 
     /**
      * 获取商品基本信息
@@ -76,7 +76,7 @@ public class Demo1 {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         long starTime = System.currentTimeMillis();
-        Map<String, Object> map = new Demo1().goodsDetail(1L);
+        Map<String, Object> map = new EfficientAPI().goodsDetail(1L);
         System.out.println(map);
         System.out.println("耗时(ms):" + (System.currentTimeMillis() - starTime));
     }
