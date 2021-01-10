@@ -36,7 +36,8 @@ public class FutureTest {
         Task task1 = new Task("one", 5);
         Future<Boolean> f1 = executor.submit(task1);
         try {
-            if (f1.get(2, TimeUnit.SECONDS)) { // future将在2秒之后取结果
+            // future将在2秒之后取结果
+            if (f1.get(2, TimeUnit.SECONDS)) {
                 System.out.println("one complete successfully");
             }
         } catch (InterruptedException e) {
